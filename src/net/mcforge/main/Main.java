@@ -1,6 +1,7 @@
 package net.mcforge.main;
-import com.gamezgalaxy.GGS.API.plugin.Plugin;
-import com.gamezgalaxy.GGS.server.Server;
+
+import net.mcforge.API.plugin.Plugin;
+import net.mcforge.server.Server;
 
 
 public class Main extends Plugin {
