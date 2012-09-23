@@ -4,19 +4,20 @@
  */
 package net.mcforge.tutorialplugin.events;
 
+import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
-import net.mcforge.API.player.PlayerConnectEvent;
 
 /**
  *
  * @author Wouter Gerarts
  */
 public class EventListener implements Listener {
-    @Eventhandler
+    
+    @EventHandler
     public void onPlayerBlockChange(PlayerBlockChangeEvent event)
     {
-        event.getPlayer().sendWoMMesssage(
+        event.getPlayer().sendWoMMessage(
                 "x: " + event.getX() + " " +
                 "y: " + event.getY() + " " +
                 "z: " + event.getZ());
