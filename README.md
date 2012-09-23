@@ -31,6 +31,9 @@ Please follow these rules when making pull requests
 
 5. Follow Oracle Code Convention [10.5.1][4], [10.5.2][5], and [10.5.3][6]
 
+##Required Dependencies
+- [MCForge 1.0][7]
+
 ##Copyright/License
 
 Unless otherwise noted, this software and its source code is
@@ -58,3 +61,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 [4]: http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#331
 [5]: http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#333
 [6]: http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#353
+[7]: https://github.com/MCForge/MCForge-Core
