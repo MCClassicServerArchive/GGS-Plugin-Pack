@@ -13,6 +13,7 @@ import net.mcforge.API.player.PlayerConnectEvent;
  * @author Wouter Gerarts
  */
 public class EventListener implements Listener {
+    @Eventhandler
     public void onPlayerBlockChange(PlayerBlockChangeEvent event)
     {
         event.getPlayer().sendWoMMesssage(
