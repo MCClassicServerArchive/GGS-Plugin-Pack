@@ -67,6 +67,7 @@ public class GroupActions {
     
     public boolean createGroup(String name, int permission, boolean isop) {
         Group g = new Group(name, permission, isop, MainPlugin.server);
+        Group.Add(g);
         return Group.Add(g);
     }
 }
