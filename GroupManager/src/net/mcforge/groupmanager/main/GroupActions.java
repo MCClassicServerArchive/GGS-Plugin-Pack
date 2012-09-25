@@ -65,9 +65,14 @@ public class GroupActions {
     
     // group commands
     
-    public boolean createGroup(String name, int permission, boolean isop) {
+    public static boolean createGroup(String name, int permission, boolean isop) {
         Group g = new Group(name, permission, isop, MainPlugin.server);
         Group.Add(g);
         return Group.Add(g);
+    }
+    
+    public static boolean deleteGroup(String name)
+    {
+        return Group.find(name).Delete();
     }
 }
