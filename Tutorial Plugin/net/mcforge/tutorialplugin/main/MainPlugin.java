@@ -6,8 +6,6 @@ package net.mcforge.tutorialplugin.main;
 import java.util.Properties;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.server.Server;
-import net.mcforge.world.Block;
-import net.mcforge.world.blocks.Bedrock;
 
 /**
  *
