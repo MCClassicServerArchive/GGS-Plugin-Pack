@@ -7,6 +7,7 @@ package net.mcforge.groupmanager.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
+import net.mcforge.groupmanager.main.MainPlugin;
 import net.mcforge.iomodel.Player;
 
 /**
@@ -41,8 +42,8 @@ public class CmdDemote extends Command {
         {
             if (GroupManagerAPI.DemotePlayer(args[0]))
             {
-                player.sendMessage("Demoted '" + Player.find(args[0]).getName() + "'");
-                Player.find(args[0]).sendMessage("You have been demoted!");
+                player.sendMessage("Demoted '" + Player.find(MainPlugin.server, args[0]).getName() + "'");
+                Player.find(MainPlugin.server, args[0]).sendMessage("You have been demoted!");
             }
             else
             {

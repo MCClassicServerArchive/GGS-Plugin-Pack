@@ -7,6 +7,7 @@ package net.mcforge.groupmanager.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
+import net.mcforge.groupmanager.main.MainPlugin;
 import net.mcforge.iomodel.Player;
 
 /**
@@ -41,8 +42,8 @@ public class CmdPromote extends Command {
         {
             if (GroupManagerAPI.PromotePlayer(args[0]))
             {
-                player.sendMessage("Promoted '" + Player.find(args[0]).username + "'");
-                Player.find(args[0]).sendMessage("You have been promoted!");
+                player.sendMessage("Promoted '" + Player.find(MainPlugin.server, args[0]).username + "'");
+                Player.find(MainPlugin.server, args[0]).sendMessage("You have been promoted!");
             }
             else
             {
