@@ -55,11 +55,20 @@ public class CmdGroupManager extends Command {
             if ("info".equals(args[0]))
             {
                 Group g = Group.find(args[1]);
+                if (g == null)
+                {
+                    player.sendMessage("Group not found!");
+                    return;
+                }
                 player.sendMessage("Group info:");
                 player.sendMessage("name: " + g.name);
                 player.sendMessage("permission: " + Integer.toString(g.permissionlevel));
                 String opstr = g.isOP ? "true" : "false";
                 player.sendMessage("operatorgroup: " + opstr);
+                if (Group.getDefault().equals(g))
+                {
+                    player.sendMessage("default group: true");
+                }
                 return;
             }
             if ("del".equals(args[0]))
@@ -77,7 +86,7 @@ public class CmdGroupManager extends Command {
         }
         if (args.length == 3)
         {
-            if (args[0] == "add")
+            if ("add".equals(args[0]))
             {
                 if (GroupManagerAPI.CreateGroup(args[1], Integer.parseInt(args[2])))
                 {
@@ -97,10 +106,12 @@ public class CmdGroupManager extends Command {
                     if (GroupManagerAPI.EditGroupName(args[1], args[2].substring(5)))
                     {
                         player.sendMessage("Successfully changed group name!");
+                        return;
                     }
                     else
                     {
                         player.sendMessage("Failed to change group name!");
+                        return;
                     }
                 }
                 else if (args[2].startsWith("permission:"))
@@ -109,10 +120,12 @@ public class CmdGroupManager extends Command {
                     if (GroupManagerAPI.EditGroupPermission(args[1], Integer.parseInt(args[2].substring(11))))
                     {
                         player.sendMessage("Successfully changed permission level of group!");
+                        return;
                     }
                     else
                     {
                         player.sendMessage("Failed to set permission level of group!");
+                        return;
                     }
                 }
                 else if (args[2].startsWith("+op"))
@@ -120,10 +133,12 @@ public class CmdGroupManager extends Command {
                     if (GroupManagerAPI.EditGroupIsOp(args[1], true))
                     {
                         player.sendMessage("Successfully changed group to operator group!");
+                        return;
                     }
                     else
                     {
                         player.sendMessage("Failed to set group to operator!");
+                        return;
                     }
                 }
                 else if (args[2].startsWith("-op"))
@@ -131,10 +146,12 @@ public class CmdGroupManager extends Command {
                     if (GroupManagerAPI.EditGroupIsOp(args[1], false))
                     {
                         player.sendMessage("Successfully changed group to operator group!");
+                        return;
                     }
                     else
                     {
                         player.sendMessage("Failed to set group to operator!");
+                        return;
                     }
                 }      
                 else
@@ -142,44 +159,41 @@ public class CmdGroupManager extends Command {
                     help(player);
                     return;
                 }
-                return;
             }
         }
         if (args.length == 4)
         {
-            if (args[0] == "add")
+            if ("add".equals(args[0]))
             {
-                if (args[3] == "+op")
+                if ("+op".equals(args[3]))
                 {
                     if (GroupManagerAPI.CreateGroup(args[1], Integer.parseInt(args[2]), true))
                     {
                         player.sendMessage("Successfully created a new group!");
+                        return;
                     }
                     else
                     {
                         player.sendMessage("failed to create group!");
+                        return;
                     }
                 }
-                else if (args[3] == "-op")
+                if ("-op".equals(args[3]))
                 {
                     if (GroupManagerAPI.CreateGroup(args[1], Integer.parseInt(args[2]), false))
                     {
                         player.sendMessage("Successfully created a new group!");
+                        return;
                     }
                     else
                     {
                         player.sendMessage("failed to create group!");
+                        return;
                     }
-                }
-                else
-                {
-                    help(player);
-                    return;
                 }
             }
         }
         help (player);
-        return;
     }
 
     @Override
