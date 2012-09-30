@@ -9,7 +9,7 @@ package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
-import net.mcforge.system.BanHandler;
+import net.mcforge.banhandler.BanHandler;
 
 public class Unban extends Command {
 
@@ -36,8 +36,8 @@ public class Unban extends Command {
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
 		if (args.length == 1) {
-			if (BanHandler.isBanned(args[0])) {
-				BanHandler.unban(args[0]);
+			if (BanHandler.banHandler.isBanned(args[0])) {
+				BanHandler.banHandler.unban(args[0]);
 				player.sendMessage("You unbanned " + args[0]);
 			}
 			else {
