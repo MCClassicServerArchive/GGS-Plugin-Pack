@@ -6,20 +6,14 @@ import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
-import net.mcforge.mb.blocks.MessageBlock;
+import net.mcforge.mb.blocks.ZoneBlock;
 
-public class MB extends PlayerCommand {
-
+public class Zone extends PlayerCommand {
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }
-		String message = "";
-		for (String s : arg1) {
-			message += s + " ";
-		}
-		message = message.trim();
-		player.sendMessage("Place a block where the message block will go!");
-		Thread t = new Run(player, message);
+		player.sendMessage("Place two blocks to determine the edges.");
+		Thread t = new Run(player, arg1);
 		t.start();
 	}
 
@@ -30,7 +24,7 @@ public class MB extends PlayerCommand {
 
 	@Override
 	public String getName() {
-		return "mb";
+		return "zone";
 	}
 
 	@Override
@@ -50,19 +44,35 @@ public class MB extends PlayerCommand {
 	}
 	
 	private class Run extends Thread {
-		String message;
+		String[] owner;
 		Player player;
-		public Run(Player player, String message) { this.player = player; this.message = message; }
+		public Run(Player player, String[] message) { this.player = player; this.owner = message; }
 		
 		@Override
 		public void run() {
+			int x1, y1, z1, x2, y2, z2;
 			Action<BlockChangeAction> action = new BlockChangeAction();
 			action.setPlayer(player);
 			try {
 				BlockChangeAction response = action.waitForResponse();
-				MessageBlock mb = new MessageBlock(message, response.getHolding());
-				Player.GlobalBlockChange((short)response.getX(), (short)response.getY(), (short)response.getZ(), mb, player.getLevel(), player.getServer());
-				player.sendMessage(ChatColor.Bright_Green + "Message Block placed!");
+				x1 = response.getX();
+				y1 = response.getY();
+				z1 = response.getZ();
+				action = new BlockChangeAction();
+				action.setPlayer(player);
+				response = action.waitForResponse();
+				x2 = response.getX();
+				y2 = response.getY();
+				z2 = response.getZ();
+				for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); ++xx) {
+                    for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
+                        for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
+                            ZoneBlock zb = new ZoneBlock(owner, player.getLevel().getTile(xx, yy, zz));
+                            Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, player.getLevel(), player.getServer());
+                        }
+                    }
+				}
+				player.sendMessage(ChatColor.Bright_Green + "Zone placed!");
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 				player.sendMessage("An error has occured..");

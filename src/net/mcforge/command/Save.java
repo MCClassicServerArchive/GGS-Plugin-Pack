@@ -14,7 +14,7 @@ public class Save extends Command {
 			final int size = arg0.getServer().getLevelHandler().getLevelList().size();
 			for (int i = 0; i < size; i++) {
 				try {
-					arg0.getServer().getLevelHandler().getLevelList().get(i).Save();
+					arg0.getServer().getLevelHandler().getLevelList().get(i).save();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -27,7 +27,7 @@ public class Save extends Command {
 				arg0.sendMessage("Level not found!");
 			else {
 				try {
-					l.Save();
+					l.save();
 				} catch (IOException e) {
 					e.printStackTrace();
 					arg0.sendMessage("There was an error saving " + l.name + "!");

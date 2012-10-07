@@ -4,14 +4,9 @@
  */
 package net.mcforge.groupmanager.main;
 
-import java.util.ArrayList;
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 
-/**
- *
- * @author Wouter Gerarts
- */
 public class GroupActions {
     public static boolean setGroup(String playername, String groupname)
     {
