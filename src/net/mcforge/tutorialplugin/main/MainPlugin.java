@@ -4,6 +4,8 @@
 package net.mcforge.tutorialplugin.main;
 
 import java.util.Properties;
+
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.server.Server;
 
@@ -11,7 +13,7 @@ import net.mcforge.server.Server;
  *
  * @author Wouter Gerarts
  */
-public class MainPlugin extends Plugin {
+public class MainPlugin extends Plugin implements ManualLoad {
 
     public MainPlugin(Server server)
     {

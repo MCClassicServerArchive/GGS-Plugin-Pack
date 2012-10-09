@@ -5,9 +5,10 @@
 package net.mcforge.groupmanager.commands;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
-import net.mcforge.groupmanager.main.MainPlugin;
+import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 
@@ -15,7 +16,7 @@ import net.mcforge.iomodel.Player;
  *
  * @author Wouter Gerarts
  */
-public class CmdSetGroup extends Command {
+public class CmdSetGroup extends Command implements ManualLoad {
 
     @Override
     public String[] getShortcuts() {
@@ -44,7 +45,7 @@ public class CmdSetGroup extends Command {
             if (GroupManagerAPI.SetPlayerGroup(args[0], args[1]))
             {
                 player.sendMessage("Successfully changed rank!");
-                Player.find(MainPlugin.server, args[0]).sendMessage("Your rank was changed to " + Group.find(args[1]));
+                Player.find(GroupPlugin.server, args[0]).sendMessage("Your rank was changed to " + Group.find(args[1]));
             }
             else
             {

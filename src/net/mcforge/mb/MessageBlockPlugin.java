@@ -1,5 +1,6 @@
 package net.mcforge.mb;
 
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.mb.commands.MB;
@@ -7,12 +8,12 @@ import net.mcforge.mb.commands.Zone;
 import net.mcforge.mb.events.Events;
 import net.mcforge.server.Server;
 
-public class Main extends Plugin {
+public class MessageBlockPlugin extends Plugin implements ManualLoad {
 
 	private final Events events = new Events();
 	private final MB command = new MB();
 	private final Zone command2 = new Zone();
-	public Main(Server server) {
+	public MessageBlockPlugin(Server server) {
 		super(server);
 	}
 

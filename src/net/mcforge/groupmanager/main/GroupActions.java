@@ -10,7 +10,7 @@ import net.mcforge.iomodel.Player;
 public class GroupActions {
     public static boolean setGroup(String playername, String groupname)
     {
-        Player player = MainPlugin.Find(playername);
+        Player player = GroupPlugin.Find(playername);
         Group group = Group.find(groupname);
         if (player != null && group != null)
         {
@@ -21,7 +21,7 @@ public class GroupActions {
     }
     public static Group getGroup(String playername)
     {
-        return MainPlugin.Find(playername).getGroup();
+        return GroupPlugin.Find(playername).getGroup();
     }
     public static boolean Promote(String username)
     {
@@ -35,7 +35,7 @@ public class GroupActions {
                 if (lowestabove.permissionlevel > g.permissionlevel) { lowestabove = g; }
             }
         }
-        Player p = MainPlugin.Find(username);
+        Player p = GroupPlugin.Find(username);
         if (p == null || lowestabove == null) { return false; }
         p.setGroup(lowestabove);
         return true;
@@ -52,7 +52,7 @@ public class GroupActions {
                 if (highestbelow.permissionlevel < g.permissionlevel) { highestbelow = g; }
             }
         }
-        Player p = MainPlugin.Find(username);
+        Player p = GroupPlugin.Find(username);
         if (p == null || highestbelow == null) { return false; }
         p.setGroup(highestbelow);
         return true;
@@ -61,7 +61,7 @@ public class GroupActions {
     // group commands
     
     public static boolean createGroup(String name, int permission, boolean isop) {
-        Group g = new Group(name, permission, isop, MainPlugin.server);
+        Group g = new Group(name, permission, isop, GroupPlugin.server);
         return Group.Add(g);
     }
     

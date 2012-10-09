@@ -1,6 +1,7 @@
 package net.mcforge.mb.commands;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.action.Action;
 import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
@@ -8,7 +9,7 @@ import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.ZoneBlock;
 
-public class Zone extends PlayerCommand {
+public class Zone extends PlayerCommand implements ManualLoad {
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }

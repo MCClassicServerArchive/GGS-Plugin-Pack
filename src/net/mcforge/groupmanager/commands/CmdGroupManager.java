@@ -5,6 +5,7 @@
 package net.mcforge.groupmanager.commands;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
 import net.mcforge.groups.Group;
@@ -13,7 +14,7 @@ import net.mcforge.groups.Group;
  *
  * @author Wouter Gerarts
  */
-public class CmdGroupManager extends Command {
+public class CmdGroupManager extends Command implements ManualLoad {
 
     @Override
     public String[] getShortcuts() {

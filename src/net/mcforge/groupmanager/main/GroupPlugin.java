@@ -5,6 +5,8 @@
 package net.mcforge.groupmanager.main;
 
 import java.util.Properties;
+
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.groupmanager.commands.CmdDemote;
 import net.mcforge.groupmanager.commands.CmdGroupManager;
@@ -17,14 +19,14 @@ import net.mcforge.server.Server;
  *
  * @author Wouter Gerarts
  */
-public class MainPlugin extends Plugin {
+public class GroupPlugin extends Plugin implements ManualLoad {
 
     public static Server server;
-    public MainPlugin(Server server)
+    public GroupPlugin(Server server)
     {
         super(server);
     }
-    public MainPlugin(Server server, Properties properties)
+    public GroupPlugin(Server server, Properties properties)
     {
         super(server, properties);
     }
