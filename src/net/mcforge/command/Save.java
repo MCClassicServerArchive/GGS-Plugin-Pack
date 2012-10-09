@@ -3,10 +3,11 @@ package net.mcforge.command;
 import java.io.IOException;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.world.Level;
 
-public class Save extends Command {
+public class Save extends Command implements ManualLoad {
 
 	@Override
 	public void execute(CommandExecutor arg0, String[] arg1) {

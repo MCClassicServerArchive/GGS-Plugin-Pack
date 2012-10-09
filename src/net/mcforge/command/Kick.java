@@ -3,11 +3,12 @@ package net.mcforge.command;
 import java.util.Arrays;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
 
-public class Kick extends Command {
+public class Kick extends Command implements ManualLoad {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "k" };

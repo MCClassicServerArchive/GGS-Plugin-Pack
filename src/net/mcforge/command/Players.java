@@ -3,10 +3,11 @@ package net.mcforge.command;
 import java.util.List;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
 
-public class Players extends Command {
+public class Players extends Command implements ManualLoad {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "online", "who" };

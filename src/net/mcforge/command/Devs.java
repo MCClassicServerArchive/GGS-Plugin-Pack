@@ -8,12 +8,13 @@
 package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
 
-public class Devs extends PlayerCommand {
+public class Devs extends PlayerCommand implements ManualLoad {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "devs" };

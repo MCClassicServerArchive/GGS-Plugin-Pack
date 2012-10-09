@@ -8,10 +8,11 @@
 package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.world.LevelHandler;
 
-public class Newlvl extends Command {
+public class Newlvl extends Command implements ManualLoad {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

@@ -8,12 +8,13 @@
 package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.world.LevelHandler;
 
 import java.io.File;
 
-public class Load extends Command {
+public class Load extends Command implements ManualLoad {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

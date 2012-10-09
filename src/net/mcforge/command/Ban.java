@@ -1,11 +1,12 @@
 package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 import net.mcforge.banhandler.BanHandler;
 
-public class Ban extends PlayerCommand {
+public class Ban extends PlayerCommand implements ManualLoad {
 
 	@Override
 	public String[] getShortcuts() {

@@ -8,10 +8,11 @@
 package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.banhandler.BanHandler;
 
-public class Unban extends Command {
+public class Unban extends Command implements ManualLoad {
 
 	@Override
 	public String[] getShortcuts() {
