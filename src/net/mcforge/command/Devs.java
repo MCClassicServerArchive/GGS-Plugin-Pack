@@ -14,7 +14,8 @@ import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
 
-public class Devs extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class Devs extends PlayerCommand  {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "devs" };

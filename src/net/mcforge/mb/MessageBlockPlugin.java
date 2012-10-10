@@ -8,7 +8,8 @@ import net.mcforge.mb.commands.Zone;
 import net.mcforge.mb.events.Events;
 import net.mcforge.server.Server;
 
-public class MessageBlockPlugin extends Plugin implements ManualLoad {
+@ManualLoad
+public class MessageBlockPlugin extends Plugin {
 
 	private final Events events = new Events();
 	private final MB command = new MB();

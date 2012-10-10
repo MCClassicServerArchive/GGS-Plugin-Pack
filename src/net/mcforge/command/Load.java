@@ -14,7 +14,8 @@ import net.mcforge.world.LevelHandler;
 
 import java.io.File;
 
-public class Load extends Command implements ManualLoad {
+@ManualLoad
+public class Load extends Command {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

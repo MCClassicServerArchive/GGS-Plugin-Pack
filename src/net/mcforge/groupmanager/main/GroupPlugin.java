@@ -15,11 +15,9 @@ import net.mcforge.groupmanager.commands.CmdSetGroup;
 import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
 
-/**
- *
- * @author Wouter Gerarts
- */
-public class GroupPlugin extends Plugin implements ManualLoad {
+
+@ManualLoad
+public class GroupPlugin extends Plugin {
 
     public static Server server;
     public GroupPlugin(Server server)

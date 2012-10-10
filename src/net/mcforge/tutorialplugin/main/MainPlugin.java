@@ -9,11 +9,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.server.Server;
 
-/**
- *
- * @author Wouter Gerarts
- */
-public class MainPlugin extends Plugin implements ManualLoad {
+@ManualLoad
+public class MainPlugin extends Plugin {
 
     public MainPlugin(Server server)
     {

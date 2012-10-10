@@ -14,7 +14,8 @@ import net.mcforge.iomodel.Player;
 import net.mcforge.world.Level;
 import net.mcforge.world.LevelHandler;
 
-public class Goto extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class Goto extends PlayerCommand{
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "g" };

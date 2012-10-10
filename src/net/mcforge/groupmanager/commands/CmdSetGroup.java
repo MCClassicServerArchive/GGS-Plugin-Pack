@@ -12,11 +12,8 @@ import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 
-/**
- *
- * @author Wouter Gerarts
- */
-public class CmdSetGroup extends Command implements ManualLoad {
+@ManualLoad
+public class CmdSetGroup extends Command {
 
     @Override
     public String[] getShortcuts() {

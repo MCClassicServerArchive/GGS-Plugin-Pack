@@ -13,7 +13,8 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.world.Level;
 import net.mcforge.world.LevelHandler;
 
-public class Loaded extends Command implements ManualLoad {
+@ManualLoad
+public class Loaded extends Command {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

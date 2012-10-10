@@ -1,10 +1,11 @@
 package net.mcforge.command;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 
-//TODO Remove me!
+@ManualLoad
 public class ExampleCommand extends PlayerCommand {
 
 	@Override

@@ -8,7 +8,8 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
 
-public class Kick extends Command implements ManualLoad {
+@ManualLoad
+public class Kick extends Command {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "k" };

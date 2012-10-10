@@ -9,7 +9,8 @@ import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.MessageBlock;
 
-public class MB extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class MB extends PlayerCommand {
 
 	@Override
 	public void execute(Player player, String[] arg1) {

@@ -9,7 +9,8 @@ import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.ZoneBlock;
 
-public class Zone extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class Zone extends PlayerCommand {
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }

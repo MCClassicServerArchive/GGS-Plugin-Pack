@@ -10,11 +10,8 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
 import net.mcforge.groups.Group;
 
-/**
- *
- * @author Wouter Gerarts
- */
-public class CmdGroupManager extends Command implements ManualLoad {
+@ManualLoad
+public class CmdGroupManager extends Command {
 
     @Override
     public String[] getShortcuts() {

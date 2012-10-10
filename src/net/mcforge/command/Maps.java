@@ -12,7 +12,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import java.io.File;
 
-public class Maps extends Command implements ManualLoad {
+@ManualLoad
+public class Maps extends Command {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

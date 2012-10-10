@@ -11,11 +11,8 @@ import net.mcforge.groupmanager.API.GroupManagerAPI;
 import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.iomodel.Player;
 
-/**
- *
- * @author Wouter Gerarts
- */
-public class CmdDemote extends Command implements ManualLoad {
+@ManualLoad
+public class CmdDemote extends Command {
 
     @Override
     public String[] getShortcuts() {

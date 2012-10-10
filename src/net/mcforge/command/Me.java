@@ -6,7 +6,8 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
 
-public class Me extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class Me extends PlayerCommand {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

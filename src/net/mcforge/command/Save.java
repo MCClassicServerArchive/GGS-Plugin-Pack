@@ -7,7 +7,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.world.Level;
 
-public class Save extends Command implements ManualLoad {
+@ManualLoad
+public class Save extends Command {
 
 	@Override
 	public void execute(CommandExecutor arg0, String[] arg1) {

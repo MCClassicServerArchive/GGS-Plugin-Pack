@@ -12,7 +12,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.banhandler.BanHandler;
 
-public class Unban extends Command implements ManualLoad {
+@ManualLoad
+public class Unban extends Command {
 
 	@Override
 	public String[] getShortcuts() {

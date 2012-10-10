@@ -6,7 +6,8 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 import net.mcforge.banhandler.BanHandler;
 
-public class Ban extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class Ban extends PlayerCommand {
 
 	@Override
 	public String[] getShortcuts() {

@@ -12,7 +12,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 
-public class Afk extends PlayerCommand implements ManualLoad
+@ManualLoad
+public class Afk extends PlayerCommand
 {
 	@Override
 	public String[] getShortcuts()

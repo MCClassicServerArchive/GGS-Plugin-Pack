@@ -4,7 +4,8 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 
-public class Help extends Command implements ManualLoad {
+@ManualLoad
+public class Help extends Command {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

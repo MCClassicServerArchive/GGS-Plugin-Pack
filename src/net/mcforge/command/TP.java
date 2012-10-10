@@ -12,7 +12,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 
-public class TP extends PlayerCommand implements ManualLoad {
+@ManualLoad
+public class TP extends PlayerCommand {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];

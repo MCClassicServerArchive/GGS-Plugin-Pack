@@ -12,7 +12,8 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import java.io.IOException;
 
-public class Stop extends Command implements ManualLoad {
+@ManualLoad
+public class Stop extends Command {
 	@Override
 	public String getName() {
 		return "stop";
