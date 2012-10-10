@@ -55,6 +55,8 @@ public class Main extends Plugin implements Updatable {
 
 	@Override
 	public void onLoad(String[] arg0) {
+		getServer().getUpdateService().getUpdateManager().add(this);
+		
 		loadCommands(COMMANDS);
 		
 		//--Load plugins--
@@ -97,27 +99,27 @@ public class Main extends Plugin implements Updatable {
 
 	@Override
 	public String getCheckURL() {
-		return null;
+		return "http://update.mcforge.net/VERSION_2/defaults/current.txt";
 	}
 
 	@Override
 	public String getCurrentVersion() {
-		return null;
+		return "1.0.0";
 	}
 
 	@Override
 	public String getDownloadPath() {
-		return null;
+		return "plugins/Defaults.jar";
 	}
 
 	@Override
 	public String getDownloadURL() {
-		return null;
+		return "http://update.mcforge.net/VERSION_2/defaults/Defaults.jar";
 	}
 
 	@Override
 	public UpdateType getUpdateType() {
-		return UpdateType.Auto_Silent;
+		return UpdateType.Auto_Notify;
 	}
 
 	@Override
