@@ -5,47 +5,57 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
-import net.mcforge.API.plugin.PlayerCommand;
-import net.mcforge.chat.Messages;
-import net.mcforge.iomodel.Player;
-import net.mcforge.server.Server;
+import net.mcforge.API.plugin.Command;
+import net.mcforge.world.LevelHandler;
+
+import java.io.File;
 
 @ManualLoad
-public class Devs extends PlayerCommand  {
+public class Load extends Command {
 	@Override
 	public String[] getShortcuts() {
-		return new String[] { "devs" };
+		return new String[0];
 	}
 
 	@Override
 	public String getName() {
-		return "developers";
+		return "load";
 	}
 
 	@Override
 	public boolean isOpCommand() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getDefaultPermissionLevel() {
-		return 0;
+		return 100;
 	}
 
 	@Override
-	public void execute(Player player, String[] args) {
-		String[] devArray = Server.devs.toArray(new String[Server.devs.size()]);
-		String devs = Messages.join(devArray, "&f, &e");
-		player.sendMessage("&9MCForge developers: &e" + devs);
+	public void execute(CommandExecutor player, String[] args) {
+		if (args.length == 1) {
+			LevelHandler handler = player.getServer().getLevelHandler();
+			File levelFile = new File("levels/" + args[0] + ".ggs");
+
+			if (levelFile.exists()) {
+				handler.loadLevel(levelFile.getPath());
+			}
+			else {
+				player.sendMessage("Level does not exist.");
+			}
+		}
+		else {
+			help(player);
+		}
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/developers - shows the MCForge developer list");
-		executor.sendMessage("Shortcuts: /devs");
+		executor.sendMessage("/load - Loads an existing level");
 	}
 }

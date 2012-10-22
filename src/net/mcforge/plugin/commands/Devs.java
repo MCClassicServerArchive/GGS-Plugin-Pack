@@ -5,24 +5,25 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
-import net.mcforge.API.plugin.Command;
-import net.mcforge.world.Level;
-import net.mcforge.world.LevelHandler;
+import net.mcforge.API.plugin.PlayerCommand;
+import net.mcforge.chat.Messages;
+import net.mcforge.iomodel.Player;
+import net.mcforge.server.Server;
 
 @ManualLoad
-public class Loaded extends Command {
+public class Devs extends PlayerCommand  {
 	@Override
 	public String[] getShortcuts() {
-		return new String[0];
+		return new String[] { "devs" };
 	}
 
 	@Override
 	public String getName() {
-		return "loaded";
+		return "developers";
 	}
 
 	@Override
@@ -36,20 +37,15 @@ public class Loaded extends Command {
 	}
 
 	@Override
-	public void execute(CommandExecutor player, String[] args) {
-		LevelHandler handler = player.getServer().getLevelHandler();
-		StringBuilder finalStr = new StringBuilder();
-
-		for (Level l : handler.getLevelList()) {
-			finalStr.append(l.name);
-			finalStr.append(", ");
-		}
-
-		player.sendMessage(finalStr.toString());
+	public void execute(Player player, String[] args) {
+		String[] devArray = Server.devs.toArray(new String[Server.devs.size()]);
+		String devs = Messages.join(devArray, "&f, &e");
+		player.sendMessage("&9MCForge developers: &e" + devs);
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/loaded - shows the currently loaded levels");
+		executor.sendMessage("/developers - shows the MCForge developer list");
+		executor.sendMessage("Shortcuts: /devs");
 	}
 }
