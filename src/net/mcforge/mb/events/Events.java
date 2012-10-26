@@ -5,6 +5,7 @@ import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.mb.blocks.MessageBlock;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.world.Block;
@@ -14,6 +15,9 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void breakblock(PlayerBlockChangeEvent event) {
+		if (MessageBlockPlugin.INSTANCE.deleters.contains(event.getPlayer()))
+			return;
+		
 		if (event.getPlaceType() == PlaceMode.PLACE) {
 			Block b = event.getPlayer().getLevel().getTile(event.getX(), event.getY(), event.getZ());
 			if (b instanceof ZoneBlock) {
