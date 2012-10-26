@@ -65,6 +65,8 @@ public class Main extends Plugin implements Updatable {
 		getServer().getPluginHandler().loadPlugin(p, getServer());
 		plugins.add(p);
 		//--Load plugins--
+		
+		getServer().Log("MCForge Defaults loaded!");
 	}
 
 	@Override
