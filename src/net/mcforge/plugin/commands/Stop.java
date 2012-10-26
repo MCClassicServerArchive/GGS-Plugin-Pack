@@ -5,25 +5,23 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
-import net.mcforge.world.LevelHandler;
-
-import java.io.File;
+import java.io.IOException;
 
 @ManualLoad
-public class Load extends Command {
+public class Stop extends Command {
+	@Override
+	public String getName() {
+		return "stop";
+	}
+	
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
-	}
-
-	@Override
-	public String getName() {
-		return "load";
 	}
 
 	@Override
@@ -38,24 +36,19 @@ public class Load extends Command {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		if (args.length == 1) {
-			LevelHandler handler = player.getServer().getLevelHandler();
-			File levelFile = new File("levels/" + args[0] + ".ggs");
-
-			if (levelFile.exists()) {
-				handler.loadLevel(levelFile.getPath());
-			}
-			else {
-				player.sendMessage("Level does not exist.");
-			}
+		try {
+			player.getServer().Stop();
 		}
-		else {
-			help(player);
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/load - Loads an existing level");
+		executor.sendMessage("/stop - shuts the server down");
 	}
 }

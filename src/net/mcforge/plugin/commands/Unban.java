@@ -5,15 +5,16 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
-import java.io.File;
+import net.mcforge.banhandler.BanHandler;
 
 @ManualLoad
-public class Maps extends Command {
+public class Unban extends Command {
+
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -21,37 +22,37 @@ public class Maps extends Command {
 
 	@Override
 	public String getName() {
-		return "maps";
+		return "unban";
 	}
 
 	@Override
 	public boolean isOpCommand() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getDefaultPermissionLevel() {
-		return 0;
+		return 100;
 	}
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		File levelsFolder = new File("levels");
-		File[] levelFiles = levelsFolder.listFiles();
-		StringBuilder finalStr = new StringBuilder();
-
-		for (File f : levelFiles) {
-			if (f.getName().split("\\.")[1].equals("ggs")) {
-				finalStr.append(f.getName().split("\\.")[0]);
-				finalStr.append(", ");
+		if (args.length == 1) {
+			if (BanHandler.banHandler.isBanned(args[0])) {
+				BanHandler.banHandler.unban(args[0]);
+				player.sendMessage("You unbanned " + args[0]);
+			}
+			else {
+				player.sendMessage(args[0] + " is not banned.");
 			}
 		}
-
-		player.sendMessage(finalStr.toString());
+		else {
+			help(player);
+		}
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/maps - shows all the maps the server has");
+		executor.sendMessage("/unban <player> - unbans a banned player");
 	}
 }
