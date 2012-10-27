@@ -10,35 +10,32 @@ package net.mcforge.irc;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
 
-public class CmdIRCInfo extends Command {
+public class CmdReloadIRCControllers extends Command {
 
 	@Override
 	public String getName() {
-		return "ircinfo";
+		return "reloadirccontrollers";
 	}
 	@Override
 	public String[] getShortcuts() {
-		return new String[0];
+		return new String[] { "rcontrollers" };
 	}
 	@Override
 	public int getDefaultPermissionLevel() {
-		return 0;
+		return 50;
 	}
 	@Override
 	public boolean isOpCommandDefault() {
-		return false;
+		return true;
 	}
 	@Override
 	public void execute(CommandExecutor executor, String[] args) {
-		IRCBot b = IRCPlugin.getBot();
-		executor.sendMessage("IRC server: " + b.server + ":" + b.port);
-		executor.sendMessage("IRC channel: " + b.channel);
-		executor.sendMessage("IRC bot nick: " + b.userName);
-		executor.sendMessage(b.connected ? "&aThe bot is connected to the IRC" : "&cThe bot isn't connected to the IRC");
-		executor.sendMessage("IRC controllers: " + IRCUser.IRCControllers);
+		IRCUser.loadIRCControllers();
+		executor.sendMessage("Reloaded IRC-Controller list!");
 	}
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/ircinfo - shows the server's irc info");
+		executor.sendMessage("/reloadirccontrollers - reloads the IRC controllers list");
+		executor.sendMessage("Shortcut: /rcontrollers");
 	}
 }

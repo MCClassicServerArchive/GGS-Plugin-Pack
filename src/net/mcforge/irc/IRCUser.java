@@ -21,7 +21,7 @@ import net.mcforge.util.FileUtils;
  * This class mostly handles the IRC commands.
  */
 public class IRCUser implements CommandExecutor {
-	private static List<String> IRCControllers = new ArrayList<String>();
+	protected static List<String> IRCControllers = new ArrayList<String>();
 	private String nickname;
 	private IRCBot bot;
 	public IRCUser(String nickname, IRCBot bot) {
