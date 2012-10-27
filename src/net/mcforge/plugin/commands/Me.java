@@ -19,7 +19,7 @@ public class Me extends PlayerCommand {
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return false;
 	}
 

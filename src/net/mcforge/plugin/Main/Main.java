@@ -22,6 +22,7 @@ import net.mcforge.plugin.commands.Stop;
 import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Unban;
 import net.mcforge.groupmanager.main.GroupPlugin;
+import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
@@ -66,6 +67,8 @@ public class Main extends Plugin implements Updatable {
 		p = new GroupPlugin(getServer());
 		getServer().getPluginHandler().loadPlugin(p, getServer());
 		plugins.add(p);
+		p = new IRCPlugin(getServer());
+		getServer().getPluginHandler().loadPlugin(p, getServer());
 		//--Load plugins--
 	}
 

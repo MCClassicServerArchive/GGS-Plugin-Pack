@@ -24,7 +24,7 @@ public class CmdGroupManager extends Command {
     }
 
     @Override
-    public boolean isOpCommand() {
+    public boolean isOpCommandDefault() {
         return true;
     }
 

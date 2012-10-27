@@ -41,7 +41,7 @@ public class Zone extends PlayerCommand {
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return false;
 	}
 	
