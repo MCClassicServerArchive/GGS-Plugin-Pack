@@ -4,24 +4,25 @@ import java.util.ArrayList;
 
 import net.mcforge.API.plugin.Command;
 import net.mcforge.API.plugin.Plugin;
-import net.mcforge.command.Afk;
-import net.mcforge.command.Ban;
-import net.mcforge.command.Devs;
-import net.mcforge.command.Goto;
-import net.mcforge.command.Help;
-import net.mcforge.command.Kick;
-import net.mcforge.command.Load;
-import net.mcforge.command.Loaded;
-import net.mcforge.command.Maps;
-import net.mcforge.command.Me;
-import net.mcforge.command.Newlvl;
-import net.mcforge.command.Players;
-import net.mcforge.command.Save;
-import net.mcforge.command.Spawn;
-import net.mcforge.command.Stop;
-import net.mcforge.command.TP;
-import net.mcforge.command.Unban;
+import net.mcforge.plugin.commands.Afk;
+import net.mcforge.plugin.commands.Ban;
+import net.mcforge.plugin.commands.Devs;
+import net.mcforge.plugin.commands.Goto;
+import net.mcforge.plugin.commands.Help;
+import net.mcforge.plugin.commands.Kick;
+import net.mcforge.plugin.commands.Load;
+import net.mcforge.plugin.commands.Loaded;
+import net.mcforge.plugin.commands.Maps;
+import net.mcforge.plugin.commands.Me;
+import net.mcforge.plugin.commands.Newlvl;
+import net.mcforge.plugin.commands.Players;
+import net.mcforge.plugin.commands.Save;
+import net.mcforge.plugin.commands.Spawn;
+import net.mcforge.plugin.commands.Stop;
+import net.mcforge.plugin.commands.TP;
+import net.mcforge.plugin.commands.Unban;
 import net.mcforge.groupmanager.main.GroupPlugin;
+import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
@@ -55,8 +56,6 @@ public class Main extends Plugin implements Updatable {
 
 	@Override
 	public void onLoad(String[] arg0) {
-		getServer().getUpdateService().getUpdateManager().add(this);
-		
 		loadCommands(COMMANDS);
 		
 		//--Load plugins--
@@ -66,7 +65,11 @@ public class Main extends Plugin implements Updatable {
 		p = new GroupPlugin(getServer());
 		getServer().getPluginHandler().loadPlugin(p, getServer());
 		plugins.add(p);
+		p = new IRCPlugin(getServer());
+		getServer().getPluginHandler().loadPlugin(p, getServer());
 		//--Load plugins--
+		
+		getServer().Log("MCForge Defaults loaded!");
 	}
 
 	@Override

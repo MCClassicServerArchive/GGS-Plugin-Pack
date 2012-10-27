@@ -48,4 +48,12 @@ public class ZoneBlock extends Block {
 		ZoneBlock bb = new ZoneBlock(owners, b);
 		return bb;
 	}
+
+	public String getOwnersString() {
+		String finalstring = "";
+		for (String s : getOwners()) {
+			finalstring += " " + s;
+		}
+		return finalstring.trim();
+	}
 }

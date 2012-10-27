@@ -1,4 +1,4 @@
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import java.util.Arrays;
 
@@ -21,7 +21,7 @@ public class Kick extends Command {
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return true;
 	}
 

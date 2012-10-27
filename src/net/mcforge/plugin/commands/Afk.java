@@ -5,47 +5,57 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
-import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
-import net.mcforge.server.Server;
 
 @ManualLoad
-public class Devs extends PlayerCommand  {
+public class Afk extends PlayerCommand
+{
 	@Override
-	public String[] getShortcuts() {
-		return new String[] { "devs" };
+	public String[] getShortcuts()
+	{
+		return new String[0];
 	}
 
 	@Override
-	public String getName() {
-		return "developers";
+	public String getName()
+	{
+		return "afk";
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault()
+	{
 		return false;
 	}
 
 	@Override
-	public int getDefaultPermissionLevel() {
+	public int getDefaultPermissionLevel()
+	{
 		return 0;
 	}
 
 	@Override
-	public void execute(Player player, String[] args) {
-		String[] devArray = Server.devs.toArray(new String[Server.devs.size()]);
-		String devs = Messages.join(devArray, "&f, &e");
-		player.sendMessage("&9MCForge developers: &e" + devs);
+	public void execute(Player player, String[] args)
+	{
+		if(player.isAfk())
+		{
+			player.setAfk(false);
+
+			player.getChat().serverBroadcast(player.username + " is no longer afk.");
+		} else {
+			player.setAfk(true);
+
+			player.getChat().serverBroadcast(player.username + " is now afk...");
+		}
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/developers - shows the MCForge developer list");
-		executor.sendMessage("Shortcuts: /devs");
+		executor.sendMessage("/afk - marks you as afk or back");
 	}
 }

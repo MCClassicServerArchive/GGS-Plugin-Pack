@@ -5,48 +5,47 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
+import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
+import net.mcforge.server.Server;
 
 @ManualLoad
-public class Spawn extends PlayerCommand
-{
+public class Devs extends PlayerCommand  {
 	@Override
-	public String[] getShortcuts()
-	{
-		return new String[0];
+	public String[] getShortcuts() {
+		return new String[] { "devs" };
 	}
 
 	@Override
-	public String getName()
-	{
-		return "spawn";
+	public String getName() {
+		return "developers";
 	}
 
 	@Override
-	public boolean isOpCommand()
-	{
+	public boolean isOpCommandDefault() {
 		return false;
 	}
 
 	@Override
-	public int getDefaultPermissionLevel()
-	{
-		return 0; // DON'T KNOW THE PERMISSION LEVEL FOR STANDARD USER.
+	public int getDefaultPermissionLevel() {
+		return 0;
 	}
 
 	@Override
-	public void execute(Player player, String[] args)
-	{
-		player.setPos((short)((0.5 + player.getLevel().spawnx) * 32), (short)((1 + player.getLevel().spawny) * 32), (short)((0.5 + player.getLevel().spawnz) * 32));
+	public void execute(Player player, String[] args) {
+		String[] devArray = Server.devs.toArray(new String[Server.devs.size()]);
+		String devs = Messages.join(devArray, "&f, &e");
+		player.sendMessage("&9MCForge developers: &e" + devs);
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/spawn - sends you to the spawn of the current map");
+		executor.sendMessage("/developers - shows the MCForge developer list");
+		executor.sendMessage("Shortcuts: /devs");
 	}
 }

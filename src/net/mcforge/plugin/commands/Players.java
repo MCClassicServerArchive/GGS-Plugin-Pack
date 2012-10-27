@@ -1,4 +1,4 @@
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class Players extends Command {
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return false;
 	}
 

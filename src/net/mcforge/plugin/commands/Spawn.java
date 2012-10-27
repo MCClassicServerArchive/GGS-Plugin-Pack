@@ -5,15 +5,15 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
-import net.mcforge.API.action.Action;
-import net.mcforge.API.action.ChatAction;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 
-public class ActionExample extends PlayerCommand
+@ManualLoad
+public class Spawn extends PlayerCommand
 {
 	@Override
 	public String[] getShortcuts()
@@ -24,11 +24,11 @@ public class ActionExample extends PlayerCommand
 	@Override
 	public String getName()
 	{
-		return "actoinexe";
+		return "spawn";
 	}
 
 	@Override
-	public boolean isOpCommand()
+	public boolean isOpCommandDefault()
 	{
 		return false;
 	}
@@ -36,36 +36,17 @@ public class ActionExample extends PlayerCommand
 	@Override
 	public int getDefaultPermissionLevel()
 	{
-		return 0;
+		return 0; // DON'T KNOW THE PERMISSION LEVEL FOR STANDARD USER.
 	}
 
-	public class Test extends Thread {
-		public Player player;
-		@Override
-		public void run() {
-			Action<ChatAction> a = new ChatAction();
-			a.setPlayer(player);
-			try {
-				ChatAction c = a.waitForResponse();
-				player.sendMessage("You said " + c.getMessage() + "!");
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	@Override
 	public void execute(Player player, String[] args)
 	{
-		Test t = new Test();
-		t.player = player;
-		t.start();
-		player.sendMessage("Say something!");
+		player.setPos((short)((0.5 + player.getLevel().spawnx) * 32), (short)((1 + player.getLevel().spawny) * 32), (short)((0.5 + player.getLevel().spawnz) * 32));
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/actionexample - a test command");	
+		executor.sendMessage("/spawn - sends you to the spawn of the current map");
 	}
 }

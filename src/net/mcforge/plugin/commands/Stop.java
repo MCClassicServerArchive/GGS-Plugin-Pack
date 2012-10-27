@@ -5,51 +5,50 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
-import net.mcforge.world.Level;
-import net.mcforge.world.LevelHandler;
+import java.io.IOException;
 
 @ManualLoad
-public class Loaded extends Command {
+public class Stop extends Command {
+	@Override
+	public String getName() {
+		return "stop";
+	}
+	
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
 	}
 
 	@Override
-	public String getName() {
-		return "loaded";
-	}
-
-	@Override
-	public boolean isOpCommand() {
-		return false;
+	public boolean isOpCommandDefault() {
+		return true;
 	}
 
 	@Override
 	public int getDefaultPermissionLevel() {
-		return 0;
+		return 100;
 	}
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		LevelHandler handler = player.getServer().getLevelHandler();
-		StringBuilder finalStr = new StringBuilder();
-
-		for (Level l : handler.getLevelList()) {
-			finalStr.append(l.name);
-			finalStr.append(", ");
+		try {
+			player.getServer().Stop();
 		}
-
-		player.sendMessage(finalStr.toString());
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/loaded - shows the currently loaded levels");
+		executor.sendMessage("/stop - shuts the server down");
 	}
 }

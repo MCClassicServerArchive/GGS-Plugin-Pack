@@ -5,15 +5,16 @@
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
-import java.io.File;
+import net.mcforge.world.Level;
+import net.mcforge.world.LevelHandler;
 
 @ManualLoad
-public class Maps extends Command {
+public class Loaded extends Command {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -21,11 +22,11 @@ public class Maps extends Command {
 
 	@Override
 	public String getName() {
-		return "maps";
+		return "loaded";
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return false;
 	}
 
@@ -36,15 +37,12 @@ public class Maps extends Command {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		File levelsFolder = new File("levels");
-		File[] levelFiles = levelsFolder.listFiles();
+		LevelHandler handler = player.getServer().getLevelHandler();
 		StringBuilder finalStr = new StringBuilder();
 
-		for (File f : levelFiles) {
-			if (f.getName().split("\\.")[1].equals("ggs")) {
-				finalStr.append(f.getName().split("\\.")[0]);
-				finalStr.append(", ");
-			}
+		for (Level l : handler.getLevelList()) {
+			finalStr.append(l.name);
+			finalStr.append(", ");
 		}
 
 		player.sendMessage(finalStr.toString());
@@ -52,6 +50,6 @@ public class Maps extends Command {
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/maps - shows all the maps the server has");
+		executor.sendMessage("/loaded - shows the currently loaded levels");
 	}
 }

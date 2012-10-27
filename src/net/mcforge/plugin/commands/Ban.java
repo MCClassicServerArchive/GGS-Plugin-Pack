@@ -1,4 +1,4 @@
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
@@ -20,7 +20,7 @@ public class Ban extends PlayerCommand {
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return true;
 	}
 

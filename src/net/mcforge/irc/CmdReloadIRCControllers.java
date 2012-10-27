@@ -1,54 +1,41 @@
 /*******************************************************************************
- * Copyright (c) 2012 GamezGalaxy.
+ * Copyright (c) 2012 MCForge.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
-package net.mcforge.command;
+package net.mcforge.irc;
 
 import net.mcforge.API.CommandExecutor;
-import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
-import java.io.IOException;
 
-@ManualLoad
-public class Stop extends Command {
+public class CmdReloadIRCControllers extends Command {
+
 	@Override
 	public String getName() {
-		return "stop";
+		return "reloadirccontrollers";
 	}
-	
 	@Override
 	public String[] getShortcuts() {
-		return new String[0];
+		return new String[] { "rcontrollers" };
 	}
-
-	@Override
-	public boolean isOpCommand() {
-		return true;
-	}
-
 	@Override
 	public int getDefaultPermissionLevel() {
-		return 100;
+		return 50;
 	}
-
 	@Override
-	public void execute(CommandExecutor player, String[] args) {
-		try {
-			player.getServer().Stop();
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+	public boolean isOpCommandDefault() {
+		return true;
 	}
-
+	@Override
+	public void execute(CommandExecutor executor, String[] args) {
+		IRCUser.loadIRCControllers();
+		executor.sendMessage("Reloaded IRC-Controller list!");
+	}
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/stop - shuts the server down");
+		executor.sendMessage("/reloadirccontrollers - reloads the IRC controllers list");
+		executor.sendMessage("Shortcut: /rcontrollers");
 	}
 }

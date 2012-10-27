@@ -36,12 +36,12 @@ public class Zone extends PlayerCommand {
 
 	@Override
 	public void help(CommandExecutor arg0) {
-		arg0.sendMessage("/mb <message> - Place a message in a block! When the block is hit, the message will display");
-		arg0.sendMessage("/mb [block] <message> - Place a message in a [block] block! When the block is hit, the message will display");
+		arg0.sendMessage("/mb <owner1>, [owner2], [owner3] ... - Add a zone with the owners being owner1, owner2, owner3 and ect..");
+		arg0.sendMessage("You can have as many owners as you like!");
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return false;
 	}
 	

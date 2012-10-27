@@ -1,4 +1,4 @@
-package net.mcforge.command;
+package net.mcforge.plugin.commands;
 
 import java.io.IOException;
 
@@ -62,7 +62,7 @@ public class Save extends Command {
 	}
 
 	@Override
-	public boolean isOpCommand() {
+	public boolean isOpCommandDefault() {
 		return true;
 	}
 
