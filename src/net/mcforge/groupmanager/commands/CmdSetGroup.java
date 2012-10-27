@@ -42,7 +42,7 @@ public class CmdSetGroup extends Command {
             if (GroupManagerAPI.SetPlayerGroup(args[0], args[1]))
             {
                 player.sendMessage("Successfully changed rank!");
-                Player.find(GroupPlugin.server, args[0]).sendMessage("Your rank was changed to " + Group.find(args[1]));
+                Player.find(GroupPlugin.server, args[0]).sendMessage("Your rank was changed to " + Group.find(args[1]).name);
             }
             else
             {
