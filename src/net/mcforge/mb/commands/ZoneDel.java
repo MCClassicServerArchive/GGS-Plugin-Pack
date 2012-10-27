@@ -15,6 +15,12 @@ import net.mcforge.world.Level;
 public class ZoneDel extends PlayerCommand {
 	@Override
 	public void execute(Player player, String[] arg1) {
+		if (arg1.length != 0 && arg1[0].equalsIgnoreCase("all")) {
+			player.sendMessage(ChatColor.Yellow + "Deleting all zones...");
+			Thread t = new RunAll(player.getLevel(), player);
+			t.start();
+			return;
+		}
 		player.sendMessage("Place a block inside the zone you want to remove.");
 		Thread t = new Run(player);
 		t.start();
@@ -38,6 +44,7 @@ public class ZoneDel extends PlayerCommand {
 	@Override
 	public void help(CommandExecutor arg0) {
 		arg0.sendMessage("/zonedel - Delete a zone.");
+		arg0.sendMessage("/zonedel [all] - Delete all zones in this level.");
 	}
 
 	@Override
@@ -74,6 +81,27 @@ public class ZoneDel extends PlayerCommand {
 			checkandremove(x, y , z - 1, l, server, zb);
 		}
 
+	}
+	
+	private class RunAll extends Thread {
+		Level l;
+		Player p;
+		public RunAll(Level l, Player p) { this.l = l; this.p = p; }
+		
+		@Override
+		public void run() {
+			Block b;
+			for (int x = 0; x < l.width; x++) {
+				for (int y = 0; y < l.height; y++) {
+					for (int z = 0; z < l.depth; z++) {
+						b = l.getTile(x, y, z);
+						if (b instanceof ZoneBlock)
+							remove(x, y, z, l, (ZoneBlock)b, p.getServer());
+					}
+				}
+			}
+			p.sendMessage(ChatColor.Bright_Green + "All zone's removed!");
+		}
 	}
 	
 	private class Run extends Thread {
