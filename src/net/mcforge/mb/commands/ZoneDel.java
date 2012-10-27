@@ -111,12 +111,12 @@ public class ZoneDel extends PlayerCommand {
 		@Override
 		public void run() {
 			int x1, y1, z1;
-			Action<BlockChangeAction> action = new BlockChangeAction();
-			action.setPlayer(player);
 			MessageBlockPlugin.INSTANCE.deleters.add(player);
 			try {
 				ZoneBlock zb = null;
 				while (zb == null) {
+					Action<BlockChangeAction> action = new BlockChangeAction();
+					action.setPlayer(player);
 					BlockChangeAction response = action.waitForResponse();
 					x1 = response.getX();
 					y1 = response.getY();

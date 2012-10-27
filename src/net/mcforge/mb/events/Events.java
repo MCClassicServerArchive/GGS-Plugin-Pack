@@ -43,8 +43,7 @@ public class Events implements Listener {
 			Block b = event.getPlayer().getLevel().getTile(event.getX(), event.getY(), event.getZ());
 			if (b instanceof ZoneBlock) {
 				ZoneBlock zb = (ZoneBlock)b;
-				
-				if (zb.canBuild(event.getPlayer())) {
+				if (zb.canBuild(event.getPlayer()) || MessageBlockPlugin.INSTANCE.permissionoverride <= event.getPlayer().getGroup().permissionlevel) {
 					ZoneBlock newb = zb.clone(event.getBlock());
 					Player.GlobalBlockChange(event.getX(), event.getY(), event.getZ(), newb, event.getLevel(), event.getServer());
 					event.setCancel(true);

@@ -1,10 +1,12 @@
 package net.mcforge.mb;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
 import net.mcforge.API.plugin.Plugin;
+import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.commands.MB;
 import net.mcforge.mb.commands.Zone;
@@ -19,14 +21,35 @@ public class MessageBlockPlugin extends Plugin {
 	private final MB command = new MB();
 	private final Zone command2 = new Zone();
 	private final ZoneDel command3 = new ZoneDel();
+	public int permissionoverride;
 	public ArrayList<Player> deleters = new ArrayList<Player>();
 	public static MessageBlockPlugin INSTANCE;
 	public MessageBlockPlugin(Server server) {
 		super(server);
 	}
+	
+	private int getHighest() {
+		for (Group g : Group.getGroupList()) {
+			if (g.isOP)
+				return g.permissionlevel;
+		}
+		return 0;
+	}
 
 	@Override
 	public void onLoad(String[] arg0) {
+		if (!getServer().getSystemProperties().hasValue("zone-admin-permission")) {
+			permissionoverride = getHighest();
+			getServer().getSystemProperties().addSetting("zone-admin-permission", permissionoverride);
+			getServer().getSystemProperties().addComment("zone-admin-permission", "What permission level can override zone ownership.");
+			try {
+				getServer().getSystemProperties().save("system.config");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+			permissionoverride = getServer().getSystemProperties().getInt("zone-admin-permission");
 		getServer().getEventSystem().registerEvents(events);
 		getServer().getCommandHandler().addCommand(command);
 		getServer().getCommandHandler().addCommand(command2);
