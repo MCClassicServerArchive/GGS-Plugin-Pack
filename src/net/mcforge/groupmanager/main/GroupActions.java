@@ -27,7 +27,7 @@ public class GroupActions {
     {
         Group startgroup = getGroup(username);
         if (startgroup == null) { return false; }
-        int perms = startgroup.permissionlevel;
+        //int perms = startgroup.permissionlevel;
         Group lowestabove = null;
         for (Group g : Group.getGroupList()) {
             if (g.permissionlevel > startgroup.permissionlevel) {
@@ -44,7 +44,7 @@ public class GroupActions {
     {
         Group startgroup = getGroup(username);
         if (startgroup == null) { return false; }
-        int perms = startgroup.permissionlevel;
+        //int perms = startgroup.permissionlevel;
         Group highestbelow = null;
         for (Group g : Group.getGroupList()) {
             if (g.permissionlevel < startgroup.permissionlevel) {
