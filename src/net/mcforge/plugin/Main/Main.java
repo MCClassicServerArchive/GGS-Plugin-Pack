@@ -56,8 +56,6 @@ public class Main extends Plugin implements Updatable {
 
 	@Override
 	public void onLoad(String[] arg0) {
-		getServer().getUpdateService().getUpdateManager().add(this);
-		
 		loadCommands(COMMANDS);
 		
 		//--Load plugins--
@@ -70,6 +68,8 @@ public class Main extends Plugin implements Updatable {
 		p = new IRCPlugin(getServer());
 		getServer().getPluginHandler().loadPlugin(p, getServer());
 		//--Load plugins--
+		
+		getServer().Log("MCForge Defaults loaded!");
 	}
 
 	@Override

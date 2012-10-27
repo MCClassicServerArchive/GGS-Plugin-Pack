@@ -3,7 +3,11 @@ package net.mcforge.mb.events;
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
+import net.mcforge.API.plugin.Command;
+import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.mb.MessageBlockPlugin;
+import net.mcforge.mb.blocks.CommandBlock;
 import net.mcforge.mb.blocks.MessageBlock;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.world.Block;
@@ -13,26 +17,12 @@ public class Events implements Listener {
 	
 	@EventHandler
 	public void breakblock(PlayerBlockChangeEvent event) {
+		if (MessageBlockPlugin.INSTANCE.deleters.contains(event.getPlayer()))
+			return;
 		if (event.getPlaceType() == PlaceMode.PLACE) {
 			Block b = event.getPlayer().getLevel().getTile(event.getX(), event.getY(), event.getZ());
-			System.out.println((b instanceof ZoneBlock));
-			System.out.println(b);
-			try {
-				System.out.println(((ZoneBlock)b).getOwners()[0]);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Welp, that didnt work");
-			}
-			System.out.println(b.getVisableBlock());
-			System.out.println(b.getClass().getClassLoader());
-			System.out.println(ZoneBlock.class.getClassLoader());
-			System.out.println("-------");
 			if (b instanceof ZoneBlock) {
 				ZoneBlock zb = (ZoneBlock)b;
-				for (String s : zb.getOwners()) {
-					event.getPlayer().sendMessage(s);
-				}
 				
 				if (zb.canBuild(event.getPlayer())) {
 					ZoneBlock newb = zb.clone(event.getBlock());
@@ -41,7 +31,8 @@ public class Events implements Listener {
 					return;
 				}
 				else {
-					event.getPlayer().sendMessage("Sorry, but you cant build here!");
+					event.getPlayer().sendMessage(ChatColor.Red + "Sorry, but you cant build here!");
+					event.getPlayer().sendMessage("This zone is owned by " + zb.getOwnersString());
 					event.setCancel(true);
 					return;
 				}
@@ -52,6 +43,17 @@ public class Events implements Listener {
 			if (b instanceof MessageBlock) {
 				MessageBlock mb = (MessageBlock)b;
 				event.getPlayer().sendMessage(mb.getMessage());
+				event.setCancel(true);
+				return;
+			}
+			if (b instanceof CommandBlock) {
+				CommandBlock cb = (CommandBlock)b;
+				final Command c = cb.getCommand(event.getServer());
+				String[] args = new String[cb.getMessage().split("\\ ").length - 1]; //remove command
+				for (int i = 0; i < args.length; i++) {
+					args[i] = cb.getMessage().split("\\ ")[i + 1];
+				}
+				event.getServer().getCommandHandler().execute(event.getPlayer(), c.getName(), args);
 				event.setCancel(true);
 				return;
 			}
@@ -67,8 +69,8 @@ public class Events implements Listener {
 					return;
 				}
 				else {
-					event.getPlayer().sendMessage("Sorry, but you cant build here!");
-					event.setCancel(true);
+					event.getPlayer().sendMessage(ChatColor.Red + "Sorry, but you cant build here!");
+					event.getPlayer().sendMessage("This zone is owned by " + zb.getOwnersString());
 					return;
 				}
 			}
