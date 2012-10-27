@@ -18,7 +18,7 @@ public class MB extends PlayerCommand {
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }
 		int startindex = 0;
-		if (Block.getBlock(arg1[0]) != Block.getBlock("UNKNOWN")) {
+		if (Block.getBlock(arg1[0]) != Block.getBlock("NULL")) {
 			b = Block.getBlock(arg1[0]);
 			startindex++;
 		}
