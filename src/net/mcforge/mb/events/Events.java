@@ -3,6 +3,7 @@ package net.mcforge.mb.events;
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
+import net.mcforge.API.player.PlayerMoveEvent;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
@@ -14,6 +15,25 @@ import net.mcforge.world.Block;
 import net.mcforge.world.PlaceMode;
 
 public class Events implements Listener {
+	
+	@EventHandler
+	public void playermove(PlayerMoveEvent event) {
+		final int x = event.getPlayer().getBlockX();
+		final int y = event.getPlayer().getBlockY() - 1;
+		final int z = event.getPlayer().getBlockZ();
+		final Block b = event.getPlayer().getLevel().getTile(x, y, z);
+		if (canWalkThrough(b) && b instanceof MessageBlock) {
+			MessageBlock mb = (MessageBlock)b;
+			event.getPlayer().sendMessage(mb.getMessage());
+			return;
+		}
+		
+	}
+	
+	private boolean canWalkThrough(Block b) {
+		final byte bb = b.getVisableBlock();
+		return bb == 39 || bb == 10 || bb == 38 || bb == 40 || bb == 6 || bb == 11 || bb == 9 || bb == 8 || bb == 0;
+	}
 	
 	@EventHandler
 	public void breakblock(PlayerBlockChangeEvent event) {

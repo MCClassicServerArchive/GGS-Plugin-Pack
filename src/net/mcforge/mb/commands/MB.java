@@ -8,16 +8,23 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.MessageBlock;
+import net.mcforge.world.Block;
 
 @ManualLoad
 public class MB extends PlayerCommand {
 
+	private Block b;
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }
+		int startindex = 0;
+		if (Block.getBlock(arg1[0]) != Block.getBlock("UNKNOWN")) {
+			b = Block.getBlock(arg1[0]);
+			startindex++;
+		}
 		String message = "";
-		for (String s : arg1) {
-			message += s + " ";
+		for (int i = startindex; i < arg1.length; i++) {
+			message += arg1[i - startindex];
 		}
 		message = message.trim();
 		player.sendMessage("Place a block where the message block will go!");
@@ -62,7 +69,11 @@ public class MB extends PlayerCommand {
 			action.setPlayer(player);
 			try {
 				BlockChangeAction response = action.waitForResponse();
-				MessageBlock mb = new MessageBlock(message, response.getHolding());
+				MessageBlock mb;
+				if (b == null)
+					mb = new MessageBlock(message, Block.getBlock("White"));
+				else
+					mb = new MessageBlock(message, b);
 				Player.GlobalBlockChange((short)response.getX(), (short)response.getY(), (short)response.getZ(), mb, player.getLevel(), player.getServer());
 				player.sendMessage(ChatColor.Bright_Green + "Message Block placed!");
 			} catch (IllegalAccessException e) {
