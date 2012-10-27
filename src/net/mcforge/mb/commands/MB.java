@@ -18,13 +18,13 @@ public class MB extends PlayerCommand {
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }
 		int startindex = 0;
-		if (Block.getBlock(arg1[0]) != Block.getBlock("NULL")) {
+		if (!Block.getBlock(arg1[0]).name.equals("NULL")) {
 			b = Block.getBlock(arg1[0]);
 			startindex++;
 		}
 		String message = "";
 		for (int i = startindex; i < arg1.length; i++) {
-			message += arg1[i - startindex];
+			message += arg1[i];
 		}
 		message = message.trim();
 		player.sendMessage("Place a block where the message block will go!");
@@ -71,7 +71,7 @@ public class MB extends PlayerCommand {
 				BlockChangeAction response = action.waitForResponse();
 				MessageBlock mb;
 				if (b == null)
-					mb = new MessageBlock(message, Block.getBlock("White"));
+					mb = new MessageBlock(message, Block.getBlock((byte)36));
 				else
 					mb = new MessageBlock(message, b);
 				Player.GlobalBlockChange((short)response.getX(), (short)response.getY(), (short)response.getZ(), mb, player.getLevel(), player.getServer());

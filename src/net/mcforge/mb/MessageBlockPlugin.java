@@ -22,6 +22,7 @@ public class MessageBlockPlugin extends Plugin {
 	private final Zone command2 = new Zone();
 	private final ZoneDel command3 = new ZoneDel();
 	public int permissionoverride;
+	public boolean repeat;
 	public ArrayList<Player> deleters = new ArrayList<Player>();
 	public static MessageBlockPlugin INSTANCE;
 	public MessageBlockPlugin(Server server) {
@@ -50,6 +51,18 @@ public class MessageBlockPlugin extends Plugin {
 		}
 		else
 			permissionoverride = getServer().getSystemProperties().getInt("zone-admin-permission");
+		if (!getServer().getSystemProperties().hasValue("messageblock-repeat-message")) {
+			repeat = true;
+			getServer().getSystemProperties().addSetting("messageblock-repeat-message", repeat);
+			getServer().getSystemProperties().addComment("messageblock-repeat-message", "Weather or not to repeat messageblock messages if they are the same message.");
+			try {
+				getServer().getSystemProperties().save("system.config");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+			repeat = getServer().getSystemProperties().getBool("messageblock-repeat-message");
 		getServer().getEventSystem().registerEvents(events);
 		getServer().getCommandHandler().addCommand(command);
 		getServer().getCommandHandler().addCommand(command2);

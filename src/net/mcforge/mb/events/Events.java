@@ -1,5 +1,7 @@
 package net.mcforge.mb.events;
 
+import java.util.HashMap;
+
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBlockChangeEvent;
@@ -16,6 +18,8 @@ import net.mcforge.world.PlaceMode;
 
 public class Events implements Listener {
 	
+	private HashMap<Player, String> antirepeat = new HashMap<Player, String>();
+	
 	@EventHandler
 	public void playermove(PlayerMoveEvent event) {
 		final int x = event.getPlayer().getBlockX();
@@ -24,6 +28,19 @@ public class Events implements Listener {
 		final Block b = event.getPlayer().getLevel().getTile(x, y, z);
 		if (canWalkThrough(b) && b instanceof MessageBlock) {
 			MessageBlock mb = (MessageBlock)b;
+			if (!MessageBlockPlugin.INSTANCE.repeat) {
+				if (!antirepeat.containsKey(event.getPlayer())) {
+					antirepeat.put(event.getPlayer(), mb.getMessage());
+				}
+				else {
+					if (antirepeat.get(event.getPlayer()).equals(mb.getMessage()))
+						return;
+					else {
+						antirepeat.remove(event.getPlayer());
+						antirepeat.put(event.getPlayer(), mb.getMessage());
+					}
+				}
+			}
 			event.getPlayer().sendMessage(mb.getMessage());
 			return;
 		}
@@ -61,6 +78,21 @@ public class Events implements Listener {
 			Block b = event.getPlayer().getLevel().getTile(event.getX(), event.getY(), event.getZ());
 			if (b instanceof MessageBlock) {
 				MessageBlock mb = (MessageBlock)b;
+				if (!MessageBlockPlugin.INSTANCE.repeat) {
+					if (!antirepeat.containsKey(event.getPlayer())) {
+						antirepeat.put(event.getPlayer(), mb.getMessage());
+					}
+					else {
+						if (antirepeat.get(event.getPlayer()).equals(mb.getMessage())) {
+							event.setCancel(true);
+							return;
+						}
+						else {
+							antirepeat.remove(event.getPlayer());
+							antirepeat.put(event.getPlayer(), mb.getMessage());
+						}
+					}
+				}
 				event.getPlayer().sendMessage(mb.getMessage());
 				event.setCancel(true);
 				return;
