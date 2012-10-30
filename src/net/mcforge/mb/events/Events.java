@@ -1,5 +1,7 @@
 package net.mcforge.mb.events;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import net.mcforge.API.EventHandler;
@@ -15,10 +17,25 @@ import net.mcforge.mb.blocks.MessageBlock;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.world.Block;
 import net.mcforge.world.PlaceMode;
+import net.mcforge.API.server.ServerStartedEvent;;
 
 public class Events implements Listener {
 	
 	private HashMap<Player, String> antirepeat = new HashMap<Player, String>();
+	
+	@EventHandler
+	public void serverStarted(ServerStartedEvent eventargs) {
+		if (new File("properties/mbconvert.config").exists()) {
+			eventargs.getServer().Log("Convert file found!");
+			eventargs.getServer().Log("Converting...");
+			try {
+				MessageBlockPlugin.INSTANCE.convert();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			eventargs.getServer().Log("Done!");
+		}
+	}
 	
 	@EventHandler
 	public void playermove(PlayerMoveEvent event) {

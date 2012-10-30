@@ -1,6 +1,10 @@
 package net.mcforge.mb;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import net.mcforge.API.ManualLoad;
@@ -8,11 +12,15 @@ import net.mcforge.API.player.PlayerBlockChangeEvent;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
+import net.mcforge.mb.blocks.MessageBlock;
+import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.mb.commands.MB;
 import net.mcforge.mb.commands.Zone;
 import net.mcforge.mb.commands.ZoneDel;
 import net.mcforge.mb.events.Events;
 import net.mcforge.server.Server;
+import net.mcforge.world.Block;
+import net.mcforge.world.Level;
 
 @ManualLoad
 public class MessageBlockPlugin extends Plugin {
@@ -77,6 +85,90 @@ public class MessageBlockPlugin extends Plugin {
 		getServer().getCommandHandler().removeCommand(command2);
 		getServer().getCommandHandler().removeCommand(command3);
 		INSTANCE = null;
+	}
+	
+	public void convert() throws IOException {
+		FileInputStream fstream = new FileInputStream("properties/mbconvert.config");
+		DataInputStream in = new DataInputStream(fstream);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		String strLine;
+		while ((strLine = br.readLine()) != null)   {
+			final String[] args = strLine.split("\\:");
+			String type = args[0];
+			int x1, x2, y1, y2, z1, z2;
+			byte b;
+			String Level;
+			if (type.equals("MB")) {
+				x1 = Integer.parseInt(args[1]);
+				//x2 = Integer.parseInt(args[2]);
+				y1 = Integer.parseInt(args[2]);
+				//y2 = Integer.parseInt(args[4]);
+				z1 = Integer.parseInt(args[3]);
+				//z2 = Integer.parseInt(args[6]);
+				b = Byte.parseByte(args[4]);
+				Level = args[5];
+				String message = "";
+				for (int i = 6; i < args.length; i++) {
+					message += args[i];
+				}
+				Level l;
+				boolean tried = false;
+				while ((l = getServer().getLevelHandler().findLevel(Level)) == null && !tried)
+					getServer().getLevelHandler().loadLevel("levels/" + Level + ".ggs");
+				if (l == null) {
+					getServer().Log("Could not find " + Level + "!");
+					continue;
+				}
+				MessageBlock mb = new MessageBlock(message, Block.getBlock(b););
+				Player.GlobalBlockChange((short)x1, (short)y1, (short)z1, mb, l, getServer());
+			}
+			else if (type.equals("ZONE")) {
+				x1 = Integer.parseInt(args[1]);
+				x2 = Integer.parseInt(args[2]);
+				y1 = Integer.parseInt(args[3]);
+				y2 = Integer.parseInt(args[4]);
+				z1 = Integer.parseInt(args[5]);
+				z2 = Integer.parseInt(args[6]);
+				String owner = args[7];
+				String Level1 = args[8];
+				Level l;
+				boolean tried = false;
+				while ((l = getServer().getLevelHandler().findLevel(Level1)) == null && !tried)
+					getServer().getLevelHandler().loadLevel("levels/" + Level1 + ".ggs");
+				if (l == null) {
+					getServer().Log("Could not find " + Level1 + "!");
+					continue;
+				}
+				for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); ++xx) {
+                    for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
+                        for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
+                            ZoneBlock zb = new ZoneBlock(new String[] { owner }, l.getTile(xx, yy, zz));
+                            Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, l, getServer());
+                        }
+                    }
+				}
+			}
+		}
+		in.close();
+	}
+	
+	public class TZone {
+		public int x1;
+		public int y1;
+		public int z1;
+		public int x2;
+		public int y2;
+		public int z2;
+		public String owner;
+		
+		@Override
+		public boolean equals(Object owner) {
+			if (owner instanceof TZone) {
+				TZone tz = (TZone)owner;
+				return tz.x1 == x1 && tz.x2 == x2 && tz.y1 == y1 && tz.y2 == y2 && tz.z1 == z1 && tz.z2 == z2;
+			}
+			return false;
+		}
 	}
 
 }
