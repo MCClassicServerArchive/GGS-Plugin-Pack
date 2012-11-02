@@ -140,12 +140,12 @@ public class MessageBlockPlugin extends Plugin {
 					continue;
 				}
 				for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); ++xx) {
-                    for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
-                        for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
-                            ZoneBlock zb = new ZoneBlock(new String[] { owner }, l.getTile(xx, yy, zz));
-                            Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, l, getServer());
-                        }
-                    }
+					for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
+						for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
+							ZoneBlock zb = new ZoneBlock(new String[] { owner }, l.getTile(xx, yy, zz));
+							Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, l, getServer());
+						}
+					}
 				}
 			}
 		}
@@ -172,3 +172,4 @@ public class MessageBlockPlugin extends Plugin {
 	}
 
 }
+

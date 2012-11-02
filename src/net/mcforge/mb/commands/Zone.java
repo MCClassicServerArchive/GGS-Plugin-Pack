@@ -67,12 +67,12 @@ public class Zone extends PlayerCommand {
 				y2 = response.getY();
 				z2 = response.getZ();
 				for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); ++xx) {
-                    for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
-                        for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
-                            ZoneBlock zb = new ZoneBlock(owner, player.getLevel().getTile(xx, yy, zz));
-                            Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, player.getLevel(), player.getServer());
-                        }
-                    }
+					for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
+						for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
+							ZoneBlock zb = new ZoneBlock(owner, player.getLevel().getTile(xx, yy, zz));
+							Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, player.getLevel(), player.getServer());
+						}
+					}
 				}
 				player.sendMessage(ChatColor.Bright_Green + "Zone placed!");
 			} catch (IllegalAccessException e) {
@@ -87,3 +87,4 @@ public class Zone extends PlayerCommand {
 		}
 	}
 }
+

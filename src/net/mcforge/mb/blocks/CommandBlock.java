@@ -36,3 +36,4 @@ public class CommandBlock extends Block {
 	}
 
 }
+

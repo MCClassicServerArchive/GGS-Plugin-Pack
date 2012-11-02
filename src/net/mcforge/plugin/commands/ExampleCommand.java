@@ -39,3 +39,4 @@ public class ExampleCommand extends PlayerCommand {
 	}
 
 }
+

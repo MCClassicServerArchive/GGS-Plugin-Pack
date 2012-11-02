@@ -63,3 +63,4 @@ public class Ban extends PlayerCommand {
 	}
 
 }
+
