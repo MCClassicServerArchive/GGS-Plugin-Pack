@@ -10,6 +10,7 @@ package net.mcforge.plugin.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.chat.ChatColor;
 import net.mcforge.world.LevelHandler;
 
 import java.io.File;
@@ -44,6 +45,7 @@ public class Load extends Command {
 
 			if (levelFile.exists()) {
 				handler.loadLevel(levelFile.getPath());
+				player.sendMessage(ChatColor.Bright_Green + "+ " + ChatColor.White + args[0] + " loaded!");
 			}
 			else {
 				player.sendMessage("Level does not exist.");

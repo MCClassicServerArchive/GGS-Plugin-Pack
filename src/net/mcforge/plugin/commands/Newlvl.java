@@ -18,7 +18,6 @@ import net.mcforge.server.Server;
 import net.mcforge.world.Generator;
 import net.mcforge.world.LevelHandler;
 import net.mcforge.world.generator.FlatGrass;
-import net.mcforge.world.generator.Island;
 
 @ManualLoad
 public class Newlvl extends Command {
@@ -62,22 +61,18 @@ public class Newlvl extends Command {
 					gen = (Generator)construct.newInstance(player.getServer());
 				}
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
 			} catch (SecurityException e) {
-				e.printStackTrace();
 			} catch (InstantiationException e) {
-				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				e.printStackTrace();
 			}
-			if (gen == null)
+			if (gen == null) {
 				gen = new FlatGrass(player.getServer());
+				player.sendMessage("The type " + args[4] + " could not be found..");
+				player.sendMessage("Defaulting to FlatGrass");
+			}
 		}
 		else {
 			help(player);

@@ -1,5 +1,13 @@
 package net.mcforge.plugin.Main;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import net.mcforge.API.plugin.Command;
@@ -27,9 +35,11 @@ import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
+import net.mcforge.util.properties.Properties;
 
 public class Main extends Plugin implements Updatable {
 
+	private ArrayList<String> load = new ArrayList<String>();
 	private static final Command[] COMMANDS = new Command[] {
 		new Afk(),
 		new Ban(),
@@ -53,23 +63,66 @@ public class Main extends Plugin implements Updatable {
 	public Main(Server server) {
 		super(server);
 	}
+	
+	public boolean loadOptions() throws IOException {
+		if (!new File("properties/mcforge_plugin.config").exists())
+			return false;
+		FileInputStream fstream = new FileInputStream("properties/mcforge_plugin.config");
+		DataInputStream in = new DataInputStream(fstream);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		String strLine;
+		while ((strLine = br.readLine()) != null)   {
+			if (strLine.startsWith("#"))
+				continue;
+			load.add(strLine);
+		}
+		in.close();
+		return true;
+	}
 
 	@Override
 	public void onLoad(String[] arg0) {
-		loadCommands(COMMANDS);
+		boolean savedefaults = true;
+		try {
+			savedefaults = !loadOptions();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		loadCommands(COMMANDS, savedefaults);
 		
 		//--Load plugins--
 		Plugin p = new MessageBlockPlugin(getServer());
-		getServer().getPluginHandler().loadPlugin(p, getServer());
-		plugins.add(p);
+		addPlugin(p, savedefaults);
 		p = new GroupPlugin(getServer());
-		getServer().getPluginHandler().loadPlugin(p, getServer());
-		plugins.add(p);
+		addPlugin(p, savedefaults);
 		p = new IRCPlugin(getServer());
-		getServer().getPluginHandler().loadPlugin(p, getServer());
+		addPlugin(p, savedefaults);
 		//--Load plugins--
 		
 		getServer().Log("MCForge Defaults loaded!");
+		if (savedefaults) {
+			try {
+				saveDefaults();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void saveDefaults() throws IOException {
+		if (new File("properties/mcforge_plugin.config").exists())
+			new File("properties/mcforge_plugin.config").delete();
+		new File("properties/mcforge_plugin.config").createNewFile();
+		PrintWriter out = new PrintWriter("properties/mcforge_plugin.config");
+		out.println("#Here you can enable and disable plugins that are loaded");
+		out.println("#By the mcforge plugin.");
+		out.println("#To disable a plugin/command, simply put a # infront of it.");
+		for (String s : load) {
+			out.println(s);
+		}
+		out.close();
 	}
 
 	@Override
@@ -83,15 +136,27 @@ public class Main extends Plugin implements Updatable {
 		//--Unload plugins--
 	}
 	
-	private void loadCommands(Command[] commands) {
+	private void loadCommands(Command[] commands, boolean add) {
 		for (Command c : commands) {
-			getServer().getCommandHandler().addCommand(c);
+			if (add)
+				load.add(c.getName());
+			if ((!add && load.contains(c.getName())) || add)
+				getServer().getCommandHandler().addCommand(c);
 		}
 	}
 	
 	private void unloadCommands(Command[] commands) {
 		for (Command c : commands) {
 			getServer().getCommandHandler().removeCommand(c);
+		}
+	}
+	
+	private void addPlugin(Plugin p, boolean add) {
+		if (add || (!add && load.contains(p.getName()))) {
+			plugins.add(p);
+			getServer().getPluginHandler().loadPlugin(p, getServer());
+			if (add)
+				load.add(p.getName());
 		}
 	}
 	

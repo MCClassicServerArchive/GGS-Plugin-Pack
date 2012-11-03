@@ -1,8 +1,5 @@
 package net.mcforge.mb.commands;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.action.Action;
 import net.mcforge.API.action.BlockChangeAction;

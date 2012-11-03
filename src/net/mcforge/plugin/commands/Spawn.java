@@ -36,7 +36,7 @@ public class Spawn extends PlayerCommand
 	@Override
 	public int getDefaultPermissionLevel()
 	{
-		return 0; // DON'T KNOW THE PERMISSION LEVEL FOR STANDARD USER.
+		return 0;
 	}
 
 	@Override
@@ -47,6 +47,6 @@ public class Spawn extends PlayerCommand
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/spawn - sends you to the spawn of the current map");
+		executor.sendMessage("/spawn - Sends you to the spawn of the current map.");
 	}
 }
