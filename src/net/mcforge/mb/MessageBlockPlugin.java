@@ -178,6 +178,8 @@ public class MessageBlockPlugin extends Plugin {
 				z1 = Integer.parseInt(args[5]);
 				z2 = Integer.parseInt(args[6]);
 				String owner = args[7];
+				if (owner.startsWith("grp"))
+					owner = owner.substring(3);
 				String Level1 = args[8];
 				Level l;
 				boolean tried = false;
