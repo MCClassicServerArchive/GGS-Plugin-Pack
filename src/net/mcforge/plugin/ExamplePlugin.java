@@ -22,3 +22,4 @@ public class ExamplePlugin extends Plugin {
 	}
 
 }
+
