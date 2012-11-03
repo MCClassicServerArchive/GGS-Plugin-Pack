@@ -8,6 +8,7 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.MessageBlock;
+import net.mcforge.mb.blocks.PortalBlock;
 import net.mcforge.world.Block;
 
 @ManualLoad
@@ -17,6 +18,10 @@ public class MB extends PlayerCommand {
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }
+		if (arg1[0].equals("show") && arg1.length == 1) {
+			show(player);
+			return;
+		}
 		int startindex = 0;
 		if (!Block.getBlock(arg1[0]).name.equals("NULL")) {
 			b = Block.getBlock(arg1[0]);
@@ -51,11 +56,35 @@ public class MB extends PlayerCommand {
 	public void help(CommandExecutor arg0) {
 		arg0.sendMessage("/mb <message> - Place a message in a block! When the block is hit, the message will display");
 		arg0.sendMessage("/mb [block] <message> - Place a message in a [block] block! When the block is hit, the message will display");
+		arg0.sendMessage("/mb show - Show/hide all message blocks in the current level your in.");
 	}
 
 	@Override
 	public boolean isOpCommandDefault() {
 		return false;
+	}
+	
+	private void show(Player p) {
+		boolean show = false;
+		if (p.hasValue("showmb")) {
+			show = p.getValue("showmb");
+		}
+		show = !show;
+		for (int x = 0; x < p.getLevel().width; x++) {
+			for (int y = 0; y < p.getLevel().height; y++) {
+				for (int z = 0; z < p.getLevel().depth; z++) {
+					if (p.getLevel().getTile(x, y, z) instanceof MessageBlock) {
+						MessageBlock pb = (MessageBlock)p.getLevel().getTile(x, y, z);
+						if (show)
+							p.SendBlockChange((short)x, (short)y, (short)z, Block.getBlock("White"));
+						else
+							p.SendBlockChange((short)x, (short)y, (short)z, pb);
+					}
+				}
+			}
+		}
+		p.sendMessage("Now " + (show ? "showing" : "hiding") + " messageblocks");
+		p.setValue("showmb", show);
 	}
 	
 	private class Run extends Thread {
