@@ -96,7 +96,8 @@ public class MessageBlockPlugin extends Plugin {
 			final String[] args = strLine.split("\\:");
 			String type = args[0];
 			int x1, x2, y1, y2, z1, z2;
-			byte b;
+			byte b = 0;
+			boolean usetile = false;
 			String Level;
 			if (type.equals("MB")) {
 				x1 = Integer.parseInt(args[1]);
@@ -105,7 +106,10 @@ public class MessageBlockPlugin extends Plugin {
 				//y2 = Integer.parseInt(args[4]);
 				z1 = Integer.parseInt(args[3]);
 				//z2 = Integer.parseInt(args[6]);
-				b = Byte.parseByte(args[4]);
+				if (args[4].equals("TILE"))
+					usetile = true;
+				else
+					b = Byte.parseByte(args[4]);
 				Level = args[5];
 				String message = "";
 				for (int i = 6; i < args.length; i++) {
@@ -119,7 +123,11 @@ public class MessageBlockPlugin extends Plugin {
 					getServer().Log("Could not find " + Level + "!");
 					continue;
 				}
-				MessageBlock mb = new MessageBlock(message, Block.getBlock(b););
+				MessageBlock mb;
+				if (!usetile)
+					mb = new MessageBlock(message, Block.getBlock(b));
+				else
+					mb = new MessageBlock(message, l.getTile(x1, y1, z1));
 				Player.GlobalBlockChange((short)x1, (short)y1, (short)z1, mb, l, getServer());
 			}
 			else if (type.equals("ZONE")) {

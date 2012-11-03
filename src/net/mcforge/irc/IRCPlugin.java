@@ -50,6 +50,14 @@ public class IRCPlugin extends Plugin {
 	    String serv = "irc.geekshed.net", chan = "#changeme";
 	    int port = 6667;
 	    
+	    if (!p.hasValue("IRC-Enable") || !p.getBool("IRC-Enable")) {
+	    	if (!p.hasValue("IRC-Enable")) {
+	    		p.addSetting("IRC-Enable", false);
+	    		saveConfig();
+	    	}
+	    	return;
+	    }
+	    
 	    if (!p.hasValue("IRC-nickname")) {
 	    	System.out.println("NICKPRINT: " + p.getValue("IRC-nickname"));
 	    	p.addSetting("IRC-nickname", name);
@@ -89,6 +97,14 @@ public class IRCPlugin extends Plugin {
 	    }
 	    else {
 	    	serv = p.getValue("IRC-server");
+	    }
+	    
+	    if (!p.hasValue("IRC-port")) {
+	    	p.addSetting("IRC-port", port);
+	    	saveConfig();
+	    }
+	    else {
+	    	port = p.getInt("IRC-port");
 	    }
 	    
 	    if (!p.hasValue("IRC-channel")) {
