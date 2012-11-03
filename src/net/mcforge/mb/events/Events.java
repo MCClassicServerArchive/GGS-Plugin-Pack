@@ -68,6 +68,29 @@ public class Events implements Listener {
 			event.getPlayer().sendMessage(mb.getMessage());
 			return;
 		}
+		if (b.canWalkThrough() && b instanceof CommandBlock) {
+			CommandBlock cb = (CommandBlock)b;
+			if (!MessageBlockPlugin.INSTANCE.repeat) {
+				if (!antirepeat.containsKey(event.getPlayer())) {
+					antirepeat.put(event.getPlayer(), cb.getMessage());
+				}
+				else {
+					if (antirepeat.get(event.getPlayer()).equals(cb.getMessage()))
+						return;
+					else {
+						antirepeat.remove(event.getPlayer());
+						antirepeat.put(event.getPlayer(), cb.getMessage());
+					}
+				}
+			}
+			final Command c = cb.getCommand(event.getPlayer().getServer());
+			String[] args = new String[cb.getMessage().split("\\ ").length - 1]; //remove command
+			for (int i = 0; i < args.length; i++) {
+				args[i] = cb.getMessage().split("\\ ")[i + 1];
+			}
+			event.getPlayer().getServer().getCommandHandler().execute(event.getPlayer(), c.getName(), args);
+			return;
+		}
 		else if (b.canWalkThrough() && b instanceof PortalBlock) {
 			PortalBlock pb = (PortalBlock)b;
 			if (!pb.isExit()) {

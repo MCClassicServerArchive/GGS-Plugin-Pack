@@ -8,12 +8,14 @@ public class CommandBlock extends Block {
 	
 	private static final long serialVersionUID = 1808391182561161713L;
 	private String message;
+	private boolean canWalk;
 	public CommandBlock(byte ID, String name) {
 		super(ID, name);
 	}
 	public CommandBlock(String message, Block placed) {
 		this(placed.getVisableBlock(), placed.name);
 		this.message = message;
+		this.canWalk = placed.canWalkThrough();
 	}
 	
 	/**
@@ -33,6 +35,11 @@ public class CommandBlock extends Block {
 	 */
 	public Command getCommand(Server server) {
 		return server.getCommandHandler().find(getMessage().split("\\ ")[0]);
+	}
+	
+	@Override
+	public boolean canWalkThrough() {
+		return canWalk;
 	}
 
 }

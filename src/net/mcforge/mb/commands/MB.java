@@ -7,8 +7,8 @@ import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.mb.blocks.CommandBlock;
 import net.mcforge.mb.blocks.MessageBlock;
-import net.mcforge.mb.blocks.PortalBlock;
 import net.mcforge.world.Block;
 
 @ManualLoad
@@ -29,7 +29,7 @@ public class MB extends PlayerCommand {
 		}
 		String message = "";
 		for (int i = startindex; i < arg1.length; i++) {
-			message += arg1[i];
+			message += " " + arg1[i];
 		}
 		message = message.trim();
 		player.sendMessage("Place a block where the message block will go!");
@@ -98,13 +98,22 @@ public class MB extends PlayerCommand {
 			action.setPlayer(player);
 			try {
 				BlockChangeAction response = action.waitForResponse();
-				MessageBlock mb;
-				if (b == null)
-					mb = new MessageBlock(message, Block.getBlock((byte)36));
-				else
-					mb = new MessageBlock(message, b);
+				Block mb;
+				if (message.startsWith("/") && player.getServer().getCommandHandler().find(message.substring(1).split("\\ ")[0]) != null) {
+					if (b == null)
+						mb = new CommandBlock(message, Block.getBlock((byte)36));
+					else
+						mb = new CommandBlock(message, b);
+					player.sendMessage(ChatColor.Bright_Green + "Command Block placed!");
+				}
+				else {
+					if (b == null)
+						mb = new MessageBlock(message, Block.getBlock((byte)36));
+					else
+						mb = new MessageBlock(message, b);
+					player.sendMessage(ChatColor.Bright_Green + "Message Block placed!");
+				}
 				Player.GlobalBlockChange((short)response.getX(), (short)response.getY(), (short)response.getZ(), mb, player.getLevel(), player.getServer());
-				player.sendMessage(ChatColor.Bright_Green + "Message Block placed!");
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 				player.sendMessage("An error has occured..");
