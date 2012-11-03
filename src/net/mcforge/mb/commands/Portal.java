@@ -20,9 +20,7 @@ public class Portal extends PlayerCommand {
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length != 0) {
 			if (arg1[0].equalsIgnoreCase("show")) {
-				try {
-					show(player);
-				} catch (ClassNotFoundException e) { } catch (SQLException e) { } catch (IOException e) { }
+				show(player);
 				return;
 			}
 			int startindex = 0;
@@ -68,7 +66,7 @@ public class Portal extends PlayerCommand {
 		return false;
 	}
 	
-	public void show(Player p) throws ClassNotFoundException, SQLException, IOException {
+	public void show(Player p) {
 		boolean show = false;
 		if (p.hasValue("showportal")) {
 			show = p.getValue("showportal");
