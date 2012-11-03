@@ -13,6 +13,7 @@ import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.mb.blocks.CommandBlock;
+import net.mcforge.mb.blocks.PortalBlock;
 import net.mcforge.mb.blocks.MessageBlock;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.world.Block;
@@ -34,16 +35,22 @@ public class Events implements Listener {
 				e.printStackTrace();
 			}
 			eventargs.getServer().Log("Done!");
+			new File("properties/mbconvert.config").delete();
 		}
 	}
 	
 	@EventHandler
 	public void playermove(PlayerMoveEvent event) {
+		Check(event, 1);
+		Check(event, 0);
+	}
+	
+	private void Check(PlayerMoveEvent event, int yoffset) {
 		final int x = event.getPlayer().getBlockX();
-		final int y = event.getPlayer().getBlockY() - 1;
+		final int y = event.getPlayer().getBlockY() - yoffset;
 		final int z = event.getPlayer().getBlockZ();
 		final Block b = event.getPlayer().getLevel().getTile(x, y, z);
-		if (canWalkThrough(b) && b instanceof MessageBlock) {
+		if (b.canWalkThrough() && b instanceof MessageBlock) {
 			MessageBlock mb = (MessageBlock)b;
 			if (!MessageBlockPlugin.INSTANCE.repeat) {
 				if (!antirepeat.containsKey(event.getPlayer())) {
@@ -61,12 +68,18 @@ public class Events implements Listener {
 			event.getPlayer().sendMessage(mb.getMessage());
 			return;
 		}
-		
-	}
-	
-	private boolean canWalkThrough(Block b) {
-		final byte bb = b.getVisableBlock();
-		return bb == 39 || bb == 10 || bb == 38 || bb == 40 || bb == 6 || bb == 11 || bb == 9 || bb == 8 || bb == 0;
+		else if (b.canWalkThrough() && b instanceof PortalBlock) {
+			PortalBlock pb = (PortalBlock)b;
+			if (!pb.isExit()) {
+				if (pb.getDestination().getLevel() != event.getPlayer().getLevel())
+					event.getPlayer().changeLevel(pb.getDestination().getLevel(), false);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) { }
+				event.getPlayer().setPos((short)pb.getDestination().getX(), (short)pb.getDestination().getY(), (short)pb.getDestination().getZ());
+				return;
+			}
+		}
 	}
 	
 	@EventHandler
@@ -111,6 +124,19 @@ public class Events implements Listener {
 					}
 				}
 				event.getPlayer().sendMessage(mb.getMessage());
+				event.setCancel(true);
+				return;
+			}
+			if (b instanceof PortalBlock) {
+				PortalBlock pb = (PortalBlock)b;
+				if (!pb.isExit()) {
+					if (pb.getDestination().getLevel() != event.getPlayer().getLevel())
+						event.getPlayer().changeLevel(pb.getDestination().getLevel(), false);
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) { }
+					event.getPlayer().setPos((short)pb.getDestination().getX(), (short)pb.getDestination().getY(), (short)pb.getDestination().getZ());
+				}
 				event.setCancel(true);
 				return;
 			}

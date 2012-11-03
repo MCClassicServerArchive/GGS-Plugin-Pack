@@ -122,7 +122,7 @@ public class Main extends Plugin implements Updatable {
 
 	@Override
 	public UpdateType getUpdateType() {
-		return UpdateType.Auto_Notify;
+		return UpdateType.Auto_Silent;
 	}
 
 	@Override

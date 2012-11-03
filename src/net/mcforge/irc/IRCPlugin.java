@@ -147,7 +147,8 @@ public class IRCPlugin extends Plugin {
 		if (unload)
 			getServer().getPluginHandler().unload(this);
 		PlayerChatEvent.getEventList().unregister(listener);
-		ircBot.disposeBot();
+		if (ircBot != null)
+			ircBot.disposeBot();
 	}
 	private void saveConfig() {
 		try {
