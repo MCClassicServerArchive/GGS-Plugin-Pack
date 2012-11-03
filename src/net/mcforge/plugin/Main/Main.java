@@ -117,6 +117,8 @@ public class Main extends Plugin implements Updatable {
 		out.println("#Here you can enable and disable plugins that are loaded");
 		out.println("#By the mcforge plugin.");
 		out.println("#To disable a plugin/command, simply put a # infront of it.");
+		out.println("#You can also remove the line, but then you might forget");
+		out.println("#The command/plugin name if you ever want to enable it again :P");
 		for (String s : load) {
 			out.println(s);
 		}
