@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -35,7 +34,6 @@ import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
-import net.mcforge.util.properties.Properties;
 
 public class Main extends Plugin implements Updatable {
 
@@ -196,3 +194,4 @@ public class Main extends Plugin implements Updatable {
 	}
 
 }
+

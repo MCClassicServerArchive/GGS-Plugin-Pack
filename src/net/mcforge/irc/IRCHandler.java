@@ -1,18 +1,18 @@
 /*******************************************************************************
- * Copyright (c) 2012 MCForge.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v3.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/gpl.html
- ******************************************************************************/
+* Copyright (c) 2012 MCForge.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the GNU Public License v3.0
+* which accompanies this distribution, and is available at
+* http://www.gnu.org/licenses/gpl.html
+******************************************************************************/
 package net.mcforge.irc;
 
 import java.io.IOException;
 
 /**
- * This class handles communication with the IRC, and implements the needed
- * features of it's protocol for the bot to use.
- */
+* This class handles communication with the IRC, and implements the needed
+* features of it's protocol for the bot to use.
+*/
 public class IRCHandler {
 	private IRCBot bot;
 	
@@ -100,25 +100,26 @@ public class IRCHandler {
 	 * @param line - The line to check
 	 */
 	public String getSender(String line)
-    {
-        return line.split("!")[0].split(":")[1];
-    }
+	{
+		return line.split("!")[0].split(":")[1];
+	}
 	/**
 	 * Gets the message of the specified line
 	 * @param line - The line to check
 	 */
-    public String getMessage(String line) {
-        String tmp = "";
-        int loop = 0;
-        if (line.split(":").length >= 2) {
-            for (String str: line.split(":")) {
-                if (str.contains("PRIVMSG")) loop = 1;
-                else if (loop == 2) tmp = str;
-                else if (loop > 2) tmp = tmp + ":" + str;
-                loop++;
-            }
-            return tmp;
-        }
-        return "";
-    }
+	public String getMessage(String line) {
+		String tmp = "";
+		int loop = 0;
+		if (line.split(":").length >= 2) {
+			for (String str: line.split(":")) {
+				if (str.contains("PRIVMSG")) loop = 1;
+				else if (loop == 2) tmp = str;
+				else if (loop > 2) tmp = tmp + ":" + str;
+				loop++;
+			}
+			return tmp;
+		}
+		return "";
+	}
 }
+
