@@ -9,6 +9,7 @@ package net.mcforge.plugin.commands;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Locale;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
@@ -55,7 +56,7 @@ public class Newlvl extends Command {
 		}
 		else if (args.length == 5) {
 			try {
-				Class<?> _class = Class.forName("net.mcforge.world.generator." + args[4]);
+				Class<?> _class = Class.forName("net.mcforge.world.generator." + getGoodFormat(args[4]));
 				if (Generator.class.isAssignableFrom(_class)) {
 					Constructor<?> construct = _class.getConstructor(Server.class);
 					gen = (Generator)construct.newInstance(player.getServer());
@@ -101,6 +102,10 @@ public class Newlvl extends Command {
 		else {
 			player.sendMessage(ChatColor.Dark_Red + "Level \"" + name + "\" already exists!");
 		}
+	}
+	private String getGoodFormat(String s) {
+		String temp = s.toLowerCase(Locale.ENGLISH);
+		return temp.substring(0, 1).toUpperCase() + temp.substring(1);
 	}
 }
 
