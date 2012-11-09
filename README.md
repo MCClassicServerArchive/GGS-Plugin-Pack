@@ -33,6 +33,7 @@ Please follow these rules when making pull requests
 
 ##Required Dependencies
 - [MCForge 1.0][7]
+- [Minecraft Classic Server][8]
 
 ##Copyright/License
 
@@ -62,3 +63,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 [5]: http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#333
 [6]: http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#353
 [7]: https://github.com/MCForge/MCForge-Core
+[8]: http://s3.amazonaws.com/MinecraftDownload/minecraft_classic_server.zip

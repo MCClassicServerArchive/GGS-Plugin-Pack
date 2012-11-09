@@ -28,6 +28,7 @@ import net.mcforge.plugin.commands.Spawn;
 import net.mcforge.plugin.commands.Stop;
 import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Unban;
+import net.mcforge.converter.DatToGGS;
 import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
@@ -96,6 +97,7 @@ public class Main extends Plugin implements Updatable {
 		addPlugin(p, savedefaults);
 		p = new IRCPlugin(getServer());
 		addPlugin(p, savedefaults);
+		DatToGGS.convertLevels();
 		//--Load plugins--
 		
 		getServer().Log("MCForge Defaults loaded!");
