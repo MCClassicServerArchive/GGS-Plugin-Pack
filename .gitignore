@@ -44,3 +44,4 @@ plugins/*
 *.project
 .project
 .classpath
+url.txt
