@@ -38,7 +38,7 @@ public class Devs extends PlayerCommand  {
 
 	@Override
 	public void execute(Player player, String[] args) {
-		String[] devArray = Server.devs.toArray(new String[Server.devs.size()]);
+		String[] devArray = Server.devs;
 		String devs = Messages.join(devArray, "&f, &e");
 		player.sendMessage("&9MCForge developers: &e" + devs);
 	}
