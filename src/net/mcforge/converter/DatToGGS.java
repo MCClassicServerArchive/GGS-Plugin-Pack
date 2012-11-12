@@ -61,6 +61,8 @@ public class DatToGGS {
 	{
 		File levelsFolder = new File("levels");
 		File[] levelFiles = levelsFolder.listFiles();
+		if (levelFiles == null)
+			return;
 		for(File f : levelFiles) {
 			if (f.getName().endsWith(".dat")) {
 				try {
