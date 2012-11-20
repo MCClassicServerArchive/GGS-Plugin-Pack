@@ -11,7 +11,7 @@ public class MessageBlock extends Block{
 		super(ID, name);
 	}
 	public MessageBlock(String message, Block placed) {
-		this(placed.getVisableBlock(), placed.name);
+		this(placed.getVisibleBlock(), placed.name);
 		this.message = message;
 		this.canWalk = placed.canWalkThrough();
 	}

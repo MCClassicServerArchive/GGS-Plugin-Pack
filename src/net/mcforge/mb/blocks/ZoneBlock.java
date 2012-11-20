@@ -14,7 +14,7 @@ public class ZoneBlock extends Block {
 	}
 	
 	public ZoneBlock(String[] owners, Block b) {
-		this(b.getVisableBlock(), b.name);
+		this(b.getVisibleBlock(), b.name);
 		this.owners = owners;
 	}
 	

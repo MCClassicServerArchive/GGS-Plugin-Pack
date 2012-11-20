@@ -53,7 +53,7 @@ public class ZoneDel extends PlayerCommand {
 	}
 	
 	private void remove(int x, int y, int z, Level l, ZoneBlock zb, Server server) {
-		Player.GlobalBlockChange((short)x, (short)y, (short)z, Block.getBlock(zb.getVisableBlock()), l, server);
+		Player.GlobalBlockChange((short)x, (short)y, (short)z, Block.getBlock(zb.getVisibleBlock()), l, server);
 	}
 	private void checkandremove(int x, int y, int z, Level l, Server server, ZoneBlock zb) {
 		if (l.getTile(x + 1, y, z) instanceof ZoneBlock && ((ZoneBlock)l.getTile(x + 1, y, z)).getOwners() == zb.getOwners()) {

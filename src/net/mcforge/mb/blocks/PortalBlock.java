@@ -12,7 +12,7 @@ public class PortalBlock extends Block {
 		super(ID, name);
 	}
 	public PortalBlock(int x, int y, int z, Level l, Block placed) {
-		this(placed.getVisableBlock(), placed.name);
+		this(placed.getVisibleBlock(), placed.name);
 		this.pos = new POS(x, y + 32, z, l);
 		this.canWalk = placed.canWalkThrough();
 	}
