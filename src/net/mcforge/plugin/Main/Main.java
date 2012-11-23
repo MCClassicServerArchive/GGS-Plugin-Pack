@@ -32,9 +32,13 @@ import net.mcforge.plugin.commands.Load;
 import net.mcforge.plugin.commands.Loaded;
 import net.mcforge.plugin.commands.Maps;
 import net.mcforge.plugin.commands.Me;
+import net.mcforge.plugin.commands.Mute;
+import net.mcforge.plugin.commands.Muted;
 import net.mcforge.plugin.commands.Newlvl;
 import net.mcforge.plugin.commands.Pay;
+import net.mcforge.plugin.commands.Place;
 import net.mcforge.plugin.commands.Players;
+import net.mcforge.plugin.commands.Rules;
 import net.mcforge.plugin.commands.Save;
 import net.mcforge.plugin.commands.Spawn;
 import net.mcforge.plugin.commands.Stop;
@@ -66,9 +70,13 @@ public class Main extends Plugin implements Updatable, Listener {
 		new Loaded(),
 		new Maps(),
 		new Me(),
+		new Mute(),
+		new Muted(),
 		new Newlvl(),
 		new Pay(),
+		new Place(),
 		new Players(),
+		new Rules(),
 		new Save(),
 		new Spawn(),
 		new Stop(),

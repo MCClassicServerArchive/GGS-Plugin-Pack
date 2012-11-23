@@ -7,13 +7,15 @@
 ******************************************************************************/
 package net.mcforge.plugin.commands;
 
+import java.util.List;
+
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
 
 @ManualLoad
-public class Take extends Command  {
+public class Muted extends Command  {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -21,7 +23,7 @@ public class Take extends Command  {
 
 	@Override
 	public String getName() {
-		return "take";
+		return "muted";
 	}
 
 	@Override
@@ -31,37 +33,25 @@ public class Take extends Command  {
 
 	@Override
 	public int getDefaultPermissionLevel() {
-		return 80;
+		return 100;
 	}
 
 	@Override
 	public void execute(CommandExecutor executor, String[] args) {
-		if (args.length < 2) {
-			executor.sendMessage("Please specify a player and the amount to take!");
-			help(executor);
+		List<Player> muted = Mute.muted;
+		if (muted.size() == 0) {
+			executor.sendMessage("There are no muted players");
 			return;
 		}
-		Player who = executor.getServer().findPlayer(args[0]);
-		int amount = 0;
-		if (who == null) {
-			executor.sendMessage("Player not found!");
-			return;
+		String ret = "";
+		for (int i = 0; i < muted.size(); i++) {
+			ret += muted.get(i).username + ", ";
 		}
-		try {
-			amount = Integer.parseInt(args[1]);
-		}
-		catch(NumberFormatException ex) {
-			executor.sendMessage("Please specify a valid integer!");
-			return;
-		}
-		if (who.getMoney() - amount < 0) {
-			executor.sendMessage("Players can't have less than 0 " + executor.getServer().CurrencyName);
-			return;
-		}
-		who.setMoney(who.getMoney() - amount);
-		who.getServer().sendGlobalMessage(who.getDisplayName() +  " has been rattled down for " + amount + " " + who.getServer().CurrencyName);
+		ret = ret.substring(0, ret.length() - 2);
+		executor.sendMessage("There are " + muted.size() + " muted players: " + ret);
 	}
-
+ /*
+  */
 	@Override
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/take <player> <amount> - takes the specified amount of " + 

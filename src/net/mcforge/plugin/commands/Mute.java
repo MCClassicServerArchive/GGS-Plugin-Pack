@@ -21,7 +21,7 @@ import net.mcforge.server.Server;
 public class Mute extends Command implements Listener {
 
 	boolean init;
-	ArrayList<Player> muted = new ArrayList<Player>();
+	public static ArrayList<Player> muted = new ArrayList<Player>();
 	@Override
 	public void execute(CommandExecutor arg0, String[] arg1) {
 		init(arg0.getServer());

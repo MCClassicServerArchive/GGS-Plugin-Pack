@@ -9,11 +9,11 @@ package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
-import net.mcforge.API.plugin.PlayerCommand;
+import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
 
 @ManualLoad
-public class Give extends PlayerCommand  {
+public class Give extends Command  {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -35,7 +35,7 @@ public class Give extends PlayerCommand  {
 	}
 
 	@Override
-	public void execute(Player executor, String[] args) {
+	public void execute(CommandExecutor executor, String[] args) {
 		if (args.length < 2) {
 			executor.sendMessage("Please specify a player and the amount to give!");
 			help(executor);
