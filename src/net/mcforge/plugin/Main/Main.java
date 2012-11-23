@@ -24,6 +24,7 @@ import net.mcforge.API.plugin.Plugin;
 import net.mcforge.plugin.commands.Afk;
 import net.mcforge.plugin.commands.Ban;
 import net.mcforge.plugin.commands.Devs;
+import net.mcforge.plugin.commands.Give;
 import net.mcforge.plugin.commands.Goto;
 import net.mcforge.plugin.commands.Help;
 import net.mcforge.plugin.commands.Kick;
@@ -32,11 +33,14 @@ import net.mcforge.plugin.commands.Loaded;
 import net.mcforge.plugin.commands.Maps;
 import net.mcforge.plugin.commands.Me;
 import net.mcforge.plugin.commands.Newlvl;
+import net.mcforge.plugin.commands.Pay;
 import net.mcforge.plugin.commands.Players;
 import net.mcforge.plugin.commands.Save;
 import net.mcforge.plugin.commands.Spawn;
 import net.mcforge.plugin.commands.Stop;
+import net.mcforge.plugin.commands.Summon;
 import net.mcforge.plugin.commands.TP;
+import net.mcforge.plugin.commands.Take;
 import net.mcforge.plugin.commands.Unban;
 import net.mcforge.banhandler.BanHandler;
 import net.mcforge.chat.ChatColor;
@@ -54,6 +58,7 @@ public class Main extends Plugin implements Updatable, Listener {
 		new Afk(),
 		new Ban(),
 		new Devs(),
+		new Give(),
 		new Goto(),
 		new Help(),
 		new Kick(),
@@ -62,10 +67,13 @@ public class Main extends Plugin implements Updatable, Listener {
 		new Maps(),
 		new Me(),
 		new Newlvl(),
+		new Pay(),
 		new Players(),
 		new Save(),
 		new Spawn(),
 		new Stop(),
+		new Summon(),
+		new Take(),
 		new TP(),
 		new Unban()
 	};
