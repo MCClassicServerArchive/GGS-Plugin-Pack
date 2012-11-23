@@ -47,6 +47,7 @@ public class BanHandler extends Plugin implements Listener {
 			@Override
 			public void execute(Listener listen, Event event) throws Exception {
 				if (isBanned(((PlayerEvent) event).getPlayer().getName())) {
+				    ((PlayerConnectEvent)event).setKickMessage("You are banned! Reason: " + getReason(((PlayerEvent)event).getPlayer().getName()));
 					((Cancelable) event).setCancel(true);
 				}
 			}
@@ -107,15 +108,30 @@ public class BanHandler extends Plugin implements Listener {
 	 *            The name of the player with the ban
 	 * @return
 	 *        Returns the date as a String, returns "null" if the ban will
-	 *        never expire, returns "" if the user cant be found.
+	 *        never expire, returns "" if the user can't be found.
 	 */
 	public String getExpire(String name) {
 		for (String s : banned) {
 			if (s.split("\\:")[0].equalsIgnoreCase(name)) {
-				return s.split("\\:")[1];
+				return s.split("\\:")[2];
 			}
 		}
 		return "";
+	}
+	
+	/**
+	 * Get the reason why the player <b>name</b> was banned
+	 * @param name
+	 *            The name of the player to lookup.
+	 * @return
+	 *        The reason this player was banned or "No reason given" if no reason was found <b>OR</b> if no user was found.
+	 */
+	public String getReason(String name) {
+	    for (String s : banned) {
+	        if (s.split("\\:")[0].equalsIgnoreCase(name))
+	            return s.split("\\:")[1];
+	    }
+	    return "No reason given";
 	}
 
 	/**
@@ -128,8 +144,8 @@ public class BanHandler extends Plugin implements Listener {
 	 *              The formated date as a String the ban will expire, if the
 	 *              string is "null", then the ban will never expire.
 	 */
-	public void ban(String username, String expire) {
-		banned.add(username + ":" + expire);
+	public void ban(String username, String reason, String expire) {
+		banned.add(username + ":" + reason + ":" + expire);
 		try {
 			save();
 		} catch (FileNotFoundException e) {
@@ -165,7 +181,7 @@ public class BanHandler extends Plugin implements Listener {
 	 *                The name of the user to ban
 	 */
 	public void ban(String username) {
-		ban(username, "null");
+		ban(username, "no reason given", "null");
 	}
 
 	/**
@@ -176,7 +192,31 @@ public class BanHandler extends Plugin implements Listener {
 	 *            The date the ban will expire.
 	 */
 	public void ban(String username, Date date) {
-		ban(username, date.toString());
+		ban(username, "no reason given", date.toString());
+	}
+	
+	/**
+	 * Ban a player with a reason provided
+	 * @param username
+	 *                The name of the user to ban
+	 * @param reason
+	 *              The reason.
+	 */
+	public void ban(String username, String reason) {
+	    ban(username, reason, "null");
+	}
+	
+	/**
+	 * Ban a player with a reason provided and have it expire at a given date.
+	 * @param username
+	 *                The name of the user to ban.
+	 * @param reason
+	 *              The reason.
+	 * @param date
+	 *            The date the ban will expire.
+	 */
+	public void ban(String username, String reason, Date date) {
+	    ban(username, reason, date.toString());
 	}
 
 	/**

@@ -9,6 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import net.mcforge.API.EventHandler;
+import net.mcforge.API.Listener;
+import net.mcforge.API.player.PlayerBanRequestEvent;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.plugin.commands.Afk;
@@ -28,6 +31,8 @@ import net.mcforge.plugin.commands.Spawn;
 import net.mcforge.plugin.commands.Stop;
 import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Unban;
+import net.mcforge.banhandler.BanHandler;
+import net.mcforge.chat.ChatColor;
 import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
@@ -35,7 +40,7 @@ import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
 
-public class Main extends Plugin implements Updatable {
+public class Main extends Plugin implements Updatable, Listener {
 
 	private ArrayList<String> load = new ArrayList<String>();
 	private static final Command[] COMMANDS = new Command[] {
@@ -193,6 +198,17 @@ public class Main extends Plugin implements Updatable {
 	@Override
 	public void unload() {
 		getServer().getPluginHandler().unload(this);
+	}
+	
+	@EventHandler
+	public void onBanRequest(PlayerBanRequestEvent event) {
+	    final String name = event.getPlayer().getName();
+	    if (BanHandler.banHandler.isBanned(name)) {
+	        event.getBanner().sendMessage(name + " is already banned!");
+	        return;
+	    }
+	    getServer().sendGlobalMessage(event.getBanner().getName() + " banned " + event.getPlayer().getDisplayName() + ChatColor.White + " for " + ChatColor.Dark_Red + event.getReason());
+	    BanHandler.banHandler.ban(name);
 	}
 
 }
