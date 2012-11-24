@@ -187,7 +187,6 @@ public class Cuboid extends PlayerCommand {
                     }
                 }
             }
-            System.out.println(bu.size());
             Player.GlobalBlockChange(bu.toArray(new BlockUpdate[bu.size()]), p.getLevel(), p.getServer());
             bu.clear();
             p.sendMessage(count + " blocks.");
