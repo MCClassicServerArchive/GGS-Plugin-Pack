@@ -23,6 +23,7 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.plugin.commands.Afk;
 import net.mcforge.plugin.commands.Ban;
+import net.mcforge.plugin.commands.Cuboid;
 import net.mcforge.plugin.commands.Devs;
 import net.mcforge.plugin.commands.Goto;
 import net.mcforge.plugin.commands.Help;
@@ -49,174 +50,212 @@ import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
 
-	private ArrayList<String> load = new ArrayList<String>();
-	private static final Command[] COMMANDS = new Command[] {
-		new Afk(),
-		new Ban(),
-		new Devs(),
-		new Goto(),
-		new Help(),
-		new Kick(),
-		new Load(),
-		new Loaded(),
-		new Maps(),
-		new Me(),
-		new Newlvl(),
-		new Players(),
-		new Save(),
-		new Spawn(),
-		new Stop(),
-		new TP(),
-		new Unban()
-	};
-	private static final ArrayList<Plugin> plugins = new ArrayList<Plugin>();
-	public Main(Server server) {
-		super(server);
-	}
-	
-	public boolean loadOptions() throws IOException {
-		if (!new File("properties/mcforge_plugin.config").exists())
-			return false;
-		FileInputStream fstream = new FileInputStream("properties/mcforge_plugin.config");
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		String strLine;
-		while ((strLine = br.readLine()) != null)   {
-			if (strLine.startsWith("#"))
-				continue;
-			load.add(strLine);
-		}
-		in.close();
-		return true;
-	}
+    private static final String CONFIG_VERSION = "#VERSION.1";
+    private ArrayList<String> load = new ArrayList<String>();
+    private static final Command[] COMMANDS = new Command[] {
+        new Afk(),
+        new Ban(),
+        new Cuboid(),
+        new Devs(),
+        new Goto(),
+        new Help(),
+        new Kick(),
+        new Load(),
+        new Loaded(),
+        new Maps(),
+        new Me(),
+        new Newlvl(),
+        new Players(),
+        new Save(),
+        new Spawn(),
+        new Stop(),
+        new TP(),
+        new Unban()
+    };
+    private static final ArrayList<Plugin> plugins = new ArrayList<Plugin>();
+    public Main(Server server) {
+        super(server);
+    }
 
-	@Override
-	public void onLoad(String[] arg0) {
-		boolean savedefaults = true;
-		try {
-			savedefaults = !loadOptions();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		loadCommands(COMMANDS, savedefaults);
-		
-		//--Load plugins--
-		Plugin p = new MessageBlockPlugin(getServer());
-		addPlugin(p, savedefaults);
-		p = new GroupPlugin(getServer());
-		addPlugin(p, savedefaults);
-		p = new IRCPlugin(getServer());
-		addPlugin(p, savedefaults);
-		//--Load plugins--
-		
-		getServer().Log("MCForge Defaults loaded!");
-		if (savedefaults) {
-			try {
-				saveDefaults();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void saveDefaults() throws IOException {
-		if (new File("properties/mcforge_plugin.config").exists())
-			new File("properties/mcforge_plugin.config").delete();
-		new File("properties/mcforge_plugin.config").createNewFile();
-		PrintWriter out = new PrintWriter("properties/mcforge_plugin.config");
-		out.println("#Here you can enable and disable plugins that are loaded");
-		out.println("#By the mcforge plugin.");
-		out.println("#To disable a plugin/command, simply put a # infront of it.");
-		out.println("#You can also remove the line, but then you might forget");
-		out.println("#The command/plugin name if you ever want to enable it again :P");
-		for (String s : load) {
-			out.println(s);
-		}
-		out.close();
-	}
+    public boolean loadOptions() throws IOException {
+        if (!new File("properties/mcforge_plugin.config").exists())
+            return false;
+        FileInputStream fstream = new FileInputStream("properties/mcforge_plugin.config");
+        DataInputStream in = new DataInputStream(fstream);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String strLine;
+        strLine = br.readLine();
+        if (strLine.equals(CONFIG_VERSION)) {
+            while ((strLine = br.readLine()) != null)   {
+                if (strLine.startsWith("#"))
+                    continue;
+                load.add(strLine);
+            }
+            in.close();
+            return true;
+        }
+        else {
+            getServer().Log("Adding new commands to config..");
+            ArrayList<String> write = new ArrayList<String>();
+            while ((strLine = br.readLine()) != null) {
+                write.add(strLine);
+                if (!strLine.startsWith("#"))
+                    load.add(strLine);
+            }
+            in.close();
+            for (Command c : COMMANDS) {
+                if (!write.contains(c.getName()))
+                    write.add(c.getName());
+            }
+            updateConfig(write.toArray(new String[write.size()]));
+            write.clear();
+            getServer().Log("Done!");
+            return true;
+        }
+    }
 
-	@Override
-	public void onUnload() {
-		unloadCommands(COMMANDS);
-		
-		//--Unload plugins--
-		for (Plugin p : plugins) {
-			getServer().getPluginHandler().unload(p);
-		}
-		//--Unload plugins--
-	}
-	
-	private void loadCommands(Command[] commands, boolean add) {
-		for (Command c : commands) {
-			if (add)
-				load.add(c.getName());
-			if ((!add && load.contains(c.getName())) || add)
-				getServer().getCommandHandler().addCommand(c);
-		}
-	}
-	
-	private void unloadCommands(Command[] commands) {
-		for (Command c : commands) {
-			getServer().getCommandHandler().removeCommand(c);
-		}
-	}
-	
-	private void addPlugin(Plugin p, boolean add) {
-		if (add || (!add && load.contains(p.getName()))) {
-			plugins.add(p);
-			getServer().getPluginHandler().loadPlugin(p, getServer());
-			if (add)
-				load.add(p.getName());
-		}
-	}
-	
-	@Override
-	public String getName() {
-		return "MCForge Defaults";
-	}
+    @Override
+    public void onLoad(String[] arg0) {
+        boolean savedefaults = true;
+        try {
+            savedefaults = !loadOptions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loadCommands(COMMANDS, savedefaults);
+        //--Load plugins--
+        Plugin p = new MessageBlockPlugin(getServer());
+        addPlugin(p, savedefaults);
+        p = new GroupPlugin(getServer());
+        addPlugin(p, savedefaults);
+        p = new IRCPlugin(getServer());
+        addPlugin(p, savedefaults);
+        //--Load plugins--
 
-	@Override
-	public String getCheckURL() {
-		return "http://update.mcforge.net/VERSION_2/defaults/current.txt";
-	}
+        getServer().Log("MCForge Defaults loaded!");
+        if (savedefaults) {
+            try {
+                saveDefaults();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	@Override
-	public String getCurrentVersion() {
-		return "1.0.0";
-	}
+    private void saveDefaults() throws IOException {
+        if (new File("properties/mcforge_plugin.config").exists())
+            new File("properties/mcforge_plugin.config").delete();
+        new File("properties/mcforge_plugin.config").createNewFile();
+        PrintWriter out = new PrintWriter("properties/mcforge_plugin.config");
+        out.println(CONFIG_VERSION);
+        out.println("#Here you can enable and disable plugins that are loaded");
+        out.println("#By the mcforge plugin.");
+        out.println("#To disable a plugin/command, simply put a # infront of it.");
+        out.println("#You can also remove the line, but then you might forget");
+        out.println("#The command/plugin name if you ever want to enable it again :P");
+        for (String s : load) {
+            out.println(s);
+        }
+        out.close();
+    }
+    
+    private void updateConfig(String[] data) throws IOException {
+        if (new File("properties/mcforge_plugin.config").exists())
+            new File("properties/mcforge_plugin.config").delete();
+        new File("properties/mcforge_plugin.config").createNewFile();
+        PrintWriter out = new PrintWriter("properties/mcforge_plugin.config");
+        out.println(CONFIG_VERSION);
+        out.println("#Here you can enable and disable plugins that are loaded");
+        out.println("#By the mcforge plugin.");
+        out.println("#To disable a plugin/command, simply put a # infront of it.");
+        out.println("#You can also remove the line, but then you might forget");
+        out.println("#The command/plugin name if you ever want to enable it again :P");
+        for (String s : data) {
+            out.println(s);
+        }
+        out.close();
+    }
 
-	@Override
-	public String getDownloadPath() {
-		return "plugins/Defaults.jar";
-	}
+    @Override
+    public void onUnload() {
+        unloadCommands(COMMANDS);
 
-	@Override
-	public String getDownloadURL() {
-		return "http://update.mcforge.net/VERSION_2/defaults/Defaults.jar";
-	}
+        //--Unload plugins--
+        for (Plugin p : plugins) {
+            getServer().getPluginHandler().unload(p);
+        }
+        //--Unload plugins--
+    }
 
-	@Override
-	public UpdateType getUpdateType() {
-		return UpdateType.Auto_Silent;
-	}
+    private void loadCommands(Command[] commands, boolean add) {
+        for (Command c : commands) {
+            if (add)
+                load.add(c.getName());
+            if ((!add && load.contains(c.getName())) || add)
+                getServer().getCommandHandler().addCommand(c);
+        }
+    }
 
-	@Override
-	public void unload() {
-		getServer().getPluginHandler().unload(this);
-	}
-	
-	@EventHandler
-	public void onBanRequest(PlayerBanRequestEvent event) {
-	    final String name = event.getPlayer().getName();
-	    if (BanHandler.banHandler.isBanned(name)) {
-	        event.getBanner().sendMessage(name + " is already banned!");
-	        return;
-	    }
-	    getServer().sendGlobalMessage(event.getBanner().getName() + " banned " + event.getPlayer().getDisplayName() + ChatColor.White + " for " + ChatColor.Dark_Red + event.getReason());
-	    BanHandler.banHandler.ban(name);
-	}
+    private void unloadCommands(Command[] commands) {
+        for (Command c : commands) {
+            getServer().getCommandHandler().removeCommand(c);
+        }
+    }
+
+    private void addPlugin(Plugin p, boolean add) {
+        if (add || (!add && load.contains(p.getName()))) {
+            plugins.add(p);
+            getServer().getPluginHandler().loadPlugin(p, getServer());
+            if (add)
+                load.add(p.getName());
+        }
+    }
+
+    @Override
+    public String getName() {
+        return "MCForge Defaults";
+    }
+
+    @Override
+    public String getCheckURL() {
+        return "http://update.mcforge.net/VERSION_2/defaults/current.txt";
+    }
+
+    @Override
+    public String getCurrentVersion() {
+        return "1.0.0";
+    }
+
+    @Override
+    public String getDownloadPath() {
+        return "plugins/Defaults.jar";
+    }
+
+    @Override
+    public String getDownloadURL() {
+        return "http://update.mcforge.net/VERSION_2/defaults/Defaults.jar";
+    }
+
+    @Override
+    public UpdateType getUpdateType() {
+        return UpdateType.Auto_Silent;
+    }
+
+    @Override
+    public void unload() {
+        getServer().getPluginHandler().unload(this);
+    }
+
+    @EventHandler
+    public void onBanRequest(PlayerBanRequestEvent event) {
+        final String name = event.getPlayer().getName();
+        if (BanHandler.banHandler.isBanned(name)) {
+            event.getBanner().sendMessage(name + " is already banned!");
+            return;
+        }
+        getServer().sendGlobalMessage(event.getBanner().getName() + " banned " + event.getPlayer().getDisplayName() + ChatColor.White + " for " + ChatColor.Dark_Red + event.getReason());
+        BanHandler.banHandler.ban(name);
+    }
 
 }
 
