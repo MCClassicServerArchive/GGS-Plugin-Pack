@@ -15,6 +15,7 @@ public class ZoneBlock extends Block {
 	private static final long serialVersionUID = -1429204508778865220L;
 	
 	private String[] owners;
+	public ZoneBlock() { super(); }
 	
 	public ZoneBlock(byte ID, String name) {
 		super(ID, name);

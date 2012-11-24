@@ -16,9 +16,12 @@ public class CommandBlock extends Block {
 	private static final long serialVersionUID = 1808391182561161713L;
 	private String message;
 	private boolean canWalk;
+	public CommandBlock() { super(); }
+	
 	public CommandBlock(byte ID, String name) {
 		super(ID, name);
 	}
+	
 	public CommandBlock(String message, Block placed) {
 		this(placed.getVisibleBlock(), placed.name);
 		this.message = message;

@@ -33,7 +33,7 @@ public class Cuboid extends PlayerCommand {
         Action<BlockChangeAction> bb = new BlockChangeAction();
         bb.setPlayer(p);
         p.sendMessage("Place two blocks to determine the edges.");
-        int x1, x2, y1, y2, z1, z2, count = 0;
+        int x1, x2, y1, y2, z1, z2;
         try {
             b = bb.waitForResponse();
             if (block == null || block.name.equals("NULL"))
@@ -56,7 +56,6 @@ public class Cuboid extends PlayerCommand {
                         for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
                             if (p.getLevel().getTile(xx, yy, zz) != block) {
                                 bu.add(new BlockUpdate(block, xx, yy, zz));
-                                count++;
                             }
                         }
                     }
@@ -68,11 +67,9 @@ public class Cuboid extends PlayerCommand {
                     for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
                         if (p.getLevel().getTile(x1, yy, zz) != block) {
                             bu.add(new BlockUpdate(block, x1, yy, zz));
-                            count++;
                         }
                         if (p.getLevel().getTile(x2, yy, zz) != block && x1 != x2) {
                             bu.add(new BlockUpdate(block, x2, yy, zz));
-                            count++;
                         }
                     }
                 }
@@ -81,11 +78,9 @@ public class Cuboid extends PlayerCommand {
                         for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
                             if (p.getLevel().getTile(xx, y1, zz) != block) {
                                 bu.add(new BlockUpdate(block, xx, y1, zz));
-                                count++;
                             }
                             if (p.getLevel().getTile(xx, y2, zz) != block && y1 != y2) {
                                 bu.add(new BlockUpdate(block, xx, y2, zz));
-                                count++;
                             }
                         }
                     }
@@ -94,11 +89,9 @@ public class Cuboid extends PlayerCommand {
                             for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); yy++) {
                                 if (p.getLevel().getTile(xx, yy, z1) != block) {
                                     bu.add(new BlockUpdate(block, xx, yy, z1));
-                                    count++;
                                 }
                                 if (p.getLevel().getTile(xx, yy, z2) != block && z1 != z2) {
                                     bu.add(new BlockUpdate(block, xx, yy, z2));
-                                    count++;
                                 } 
                             }
                         }
@@ -111,11 +104,9 @@ public class Cuboid extends PlayerCommand {
                     for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
                         if (p.getLevel().getTile(x1, yy, zz) != block) {
                             bu.add(new BlockUpdate(block, x1, yy, zz));
-                            count++;
                         }
                         if (p.getLevel().getTile(x2, yy, zz) != block && x1 != x2) {
                             bu.add(new BlockUpdate(block, x2, yy, zz));
-                            count++;
                         }
                     }
                 }
@@ -124,11 +115,9 @@ public class Cuboid extends PlayerCommand {
                         for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); yy++) {
                             if (p.getLevel().getTile(xx, yy, z1) != block) {
                                 bu.add(new BlockUpdate(block, xx, yy, z1));
-                                count++;
                             }
                             if (p.getLevel().getTile(xx, yy, z2) != block && z1 != z2) {
                                 bu.add(new BlockUpdate(block, xx, yy, z2));
-                                count++;
                             } 
                         }
                     }
@@ -145,7 +134,6 @@ public class Cuboid extends PlayerCommand {
                             checked = !checked;
                             if (checked && p.getLevel().getTile(xx, yy, zz) != block) {
                                 bu.add(new BlockUpdate(block, xx, yy, zz));
-                                count++;
                             }
                         }
                         checked = !startZ;
@@ -181,15 +169,14 @@ public class Cuboid extends PlayerCommand {
                         for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
                             if (p.getLevel().getTile(xx, yy, zz) != block && rand.nextBoolean()) {
                                 bu.add(new BlockUpdate(block, xx, yy, zz));
-                                count++;
                             }
                         }
                     }
                 }
             }
+            p.sendMessage(bu.size() + " blocks.");
             Player.GlobalBlockChange(bu.toArray(new BlockUpdate[bu.size()]), p.getLevel(), p.getServer());
             bu.clear();
-            p.sendMessage(count + " blocks.");
             block = null;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
