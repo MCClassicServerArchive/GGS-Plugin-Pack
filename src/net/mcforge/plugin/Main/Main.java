@@ -13,12 +13,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.NotSerializableException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBanRequestEvent;
+import net.mcforge.API.player.PlayerConnectEvent;
+import net.mcforge.API.player.PlayerKickedEvent;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.plugin.commands.Afk;
@@ -50,6 +57,7 @@ import net.mcforge.plugin.commands.Unban;
 import net.mcforge.banhandler.BanHandler;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.groupmanager.main.GroupPlugin;
+import net.mcforge.iomodel.Player;
 import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.server.Server;
@@ -57,7 +65,6 @@ import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
-    
     private static final String CONFIG_VERSION = "#VERSION.1";
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
@@ -272,6 +279,5 @@ public class Main extends Plugin implements Updatable, Listener {
         getServer().sendGlobalMessage(event.getBanner().getName() + " banned " + event.getPlayer().getDisplayName() + ChatColor.White + " for " + ChatColor.Dark_Red + event.getReason());
         BanHandler.banHandler.ban(name);
     }
-
 }
 
