@@ -15,6 +15,7 @@ public class PortalBlock extends Block {
 	private POS pos;
 	private boolean isExit;
 	private boolean canWalk;
+	public PortalBlock() { super(); }
 	public PortalBlock(byte ID, String name) {
 		super(ID, name);
 	}
