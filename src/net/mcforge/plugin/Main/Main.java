@@ -42,6 +42,7 @@ import net.mcforge.plugin.commands.Me;
 import net.mcforge.plugin.commands.Mute;
 import net.mcforge.plugin.commands.Muted;
 import net.mcforge.plugin.commands.Newlvl;
+import net.mcforge.plugin.commands.Nick;
 import net.mcforge.plugin.commands.Pay;
 import net.mcforge.plugin.commands.Place;
 import net.mcforge.plugin.commands.Players;
@@ -76,7 +77,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Mute(),
         new Muted(),
         new Newlvl(),
-        //new Nick(),
+        new Nick(),
         new Pay(),
         new Place(),
         new Players(),
