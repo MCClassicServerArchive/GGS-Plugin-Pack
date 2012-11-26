@@ -38,22 +38,25 @@ public class Kick extends Command {
 	}
 
 	@Override
-	public void execute(CommandExecutor player, String[] args) {
+	public void execute(CommandExecutor executor, String[] args) {
 		if (args.length == 0) {
-			help(player);
+			help(executor);
 			return;
 		}
 		String kickReason = "";
-		Player who = player.getServer().getPlayer(args[0]);
+		Player who = executor.getServer().getPlayer(args[0]);
 		if (who == null) {
-			player.sendMessage("Player not found!");
+			executor.sendMessage("Player not found!");
 			return;
 		}
-		if (who.equals(player)) {
-			player.sendMessage("You can't kick yourself!");
+		if (who.equals(executor)) {
+			executor.sendMessage("You can't kick yourself!");
 			return;
 		}
-		//TODO: if (perm > p.perm) { no kick for you }
+		if (who.getGroup().permissionlevel > executor.getGroup().permissionlevel) {
+			executor.sendMessage("You can't kick higher ranked players!");
+			return;
+		}
 		if (args.length > 1) { 
 			kickReason = Messages.join(Arrays.copyOfRange(args, 1, args.length));
 		}

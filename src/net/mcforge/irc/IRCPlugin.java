@@ -59,7 +59,6 @@ public class IRCPlugin extends Plugin {
 	    }
 	    
 	    if (!p.hasValue("IRC-nickname")) {
-	    	System.out.println("NICKPRINT: " + p.getValue("IRC-nickname"));
 	    	p.addSetting("IRC-nickname", name);
 	    	saveConfig();
 	    }

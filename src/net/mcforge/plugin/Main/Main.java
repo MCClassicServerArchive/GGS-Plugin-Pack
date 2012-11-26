@@ -48,6 +48,7 @@ import net.mcforge.plugin.commands.Take;
 import net.mcforge.plugin.commands.Unban;
 import net.mcforge.banhandler.BanHandler;
 import net.mcforge.chat.ChatColor;
+import net.mcforge.globalchat.GlobalChatPlugin;
 import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
@@ -112,7 +113,6 @@ public class Main extends Plugin implements Updatable, Listener {
 		try {
 			savedefaults = !loadOptions();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		loadCommands(COMMANDS, savedefaults);
@@ -124,6 +124,8 @@ public class Main extends Plugin implements Updatable, Listener {
 		addPlugin(p, savedefaults);
 		p = new IRCPlugin(getServer());
 		addPlugin(p, savedefaults);
+		p = new GlobalChatPlugin(getServer());
+		addPlugin(p, savedefaults);
 		//--Load plugins--
 		
 		getServer().Log("MCForge Defaults loaded!");
@@ -131,7 +133,6 @@ public class Main extends Plugin implements Updatable, Listener {
 			try {
 				saveDefaults();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
