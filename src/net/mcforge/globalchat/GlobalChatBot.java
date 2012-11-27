@@ -6,7 +6,7 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.Scanner; //dis is me testing github edit thing
+import java.util.Scanner;
 
 import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
