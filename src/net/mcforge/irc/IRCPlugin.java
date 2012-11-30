@@ -59,6 +59,7 @@ public class IRCPlugin extends Plugin {
 	    }
 	    
 	    if (!p.hasValue("IRC-nickname")) {
+	    	System.out.println("NICKPRINT: " + p.getValue("IRC-nickname"));
 	    	p.addSetting("IRC-nickname", name);
 	    	saveConfig();
 	    }
@@ -131,7 +132,7 @@ public class IRCPlugin extends Plugin {
 		catch (IOException e) {
 			getConsole().sendMessage("Error while starting IRC Bot! IRC disabled!");
 			e.printStackTrace();
-			kill(false);
+			kill(true);
 			return;
 		}
 	}
@@ -140,11 +141,13 @@ public class IRCPlugin extends Plugin {
 	}
 	@Override
 	public void onUnload() {
-		kill(true);
+		kill(false);
 	}
 	public void kill(boolean unload) {
-		if (unload)
+		if (unload) {
 			getServer().getPluginHandler().unload(this);
+			return;
+		}
 		PlayerChatEvent.getEventList().unregister(listener);
 		if (ircBot != null)
 			ircBot.disposeBot();
