@@ -82,9 +82,9 @@ public class Portal extends PlayerCommand {
 					if (p.getLevel().getTile(x, y, z) instanceof PortalBlock) {
 						PortalBlock pb = (PortalBlock)p.getLevel().getTile(x, y, z);
 						if (show)
-							p.SendBlockChange((short)x, (short)y, (short)z, (pb.isExit() ? Block.getBlock("Red") : Block.getBlock("Green")));
+							p.sendBlockChange((short)x, (short)y, (short)z, (pb.isExit() ? Block.getBlock("Red") : Block.getBlock("Green")));
 						else
-							p.SendBlockChange((short)x, (short)y, (short)z, pb);
+							p.sendBlockChange((short)x, (short)y, (short)z, pb);
 					}
 				}
 			}

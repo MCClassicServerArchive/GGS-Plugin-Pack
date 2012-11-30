@@ -24,7 +24,7 @@ public class GlobalChatBot implements Runnable {
 	protected final String REALNAME = "MCForge GC Bot";
 	
 	protected final String server = "irc.geekshed.net";
-	protected final String channel = "#MCForgeGC";
+	protected final String channel = "#MCForge";
 	protected final int port = 6667;
 
 	protected volatile boolean isRunning;
@@ -72,7 +72,7 @@ public class GlobalChatBot implements Runnable {
 		}
 		connected = true;
 
-		while ((line = reader.nextLine()) != null && isRunning) { 
+		while ((line = reader.nextLine()) != null && isRunning) {
 			if (line.startsWith("PING ")) {
 				handler.pong(line);
 			}
