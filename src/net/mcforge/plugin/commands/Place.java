@@ -13,6 +13,7 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 import net.mcforge.world.Block;
 import net.mcforge.world.Level;
+import net.mcforge.world.blocks.Unknown;
 
 @ManualLoad
 public class Place extends PlayerCommand {
@@ -48,11 +49,11 @@ public class Place extends PlayerCommand {
 			break;
 		case 1:
 			b = Block.getBlock(args[0]);
-			if (b == Block.getBlock("unknown")) {
+			if (b.name.equals("NULL")) {
 				executor.sendMessage("Invalid block type!");
-				help(executor);
 				return;
 			}
+			System.out.println(b.name);
 			break;
 		case 3:
 			try {
@@ -77,9 +78,8 @@ public class Place extends PlayerCommand {
 			}
 
 			b = Block.getBlock(args[3]);
-			if (b == Block.getBlock("unknown")) {
+			if (b.name.equals("NULL")) {
 				executor.sendMessage("Invalid block type!");
-				help(executor);
 				return;
 			}
 			break;

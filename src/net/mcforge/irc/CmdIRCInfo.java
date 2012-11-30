@@ -31,6 +31,10 @@ public class CmdIRCInfo extends Command {
 	@Override
 	public void execute(CommandExecutor executor, String[] args) {
 		IRCBot b = IRCPlugin.getBot();
+		if (b == null) {
+			executor.sendMessage("Bot was disposed or was never initialized!");
+			return;
+		}
 		executor.sendMessage("IRC server: " + b.server + ":" + b.port);
 		executor.sendMessage("IRC channel: " + b.channel);
 		executor.sendMessage("IRC bot nick: " + b.userName);

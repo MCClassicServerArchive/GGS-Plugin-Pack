@@ -24,7 +24,7 @@ public class CmdSetGroup extends Command {
 
 	@Override
 	public String[] getShortcuts() {
-		return new String[0];
+		return new String[] { "setrank", "rank" };
 	}
 
 	@Override

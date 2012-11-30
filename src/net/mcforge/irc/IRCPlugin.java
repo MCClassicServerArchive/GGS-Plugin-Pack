@@ -20,6 +20,7 @@ import net.mcforge.util.properties.Properties;
 @ManualLoad
 public class IRCPlugin extends Plugin {
 	private CmdIRCInfo cmdircinfo = new CmdIRCInfo();
+	private CmdReloadIRCControllers cmdreload = new CmdReloadIRCControllers();
 	private EventListener listener = new EventListener();
 
 	private static IRCBot ircBot;
@@ -38,6 +39,7 @@ public class IRCPlugin extends Plugin {
 	@Override
 	public void onLoad(String[] args) {
 		getServer().getCommandHandler().addCommand(cmdircinfo);
+		getServer().getCommandHandler().addCommand(cmdreload);
 		getServer().getEventSystem().registerEvents(listener);
 		
 		Properties p = getServer().getSystemProperties();
@@ -50,76 +52,78 @@ public class IRCPlugin extends Plugin {
 	    String serv = "irc.geekshed.net", chan = "#changeme";
 	    int port = 6667;
 	    
-	    if (!p.hasValue("IRC-Enable") || !p.getBool("IRC-Enable")) {
-	    	if (!p.hasValue("IRC-Enable")) {
-	    		p.addSetting("IRC-Enable", false);
+	    if (!p.hasValue("IRC-Enabled") || !p.getBool("IRC-Enabled")) {
+	    	if (!p.hasValue("IRC-Enabled")) {
+	    		p.addSetting("IRC-Enabled", false);
+	    		p.addComment("IRC-Enabled", "Determines if the IRC will be used or not");
 	    		saveConfig();
 	    	}
+	    	kill();
 	    	return;
 	    }
 	    
-	    if (!p.hasValue("IRC-nickname")) {
-	    	p.addSetting("IRC-nickname", name);
+	    if (!p.hasValue("IRC-Nickname")) {
+	    	p.addSetting("IRC-Nickname", name);
+	    	p.addComment("IRC-Nickname", "The nickname for the IRC Bot");
 	    	saveConfig();
 	    }
 	    else {
-	    	name = p.getValue("IRC-nickname");
+	    	name = p.getValue("IRC-Nickname");
 	    }
 	    
-	    if (!p.hasValue("IRC-identify")) {
-	    	p.addSetting("IRC-identify", false);
+	    if (!p.hasValue("IRC-Identify")) {
+	    	p.addSetting("IRC-Identify", false);
 	    	saveConfig();
 	    }
 	    else {
-	    	identify = p.getBool("IRC-identify");
+	    	identify = p.getBool("IRC-Identify");
 	    }
 	    	
-		if (!p.hasValue("IRC-password")) {
-		    p.addSetting("IRC-password", "");
+		if (!p.hasValue("IRC-Password")) {
+		    p.addSetting("IRC-Password", "");
 		    identify = false;
 		    saveConfig();
 		}
 		else {
-		    pass = p.getValue("IRC-password");
+		    pass = p.getValue("IRC-Password");
 		}
-	    if (!p.hasValue("IRC-visible")) {
-	    	p.addSetting("IRC-visible", false);
+	    if (!p.hasValue("IRC-Visible")) {
+	    	p.addSetting("IRC-Visible", false);
 	    	saveConfig();
 	    }
 	    else {
-	    	visible = p.getBool("IRC-visible");
+	    	visible = p.getBool("IRC-Visible");
 	    }
 	    
-	    if (!p.hasValue("IRC-server")) {
-	    	p.addSetting("IRC-server", serv);
+	    if (!p.hasValue("IRC-Server")) {
+	    	p.addSetting("IRC-Server", serv);
 	    	saveConfig();
 	    }
 	    else {
-	    	serv = p.getValue("IRC-server");
+	    	serv = p.getValue("IRC-Server");
 	    }
 	    
-	    if (!p.hasValue("IRC-port")) {
-	    	p.addSetting("IRC-port", port);
+	    if (!p.hasValue("IRC-Port")) {
+	    	p.addSetting("IRC-Port", port);
 	    	saveConfig();
 	    }
 	    else {
-	    	port = p.getInt("IRC-port");
+	    	port = p.getInt("IRC-Port");
 	    }
 	    
-	    if (!p.hasValue("IRC-channel")) {
-	    	p.addSetting("IRC-channel", chan);
+	    if (!p.hasValue("IRC-Channel")) {
+	    	p.addSetting("IRC-Channel", chan);
 	    	saveConfig();
 	    }
 	    else {
-	    	chan = p.getValue("IRC-channel");
+	    	chan = p.getValue("IRC-Channel");
 	    }
 	    
 	    if (chan.equals("#changeme")) {
-	    	getConsole().sendMessage("Please configure your IRC plugin! Shutting down... k k k?");
-	    	getConsole().sendMessage("Chan=" + chan);
+	    	getConsole().sendMessage("Please configure your IRC plugin! Shutting down...");
 	    	return;
 	    }
-	    if (chan.equalsIgnoreCase("#MCForge")) {
+	    if (chan.equalsIgnoreCase("#MCForgeGC")) {
 	    	getConsole().sendMessage("Please configure your IRC plugin! You can't use the global chat channel as a server channel! Shutting down...");
 	    	return;
 	    }
@@ -131,7 +135,7 @@ public class IRCPlugin extends Plugin {
 		catch (IOException e) {
 			getConsole().sendMessage("Error while starting IRC Bot! IRC disabled!");
 			e.printStackTrace();
-			kill(false);
+			kill();
 			return;
 		}
 	}
@@ -140,12 +144,12 @@ public class IRCPlugin extends Plugin {
 	}
 	@Override
 	public void onUnload() {
-		kill(true);
+		kill();
 	}
-	public void kill(boolean unload) {
-		if (unload)
-			getServer().getPluginHandler().unload(this);
+	public void kill() {
 		PlayerChatEvent.getEventList().unregister(listener);
+		getServer().getCommandHandler().removeCommand(cmdircinfo);
+		getServer().getCommandHandler().removeCommand(cmdreload);
 		if (ircBot != null)
 			ircBot.disposeBot();
 	}
