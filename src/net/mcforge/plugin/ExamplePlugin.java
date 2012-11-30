@@ -18,13 +18,11 @@ public class ExamplePlugin extends Plugin {
 
 	@Override
 	public void onLoad(String[] arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
 		
 	}
 

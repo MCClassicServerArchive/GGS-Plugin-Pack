@@ -13,21 +13,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.NotSerializableException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBanRequestEvent;
-import net.mcforge.API.player.PlayerConnectEvent;
-import net.mcforge.API.player.PlayerKickedEvent;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.API.plugin.Plugin;
+import net.mcforge.banhandler.BanHandler;
+import net.mcforge.chat.ChatColor;
+import net.mcforge.globalchat.GlobalChatPlugin;
+import net.mcforge.groupmanager.main.GroupPlugin;
+import net.mcforge.irc.IRCPlugin;
+import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.plugin.commands.Afk;
 import net.mcforge.plugin.commands.Ban;
 import net.mcforge.plugin.commands.Cuboid;
@@ -43,6 +42,7 @@ import net.mcforge.plugin.commands.Me;
 import net.mcforge.plugin.commands.Mute;
 import net.mcforge.plugin.commands.Muted;
 import net.mcforge.plugin.commands.Newlvl;
+import net.mcforge.plugin.commands.Nick;
 import net.mcforge.plugin.commands.Pay;
 import net.mcforge.plugin.commands.Place;
 import net.mcforge.plugin.commands.Players;
@@ -54,12 +54,6 @@ import net.mcforge.plugin.commands.Summon;
 import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Take;
 import net.mcforge.plugin.commands.Unban;
-import net.mcforge.banhandler.BanHandler;
-import net.mcforge.chat.ChatColor;
-import net.mcforge.groupmanager.main.GroupPlugin;
-import net.mcforge.iomodel.Player;
-import net.mcforge.irc.IRCPlugin;
-import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
@@ -83,6 +77,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Mute(),
         new Muted(),
         new Newlvl(),
+        new Nick(),
         new Pay(),
         new Place(),
         new Players(),
@@ -152,6 +147,8 @@ public class Main extends Plugin implements Updatable, Listener {
         p = new GroupPlugin(getServer());
         addPlugin(p, savedefaults);
         p = new IRCPlugin(getServer());
+        addPlugin(p, savedefaults);
+        p = new GlobalChatPlugin(getServer());
         addPlugin(p, savedefaults);
         //--Load plugins--
 

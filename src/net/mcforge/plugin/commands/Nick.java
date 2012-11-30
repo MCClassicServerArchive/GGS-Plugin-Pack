@@ -55,7 +55,7 @@ public class Nick extends Command {
             if (who != p)
                 p.getServer().sendGlobalMessage(p.getDisplayName() + ChatColor.White + " set " + who.getName() + "'s nick to " + who.getCustomName());
             else
-                p.getServer().sendGlobalMessage(p.getName() + " set there nick to " + p.getCustomName());
+                p.getServer().sendGlobalMessage(p.getName() + " set their nick to " + p.getCustomName());
         }
     }
 

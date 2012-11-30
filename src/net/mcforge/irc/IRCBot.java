@@ -88,14 +88,14 @@ public class IRCBot implements Runnable { // TODO: add opchat chan support
 	public void run() {
 		String line;
 		while ((line = reader.nextLine()) != null && isRunning) {
-			if (line.indexOf("004") >= 0) {
+			if (line.split(" ")[1].equals("004")) {
 				handler.joinChannel(channel);
 				plugin.getConsole().sendMessage("Bot joined the channel " + channel);
 				if (identify)
 					handler.identify(password);
 				break;
 			}
-			else if (line.indexOf("433") >= 0) {
+			else if (line.split(" ")[1].equals("433")) {
 				plugin.getConsole().sendMessage("Your nickname("+ userName + ") is already in use! Assigning a random nickname...");
 				userName = "Forge" + new Random(System.currentTimeMillis()).nextInt(1000000000);
 				plugin.getConsole().sendMessage("New IRC nickname: " + userName);
@@ -111,7 +111,8 @@ public class IRCBot implements Runnable { // TODO: add opchat chan support
 			if (line.startsWith("PING ")) {
 				handler.pong(line);
 			}
-			else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel) && line.split(" ")[1] != "005") {
+			else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel.toLowerCase(Locale.ENGLISH)) && 
+					!line.split(" ")[1].equals("005")) {
 				String toSend = ChatColor.Purple + "[IRC]" +  handler.getSender(line) + ": " +  handler.getMessage(line);
 				plugin.getServer().getMessages().serverBroadcast(toSend);
 				getPlugin().getServer().Log("[IRC]" +  handler.getSender(line) + ": " +  handler.getMessage(line));
@@ -144,8 +145,6 @@ public class IRCBot implements Runnable { // TODO: add opchat chan support
 			connected = false;
 		}
 		catch(Exception ex) {
-			System.out.println("aw fuck error while disposin :<");
-			ex.printStackTrace();
 		}
 	}
 }

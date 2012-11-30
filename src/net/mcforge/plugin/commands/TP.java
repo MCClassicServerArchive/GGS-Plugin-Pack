@@ -39,6 +39,8 @@ public class TP extends PlayerCommand {
 		if (args.length == 1) {
 			Player other = player.getServer().getPlayer(args[0]);
 			if (other != null) {
+				if (player.getLevel() != other.getLevel())
+					player.changeLevel(other.getLevel());
 				player.setPos(other.getX(), other.getY(), other.getZ());
 			}
 			else {
@@ -50,6 +52,8 @@ public class TP extends PlayerCommand {
 			Player otherTPto = player.getServer().getPlayer(args[1]);
 
 			if (otherTPing != null && otherTPto != null) {
+				if (otherTPing.getLevel() != otherTPto.getLevel())
+					otherTPing.changeLevel(otherTPto.getLevel());
 				otherTPing.setPos(otherTPto.getX(), otherTPto.getY(),
 						otherTPto.getZ());
 			}
