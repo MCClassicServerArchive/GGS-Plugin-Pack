@@ -9,12 +9,12 @@ package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
-import net.mcforge.API.plugin.PlayerCommand;
+import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
 import net.mcforge.banhandler.BanHandler;
 
 @ManualLoad
-public class Ban extends PlayerCommand {
+public class Ban extends Command {
 
 	@Override
 	public String[] getShortcuts() {
@@ -37,21 +37,21 @@ public class Ban extends PlayerCommand {
 	}
 
 	@Override
-	public void execute(Player player, String[] args) {
+	public void execute(CommandExecutor player, String[] args) {
 		if (args.length != 0) {
 			if (BanHandler.banHandler.isBanned(args[0])) {
 				player.sendMessage(args[0] + " is already banned");
 				return;
 			}
-			if (!args[0].equalsIgnoreCase(player.username)) {
+			if (!args[0].equalsIgnoreCase(player.getName())) {
 				Player who = player.getServer().getPlayer(args[0]);
 				if (who != null) {
 					BanHandler.banHandler.ban(who.username);
-					player.getServer().getMessages().serverBroadcast(who.username + " has been banned by " + player.username);
+					player.getServer().getMessages().serverBroadcast(who.username + " has been banned by " + player.getName());
 				}
 				else {
 					BanHandler.banHandler.ban(args[0]);
-					player.getServer().getMessages().serverBroadcast(args[0] + " has been banned by " + player.username);
+					player.getServer().getMessages().serverBroadcast(args[0] + " has been banned by " + player.getName());
 				}
 			}
 			else {

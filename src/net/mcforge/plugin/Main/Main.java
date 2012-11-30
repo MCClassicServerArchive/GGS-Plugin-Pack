@@ -246,7 +246,7 @@ public class Main extends Plugin implements Updatable, Listener {
 
     @Override
     public String getCurrentVersion() {
-        return "1.0.0";
+        return "1.0.1";
     }
 
     @Override

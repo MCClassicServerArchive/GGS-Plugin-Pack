@@ -83,9 +83,9 @@ public class MB extends PlayerCommand {
 					if (p.getLevel().getTile(x, y, z) instanceof MessageBlock) {
 						MessageBlock pb = (MessageBlock)p.getLevel().getTile(x, y, z);
 						if (show)
-							p.SendBlockChange((short)x, (short)y, (short)z, Block.getBlock("White"));
+							p.sendBlockChange((short)x, (short)y, (short)z, Block.getBlock("White"));
 						else
-							p.SendBlockChange((short)x, (short)y, (short)z, pb);
+							p.sendBlockChange((short)x, (short)y, (short)z, pb);
 					}
 				}
 			}
