@@ -54,6 +54,10 @@ public class Give extends Command  {
 			executor.sendMessage("Please specify a valid integer!");
 			return;
 		}
+		if (amount < 0) {
+			executor.sendMessage("Please specify a positive integer!");
+			return;
+		}
 		if (who.getMoney() + amount > Integer.MAX_VALUE) {
 			executor.sendMessage("Players can't have more than 2147483647 " + executor.getServer().CurrencyName);
 			return;

@@ -13,26 +13,26 @@ import net.mcforge.server.Server;
 
 
 public class GlobalChatBot implements Runnable {
-	private final IRCHandler handler;
-	private Server s;
+	protected final IRCHandler handler;
+	protected Server s;
 
 	protected Formatter writer;
 	private Scanner reader;
 	private Socket socket;
 
-	protected String username;
 	protected final String REALNAME = "MCForge GC Bot";
+	protected String username;
 	
 	protected final String server = "irc.geekshed.net";
-	protected final String channel = "#MCForge";
+	protected final String channel = "#MCForgeGCTest";
 	protected final int port = 6667;
 
 	protected volatile boolean isRunning;
 	protected volatile boolean connected;
 	private Thread botThread;
 	
-	protected final String outgoing = "&6<[Global]";
-	private final String incoming = "&6>[Global]";
+	protected final static String outgoing = "&6<[Global]";
+	protected final static String incoming = "&6>[Global]";
 	
 	
 	public GlobalChatBot(GlobalChatPlugin plugin, Server server, String username) {
@@ -114,8 +114,7 @@ public class GlobalChatBot implements Runnable {
 					continue;
 				}
 				String toSend = incoming + handler.getSender(line) + ": &f" +  message;
-				s.sendGlobalMessage(toSend);
-				s.Log(toSend);
+				handler.messagePlayers(toSend);
 			}
 			else if (handler.hasCode(line, "474")) {
 				String providedReason = handler.getMessage(line);

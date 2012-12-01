@@ -54,6 +54,10 @@ public class Pay extends PlayerCommand  {
 			executor.sendMessage("Please specify a valid integer!");
 			return;
 		}
+		if (amount < 0) {
+			executor.sendMessage("Please specify a positive integer!");
+			return;
+		}
 		if (executor.getMoney() - amount < 0) {
 			executor.sendMessage("You don't have that much " + executor.getServer().CurrencyName);
 			return;
@@ -64,7 +68,7 @@ public class Pay extends PlayerCommand  {
 		}
 		executor.setMoney(executor.getMoney() - amount);
 		who.setMoney(who.getMoney() + amount);
-		who.getServer().sendGlobalMessage(executor.getDisplayName() + " paid " + who.getDisplayName() + " amount " + who.getServer().CurrencyName);
+		who.getServer().sendGlobalMessage(executor.getDisplayName() + " paid " + who.getDisplayName() + " " + amount + " " + who.getServer().CurrencyName);
 	}
 
 	@Override

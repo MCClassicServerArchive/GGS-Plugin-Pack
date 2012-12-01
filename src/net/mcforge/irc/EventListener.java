@@ -11,11 +11,12 @@ import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerChatEvent;
 import net.mcforge.API.server.ServerChatEvent;
+import net.mcforge.plugin.commands.Mute;
 
 public class EventListener implements Listener {
 	@EventHandler
 	public void onPlayerChat(PlayerChatEvent e) {
-		if (IRCPlugin.getBot() != null)
+		if (!Mute.muted.contains(e.getPlayer()) && IRCPlugin.getBot() != null)
 			IRCPlugin.getBot().handler.sendMessage(e.getPlayer().getName() + ": " + e.getMessage());
 	}
 	@EventHandler

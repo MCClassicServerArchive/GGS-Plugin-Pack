@@ -8,6 +8,9 @@
 package net.mcforge.globalchat;
 
 import java.io.IOException;
+import java.util.List;
+
+import net.mcforge.iomodel.Player;
 
 /**
 * This class handles communication with the IRC, and implements the needed
@@ -18,6 +21,20 @@ public class IRCHandler {
 	
 	public IRCHandler(GlobalChatBot bot) {
 		this.bot = bot;
+	}
+	
+	/**
+	 * Sends a message to all the players that aren't ignoring the Global Chat
+	 */
+	public void messagePlayers(String message) {
+		List<Player> players = bot.s.players;
+		for (int i = 0; i < players.size(); i++) {
+			if (!DataHandler.ignoringGC(players.get(i))) {
+				players.get(i).sendMessage(message);
+			}
+			else
+				players.get(i).sendMessage("You are a faggot!");
+		}
 	}
 	
 	/**

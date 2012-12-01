@@ -14,13 +14,22 @@ import java.io.IOException;
 import java.util.Random;
 
 import net.mcforge.API.ManualLoad;
+import net.mcforge.API.plugin.CommandHandler;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.server.Server;
 import net.mcforge.util.properties.Properties;
 
 @ManualLoad
 public class GlobalChatPlugin extends Plugin {
-	private GlobalChatBot gcBot;
+	protected static GlobalChatBot gcBot;
+	
+	private CommandHandler cmdHandler = getServer().getCommandHandler();
+	private CmdGC cmdGC = new CmdGC();
+	private CmdGCAgree cmdAgree = new CmdGCAgree();
+	private CmdGCIgnore cmdIgnore = new CmdGCIgnore();
+	private CmdGCInfo cmdInfo = new CmdGCInfo();
+	private CmdGCRules cmdRules = new CmdGCRules();
+	
 	@Override
 	public String getName() {
 		return "MCForge Global Chat Plugin";
@@ -41,7 +50,11 @@ public class GlobalChatPlugin extends Plugin {
 
 	@Override
 	public void onLoad(String[] args) {
-
+		cmdHandler.addCommand(cmdGC);
+		cmdHandler.addCommand(cmdAgree);
+		cmdHandler.addCommand(cmdIgnore);
+		cmdHandler.addCommand(cmdInfo);
+		cmdHandler.addCommand(cmdRules);
 		Properties p = getServer().getSystemProperties();
 	    String name = "ForgeBot" + new Random(System.currentTimeMillis()).nextInt(1000000000);
 	    boolean enabled = true;
@@ -74,7 +87,12 @@ public class GlobalChatPlugin extends Plugin {
 
 	@Override
 	public void onUnload() {
-		
+		cmdHandler.removeCommand(cmdGC);
+		cmdHandler.removeCommand(cmdAgree);
+		cmdHandler.removeCommand(cmdIgnore);
+		cmdHandler.removeCommand(cmdInfo);
+		cmdHandler.removeCommand(cmdRules);
+		gcBot.disposeBot();
 	}
 	
 	private void saveConfig() {

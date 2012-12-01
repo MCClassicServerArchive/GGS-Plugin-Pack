@@ -54,6 +54,10 @@ public class Take extends Command  {
 			executor.sendMessage("Please specify a valid integer!");
 			return;
 		}
+		if (amount < 0) {
+			executor.sendMessage("Please specify a positive integer!");
+			return;
+		}
 		if (who.getMoney() - amount < 0) {
 			executor.sendMessage("Players can't have less than 0 " + executor.getServer().CurrencyName);
 			return;

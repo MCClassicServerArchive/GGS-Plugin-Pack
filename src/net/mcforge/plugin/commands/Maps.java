@@ -41,6 +41,8 @@ public class Maps extends Command {
 		StringBuilder finalStr = new StringBuilder();
 
 		for (File f : levelFiles) {
+			if (f.getName().equals("properties"))
+				continue;
 			if (f.getName().split("\\.")[1].equals("ggs")) {
 				finalStr.append(f.getName().split("\\.")[0]);
 				finalStr.append(", ");

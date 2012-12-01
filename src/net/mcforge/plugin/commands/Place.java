@@ -13,7 +13,6 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 import net.mcforge.world.Block;
 import net.mcforge.world.Level;
-import net.mcforge.world.blocks.Unknown;
 
 @ManualLoad
 public class Place extends PlayerCommand {
