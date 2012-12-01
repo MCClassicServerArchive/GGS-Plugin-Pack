@@ -46,7 +46,7 @@ public class Mute extends Command implements Listener {
 		
 		if (muted.contains(who)) {
 			muted.remove(who);
-			who.getChat().serverBroadcast(who.getDisplayName() + ChatColor.White + " has been &un-muted");
+			who.getChat().serverBroadcast(who.getDisplayName() + ChatColor.White + " has been &8un-muted");
 		}
 		else {
 			if (arg0 instanceof Player) {
