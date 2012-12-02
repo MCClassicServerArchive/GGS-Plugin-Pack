@@ -59,6 +59,7 @@ import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
+    private static final String VERSION = "1.0.2";
     private static final String CONFIG_VERSION = "#VERSION.1";
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
@@ -243,7 +244,7 @@ public class Main extends Plugin implements Updatable, Listener {
 
     @Override
     public String getCurrentVersion() {
-        return "1.0.1";
+        return VERSION;
     }
 
     @Override
