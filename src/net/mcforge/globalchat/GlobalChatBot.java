@@ -24,7 +24,7 @@ public class GlobalChatBot implements Runnable {
 	protected String username;
 	
 	protected final String server = "irc.geekshed.net";
-	protected final String channel = "#MCForgeGCTest";
+	protected final String channel = "#MCForgeGC";
 	protected final int port = 6667;
 
 	protected volatile boolean isRunning;
