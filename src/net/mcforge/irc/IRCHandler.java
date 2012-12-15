@@ -96,6 +96,26 @@ public class IRCHandler {
 	}
 	
 	/**
+	 * Makes the bot quit from the network
+	 * 
+	 * @param quitMessage - The quit message to send
+	 */
+	public void sendQuit(String quitMessage) {
+		if (bot.connected)
+			sendRaw("QUIT :" + quitMessage);
+	}
+	
+	/**
+	 * Makes the bot leave the channel
+	 * 
+	 * @param partMessage - The part message to send
+	 */
+	public void sendPart(String partMessage) {
+		if (bot.connected)
+			sendRaw("PART " + bot.channel + " :" + partMessage);
+	}
+	
+	/**
 	 * Gets the user who said the specified line
 	 * @param line - The line to check
 	 */

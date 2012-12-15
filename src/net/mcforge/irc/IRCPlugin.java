@@ -29,6 +29,10 @@ public class IRCPlugin extends Plugin {
 		return "MCForge IRC Plugin";
 	}
 	@Override
+	public String getAuthor() {
+		return "Arrem";
+	}
+	@Override
 	public String getVersion() {
 		return "1.0.0";
 	}

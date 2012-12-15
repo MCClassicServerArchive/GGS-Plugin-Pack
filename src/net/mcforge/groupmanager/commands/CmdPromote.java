@@ -45,7 +45,7 @@ public class CmdPromote extends Command {
 	public void execute(CommandExecutor player, String[] args) {
 		if (args.length == 1)
 		{
-			if (GroupManagerAPI.PromotePlayer(args[0]))
+			if (GroupManagerAPI.promotePlayer(args[0]))
 			{
 				player.sendMessage("Promoted '" + Player.find(GroupPlugin.server, args[0]).username + "'");
 				Player.find(GroupPlugin.server, args[0]).sendMessage("You have been promoted!");

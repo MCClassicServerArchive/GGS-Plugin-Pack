@@ -138,6 +138,8 @@ public class IRCBot implements Runnable { // TODO: add opchat chan support
 
 	public void disposeBot() {
 		try {
+			handler.sendPart("");
+			handler.sendQuit("");
 			reader.close();
 			writer.close(); 
 			socket.close();

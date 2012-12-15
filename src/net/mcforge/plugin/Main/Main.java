@@ -236,7 +236,14 @@ public class Main extends Plugin implements Updatable, Listener {
     public String getName() {
         return "MCForge Defaults";
     }
-
+    @Override
+    public String getAuthor() {
+    	return "MCForge Development Team";
+    }
+    @Override
+    public String getVersion() {
+    	return VERSION;
+    }
     @Override
     public String getCheckURL() {
         return "http://update.mcforge.net/VERSION_2/defaults/current.txt";

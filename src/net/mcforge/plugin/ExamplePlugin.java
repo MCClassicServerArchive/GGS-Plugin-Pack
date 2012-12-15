@@ -6,10 +6,11 @@
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
 package net.mcforge.plugin;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.server.Server;
 
-
+@ManualLoad
 public class ExamplePlugin extends Plugin {
 
 	public ExamplePlugin(Server server) {

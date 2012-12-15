@@ -11,30 +11,33 @@
 */
 package net.mcforge.groupmanager.main;
 
+import net.mcforge.chat.ChatColor;
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 
 public class GroupActions {
 	public static boolean setGroup(String playername, String groupname)
 	{
-		Player player = GroupPlugin.Find(playername);
+		Player player = GroupPlugin.find(playername);
 		Group group = Group.find(groupname);
 		if (player != null && group != null)
 		{
 			player.setGroup(group);
+			if (player.getDisplayColor() == ChatColor.White){
+				player.setDisplayColor(group.color);
+			} 
 			return true;
 		}
 		return false;
 	}
 	public static Group getGroup(String playername)
 	{
-		return GroupPlugin.Find(playername).getGroup();
+		return GroupPlugin.find(playername).getGroup();
 	}
-	public static boolean Promote(String username)
+	public static boolean promote(String username)
 	{
 		Group startgroup = getGroup(username);
 		if (startgroup == null) { return false; }
-		//int perms = startgroup.permissionlevel;
 		Group lowestabove = null;
 		for (Group g : Group.getGroupList()) {
 			if (g.permissionlevel > startgroup.permissionlevel) {
@@ -42,16 +45,15 @@ public class GroupActions {
 				if (lowestabove.permissionlevel > g.permissionlevel) { lowestabove = g; }
 			}
 		}
-		Player p = GroupPlugin.Find(username);
+		Player p = GroupPlugin.find(username);
 		if (p == null || lowestabove == null) { return false; }
 		p.setGroup(lowestabove);
 		return true;
 	}
-	public static boolean Demote(String username)
+	public static boolean demote(String username)
 	{
 		Group startgroup = getGroup(username);
 		if (startgroup == null) { return false; }
-		//int perms = startgroup.permissionlevel;
 		Group highestbelow = null;
 		for (Group g : Group.getGroupList()) {
 			if (g.permissionlevel < startgroup.permissionlevel) {
@@ -59,7 +61,7 @@ public class GroupActions {
 				if (highestbelow.permissionlevel < g.permissionlevel) { highestbelow = g; }
 			}
 		}
-		Player p = GroupPlugin.Find(username);
+		Player p = GroupPlugin.find(username);
 		if (p == null || highestbelow == null) { return false; }
 		p.setGroup(highestbelow);
 		return true;
@@ -67,9 +69,9 @@ public class GroupActions {
 	
 	// group commands
 	
-	public static boolean createGroup(String name, int permission, boolean isop) {
-		Group g = new Group(name, permission, isop, GroupPlugin.server);
-		return Group.Add(g);
+	public static boolean createGroup(String name, ChatColor color, int permission, boolean isop) {
+		Group g = new Group(name, permission, isop, color, null, GroupPlugin.server);
+		return Group.add(g);
 	}
 	
 	public static boolean deleteGroup(String name)
