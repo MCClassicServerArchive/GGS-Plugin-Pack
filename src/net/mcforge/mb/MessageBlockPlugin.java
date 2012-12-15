@@ -34,6 +34,18 @@ import net.mcforge.world.Level;
 @ManualLoad
 public class MessageBlockPlugin extends Plugin {
 
+	@Override
+	public String getName() {
+		return "MessageBlock Plugin";
+	}
+	@Override
+	public String getAuthor() {
+		return "hypereddie10";
+	}
+	@Override
+	public String getVersion() {
+		return "1.0.0";
+	}
 	private final Events events = new Events();
 	private final MB command = new MB();
 	private final Zone command2 = new Zone();

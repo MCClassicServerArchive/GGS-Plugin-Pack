@@ -2,6 +2,7 @@ package net.mcforge.globalchat;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
@@ -10,9 +11,11 @@ import java.util.Scanner;
 
 import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
+import net.mcforge.util.WebUtils;
 
 
 public class GlobalChatBot implements Runnable {
+	private GlobalChatPlugin plugin;
 	protected final IRCHandler handler;
 	protected Server s;
 
@@ -23,8 +26,9 @@ public class GlobalChatBot implements Runnable {
 	protected final String REALNAME = "MCForge GC Bot";
 	protected String username;
 	
-	protected final String server = "irc.geekshed.net";
-	protected final String channel = "#MCForgeGC";
+	private String server = "irc.mcforge.net";
+	private String channel = "#GlobalChat";
+	private String quitMessage = "Server shutting down...";
 	protected final int port = 6667;
 
 	protected volatile boolean isRunning;
@@ -35,10 +39,26 @@ public class GlobalChatBot implements Runnable {
 	protected final static String incoming = "&6>[Global]";
 	
 	
-	public GlobalChatBot(GlobalChatPlugin plugin, Server server, String username) {
+	public GlobalChatBot(GlobalChatPlugin plugin, Server server, String username, String quitMessage) {
 		this.username = username;
+		this.quitMessage = quitMessage;
+		this.plugin = plugin;
 		s = server;
 		handler = new IRCHandler(this);
+		URL url;
+		String gcData;
+		try {
+			url = new URL("http://server.mcforge.net/gcdata");
+			gcData = WebUtils.readContentsToArray(url)[0];
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		String[] info = gcData.split("&");
+		this.server = info[0];
+		channel = info[1];
+		channel = "#SWAG";
 	}
 	
 	public void startBot() throws IOException {
@@ -62,7 +82,7 @@ public class GlobalChatBot implements Runnable {
 			}
 			else if (handler.hasCode(line, "433")) {
 				s.Log("Nickname already in use! Randomizing..");
-				username += new Random(System.currentTimeMillis()).nextInt(1000000000);
+				username = "ForgeBot" + new Random(System.currentTimeMillis()).nextInt(1000000000);
 				handler.setNick(username);
 				s.Log("New Global Chat nickname: " + username);
 			}
@@ -73,6 +93,7 @@ public class GlobalChatBot implements Runnable {
 		connected = true;
 
 		while ((line = reader.nextLine()) != null && isRunning) {
+			plugin.getServer().Log(line);
 			if (line.startsWith("PING ")) {
 				handler.pong(line);
 			}
@@ -124,16 +145,33 @@ public class GlobalChatBot implements Runnable {
 				return;
 			}
 		}
+		disposeBot();
+	}
+	public String getChannel() {
+		return channel;
 	}
 	public void disposeBot() {
-        try {
-            isRunning = false;
-            connected = false;
-            reader.close();
-            writer.close(); 
-            socket.close();
-        }
-        catch(Exception ex) {
-        }
+		handler.sendPart(quitMessage);
+		try {
+			Thread.sleep(200);
+		}
+		catch (InterruptedException e) {
+		}
+		handler.sendQuit(quitMessage);
+		try {
+			Thread.sleep(200);
+		}
+		catch (InterruptedException e) {
+		}
+		reader.close();
+		writer.close(); 
+		try {
+			socket.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		isRunning = false;
+		connected = false;
 	}
 }

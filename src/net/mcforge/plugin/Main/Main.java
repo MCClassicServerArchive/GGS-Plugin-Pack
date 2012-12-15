@@ -226,7 +226,7 @@ public class Main extends Plugin implements Updatable, Listener {
     private void addPlugin(Plugin p, boolean add) {
         if (add || (!add && load.contains(p.getName()))) {
             plugins.add(p);
-            getServer().getPluginHandler().loadPlugin(p, getServer());
+            getServer().getPluginHandler().loadPlugin(p);
             if (add)
                 load.add(p.getName());
         }
@@ -236,7 +236,14 @@ public class Main extends Plugin implements Updatable, Listener {
     public String getName() {
         return "MCForge Defaults";
     }
-
+    @Override
+    public String getAuthor() {
+    	return "MCForge Development Team";
+    }
+    @Override
+    public String getVersion() {
+    	return VERSION;
+    }
     @Override
     public String getCheckURL() {
         return "http://update.mcforge.net/VERSION_2/defaults/current.txt";

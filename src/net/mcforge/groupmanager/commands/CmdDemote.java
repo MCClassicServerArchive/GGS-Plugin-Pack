@@ -45,7 +45,7 @@ public class CmdDemote extends Command {
 	public void execute(CommandExecutor player, String[] args) {
 		if (args.length == 1)
 		{
-			if (GroupManagerAPI.DemotePlayer(args[0]))
+			if (GroupManagerAPI.demotePlayer(args[0]))
 			{
 				player.sendMessage("Demoted '" + Player.find(GroupPlugin.server, args[0]).getName() + "'");
 				Player.find(GroupPlugin.server, args[0]).sendMessage("You have been demoted!");

@@ -34,7 +34,10 @@ public class GlobalChatPlugin extends Plugin {
 	public String getName() {
 		return "MCForge Global Chat Plugin";
 	}
-
+	@Override
+	public String getAuthor() {
+		return "Arrem";
+	}
 	@Override
 	public String getVersion() {
 		return "1.0.0";
@@ -57,8 +60,10 @@ public class GlobalChatPlugin extends Plugin {
 		cmdHandler.addCommand(cmdRules);
 		Properties p = getServer().getSystemProperties();
 	    String name = "ForgeBot" + new Random(System.currentTimeMillis()).nextInt(1000000000);
+	    String quitMessage = "Server shutting down...";
 	    boolean enabled = true;
 	    if (!p.hasValue("GC-Enabled")) { 
+	    	p.addComment("GC-Enabled", "Whether the Global Chat is enabled");
 	    	p.addSetting("GC-Enabled", true);
 	    	saveConfig();
 	    }
@@ -67,14 +72,23 @@ public class GlobalChatPlugin extends Plugin {
 	    
 	    if (!p.hasValue("GC-Nickname")) {
 	    	p.addSetting("GC-Nickname", name);
+	    	p.addComment("GC-Nickname", "The nickname for the Global Chat");
 	    	saveConfig();
 	    }
 	    else
 	    	name = p.getValue("GC-Nickname");
 	    
+	    if (!p.hasValue("GC-QuitMessage")) {
+	    	p.addSetting("GC-QuitMessage", quitMessage);
+	    	p.addComment("GC-QuitMessage", "The message your bot will send on quit");
+	    	saveConfig();
+	    }
+	    else
+	    	quitMessage = p.getValue("GC-QuitMessage");
 	    if (!enabled)
 	    	return;
-		gcBot = new GlobalChatBot(this, getServer(), name);
+	    
+		gcBot = new GlobalChatBot(this, getServer(), name, quitMessage);
 		try {
 			gcBot.startBot();
 		}
@@ -87,12 +101,12 @@ public class GlobalChatPlugin extends Plugin {
 
 	@Override
 	public void onUnload() {
+		gcBot.disposeBot();
 		cmdHandler.removeCommand(cmdGC);
 		cmdHandler.removeCommand(cmdAgree);
 		cmdHandler.removeCommand(cmdIgnore);
 		cmdHandler.removeCommand(cmdInfo);
 		cmdHandler.removeCommand(cmdRules);
-		gcBot.disposeBot();
 	}
 	
 	private void saveConfig() {

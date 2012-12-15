@@ -99,7 +99,7 @@ public class IRCHandler {
 	 */
 	public void sendMessage(String message) {
 		if (bot.connected)
-			sendRaw("PRIVMSG " + bot.channel + " :" + message);
+			sendRaw("PRIVMSG " + bot.getChannel() + " :" + message);
 	}
 	
 	/**
@@ -110,6 +110,24 @@ public class IRCHandler {
 	public void privateMessage(String user, String message) {
 		if (bot.connected)
 			sendRaw("PRIVMSG " + user + " :" + message);
+	}
+	
+	/**
+	 * Makes the bot quit from the network
+	 * 
+	 * @param quitMessage - The quit message to send
+	 */
+	public void sendQuit(String quitMessage) {
+		sendRaw("QUIT :" + quitMessage);
+	}
+	
+	/**
+	 * Makes the bot leave the channel
+	 * 
+	 * @param partMessage - The part message to send
+	 */
+	public void sendPart(String partMessage) {
+		sendRaw("PART " + bot.getChannel() + " :" + partMessage);
 	}
 	
 	/**
