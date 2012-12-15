@@ -60,7 +60,7 @@ import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
     private static final String VERSION = "1.0.2";
-    private static final String CONFIG_VERSION = "#VERSION.1";
+    private static final String CONFIG_VERSION = "#VERSION.2";
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
         new Afk(),

@@ -40,7 +40,7 @@ public class Rules extends PlayerCommand  {
 	@Override
 	public void execute(Player executor, String[] args) {
 		try {
-			FileUtils.createIfNotExist("properties", "rules.txt", "No rules added yet!");
+			FileUtils.createIfNotExist("text", "rules.txt", "No rules added yet!");
 		} catch (IOException e) {
 			e.printStackTrace();
 			executor.sendMessage("Error while displaying rules!");
@@ -48,7 +48,7 @@ public class Rules extends PlayerCommand  {
 		}
 		String[] rules;
 		try {
-			rules = FileUtils.readAllLines("properties/rules.txt");
+			rules = FileUtils.readAllLines("text/rules.txt");
 		} catch (IOException e) {
 			e.printStackTrace();
 			executor.sendMessage("Error while displaying rules!");

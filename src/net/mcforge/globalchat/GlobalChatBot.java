@@ -126,14 +126,14 @@ public class GlobalChatBot implements Runnable {
 		}
 	}
 	public void disposeBot() {
-		reader.close();
-		writer.close(); 
-		try {
-			socket.close();
-		}
-		catch (IOException e) {
-		}
-		isRunning = false;
-		connected = false;
+        try {
+            isRunning = false;
+            connected = false;
+            reader.close();
+            writer.close(); 
+            socket.close();
+        }
+        catch(Exception ex) {
+        }
 	}
 }
