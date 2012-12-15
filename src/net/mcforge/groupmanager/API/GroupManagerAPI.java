@@ -81,7 +81,7 @@ public class GroupManagerAPI {
 	* @return if successful
 	*/
 	public static boolean editGroupName(String groupname, String newname) {
-		return Group.find(groupname).SetName(newname);
+		return Group.find(groupname).setName(newname);
 	}
 	/**
 	* Change a group's permission level
@@ -90,7 +90,7 @@ public class GroupManagerAPI {
 	* @return if successful
 	*/
 	public static boolean editGroupPermission(String groupname, int permissionlevel) {
-		return Group.find(groupname).SetPermission(permissionlevel);
+		return Group.find(groupname).setPermission(permissionlevel);
 	}
 	/**
 	* Change if a group is an operator group or not
@@ -99,7 +99,7 @@ public class GroupManagerAPI {
 	* @return if successful
 	*/
 	public static boolean editGroupIsOp(String groupname, boolean isop) {
-		return Group.find(groupname).SetIsOp(isop);
+		return Group.find(groupname).setIsOp(isop);
 	}
 	/**
 	* Get all groups as list

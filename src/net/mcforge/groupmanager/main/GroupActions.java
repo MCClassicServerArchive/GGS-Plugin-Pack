@@ -76,6 +76,6 @@ public class GroupActions {
 	
 	public static boolean deleteGroup(String name)
 	{
-		return Group.find(name).Delete();
+		return Group.find(name).delete();
 	}
 }
