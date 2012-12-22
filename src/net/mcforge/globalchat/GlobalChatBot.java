@@ -15,7 +15,6 @@ import net.mcforge.util.WebUtils;
 
 
 public class GlobalChatBot implements Runnable {
-	private GlobalChatPlugin plugin;
 	protected final IRCHandler handler;
 	protected Server s;
 
@@ -42,7 +41,6 @@ public class GlobalChatBot implements Runnable {
 	public GlobalChatBot(GlobalChatPlugin plugin, Server server, String username, String quitMessage) {
 		this.username = username;
 		this.quitMessage = quitMessage;
-		this.plugin = plugin;
 		s = server;
 		handler = new IRCHandler(this);
 		URL url;
@@ -93,7 +91,6 @@ public class GlobalChatBot implements Runnable {
 		connected = true;
 
 		while ((line = reader.nextLine()) != null && isRunning) {
-			plugin.getServer().Log(line);
 			if (line.startsWith("PING ")) {
 				handler.pong(line);
 			}
@@ -110,10 +107,10 @@ public class GlobalChatBot implements Runnable {
 						handler.sendMessage("^MoTD: " + s.MOTD);
 						handler.sendMessage("^Version: MCForge " + s.VERSION);
 						handler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hashCode());
-						handler.sendMessage("Players: " + s.players.size() + "/" + s.MaxPlayers);						
+						handler.sendMessage("Players: " + s.getPlayers().size() + "/" + s.MaxPlayers);						
 					}
 					else if (message.startsWith("^GETIP ") || message.startsWith("^IPGET ")) {
-						List<Player> players = s.players;
+						List<Player> players = s.getPlayers();
 						for (int i = 0; i < players.size(); i++) {
 							Player p = players.get(i);
 							if (p.username.equals(message.split(" ")[1])) {
@@ -123,7 +120,7 @@ public class GlobalChatBot implements Runnable {
 						players = null;
 					}
 					else if (message.startsWith("^ISONLINE")) {
-						List<Player> players = s.players;
+						List<Player> players = s.getPlayers();
 						for (int i = 0; i < players.size(); i++) {
 							Player p = players.get(i);
 							if (p.username.equals(message.split(" ")[1])) {

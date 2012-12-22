@@ -38,7 +38,7 @@ public class Players extends Command {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		List<Player> players = player.getServer().players;
+		List<Player> players = player.getServer().getPlayers();
 		int size = players.size();
 		if (size == 0) {
 			player.sendMessage("There are no online players!");
@@ -48,7 +48,7 @@ public class Players extends Command {
 		for (int i = 0; i < size; i++) {
 			list += players.get(i).username + ", ";
 		}
-		list = list.substring(0, list.length() - 2);
+		list = list.substring(0, list.length() - 2); //TODO: sort by group
 		player.sendMessage(String.format("There %s %d player%s online: %s",
 				size == 1 ? "is" : "are", size, size == 1 ? "" : "s", list));
 	}
