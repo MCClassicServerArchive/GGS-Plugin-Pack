@@ -37,7 +37,7 @@ public class Stop extends Command {
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
 		try {
-			player.getServer().Stop();
+			player.getServer().stop();
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
