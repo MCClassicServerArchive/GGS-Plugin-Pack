@@ -55,6 +55,7 @@ public class Color extends Command {
 		}
 		String color = args.length == 1 ? args[0] : args[1];
 		net.mcforge.chat.ChatColor parsedColor;
+		System.out.println(s.VERSION);
 		if (s.VERSION.equals("6.0.0b5")) //Time to work my gypsy magic
 		    parsedColor = net.mcforge.chat.ChatColor.parse(net.mcforge.backwardscompatible.ChatColor.fromName(color).getColor());
 		else
@@ -65,7 +66,7 @@ public class Color extends Command {
 			return;
 		}
 		who.setDisplayColor(parsedColor);
-		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the color " + parsedColor + parsedColor.getName());
+		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the color " + parsedColor + color);
 	}
 	
 	@Override

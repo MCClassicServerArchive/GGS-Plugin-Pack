@@ -94,7 +94,7 @@ public class TColor extends Command {
 			}
 		}
 		who.setPrefix(prefix);
-		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the tcolor " + parsedColor + parsedColor.getName());
+		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the tcolor " + parsedColor + color);
 	}
 	
 	@Override
