@@ -2,7 +2,6 @@ package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
-import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.Main.Main;
 import net.mcforge.server.Server;
@@ -54,7 +53,11 @@ public class TColor extends Command {
 			}
 		}
 		String color = args.length == 1 ? args[0] : args[1];
-		ChatColor parsedColor = ChatColor.fromName(color);
+		net.mcforge.chat.ChatColor parsedColor;
+        if (s.VERSION.equals("6.0.0b5")) //Time to work my gypsy magic
+            parsedColor = net.mcforge.chat.ChatColor.parse(net.mcforge.backwardscompatible.ChatColor.fromName(color).getColor());
+        else
+            parsedColor = net.mcforge.chat.ChatColor.fromName(color);
 		if (parsedColor == null) {
 			executor.sendMessage("Invalid color!");
 			Main.displayValidColors(executor);
