@@ -67,7 +67,10 @@ public class Summon extends PlayerCommand  {
 			if (who.getGroup().permissionlevel > executor.getGroup().permissionlevel) {
 				executor.sendMessage("Cannot summon players of same or equal ranks!");
 				return;
-			} //TODO: fix not working if different lvl
+			}
+			
+			if (who.getLevel() != executor.getLevel())
+					who.changeLevel(executor.getLevel());
 			who.setPos(executor.getX(), executor.getY(), executor.getZ(), executor.yaw, executor.pitch);
 			who.sendMessage("You have been summoned by " + executor.getDisplayName());
 		}

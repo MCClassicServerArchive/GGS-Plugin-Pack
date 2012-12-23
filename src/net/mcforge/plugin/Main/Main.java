@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBanRequestEvent;
@@ -29,6 +30,7 @@ import net.mcforge.irc.IRCPlugin;
 import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.plugin.commands.Afk;
 import net.mcforge.plugin.commands.Ban;
+import net.mcforge.plugin.commands.Color;
 import net.mcforge.plugin.commands.Cuboid;
 import net.mcforge.plugin.commands.Devs;
 import net.mcforge.plugin.commands.Give;
@@ -39,6 +41,7 @@ import net.mcforge.plugin.commands.Load;
 import net.mcforge.plugin.commands.Loaded;
 import net.mcforge.plugin.commands.Maps;
 import net.mcforge.plugin.commands.Me;
+import net.mcforge.plugin.commands.Money;
 import net.mcforge.plugin.commands.Mute;
 import net.mcforge.plugin.commands.Muted;
 import net.mcforge.plugin.commands.Newlvl;
@@ -53,8 +56,10 @@ import net.mcforge.plugin.commands.Save;
 import net.mcforge.plugin.commands.Spawn;
 import net.mcforge.plugin.commands.Stop;
 import net.mcforge.plugin.commands.Summon;
+import net.mcforge.plugin.commands.TColor;
 import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Take;
+import net.mcforge.plugin.commands.Title;
 import net.mcforge.plugin.commands.Unban;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
@@ -67,6 +72,7 @@ public class Main extends Plugin implements Updatable, Listener {
     private static final Command[] COMMANDS = new Command[] {
         new Afk(),
         new Ban(),
+        new Color(),
         new Cuboid(),
         new Devs(),
         new Give(),
@@ -77,6 +83,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Loaded(),
         new Maps(),
         new Me(),
+        new Money(),
         new Mute(),
         new Muted(),
         new Newlvl(),
@@ -92,6 +99,8 @@ public class Main extends Plugin implements Updatable, Listener {
         new Stop(),
         new Summon(),
         new Take(),
+        new TColor(),
+        new Title(),
         new TP(),
         new Unban()
     };
@@ -235,6 +244,15 @@ public class Main extends Plugin implements Updatable, Listener {
                 load.add(p.getName());
         }
     }
+    
+    //used for color and title
+	public static void displayValidColors(CommandExecutor executor) {
+		executor.sendMessage("Valid colors are:");
+		executor.sendMessage("&0Black &f| &1Navy &f| &2Green &f| &3Teal");
+		executor.sendMessage("&4Maroon &f| &5Purple &f| &6Gold &f| &7Silver");
+		executor.sendMessage("&8Gray &f| &9Blue &f| &aLime &f| &bAqua");
+		executor.sendMessage("&cRed &f| &dPink &f| &eYellow &f| White");
+	}
 
     @Override
     public String getName() {

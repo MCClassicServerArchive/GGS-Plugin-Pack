@@ -84,7 +84,7 @@ public class MessageBlockPlugin extends Plugin {
 		if (!getServer().getSystemProperties().hasValue("messageblock-repeat-message")) {
 			repeat = true;
 			getServer().getSystemProperties().addSetting("messageblock-repeat-message", repeat);
-			getServer().getSystemProperties().addComment("messageblock-repeat-message", "Weather or not to repeat messageblock messages if they are the same message.");
+			getServer().getSystemProperties().addComment("messageblock-repeat-message", "Whether or not to repeat messageblock messages if they are the same message.");
 			try {
 				getServer().getSystemProperties().save("system.config");
 			} catch (IOException e) {

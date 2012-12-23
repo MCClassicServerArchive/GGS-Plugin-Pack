@@ -220,7 +220,7 @@ public class BanHandler extends Plugin implements Listener {
 	}
 
 	/**
-	 * Weather the user ban has expired.
+	 * Whether the user ban has expired.
 	 * @param username
 	 *                The name of the user to check.
 	 * @return
@@ -245,7 +245,7 @@ public class BanHandler extends Plugin implements Listener {
 	}
 
 	/**
-	 * Weather or not the user is banned. This will also
+	 * Whether or not the user is banned. This will also
 	 * check if the ban is expired or not
 	 * @param name
 	 *            The name of the user to check
