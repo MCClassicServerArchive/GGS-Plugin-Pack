@@ -7,6 +7,7 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.action.Action;
 import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
+import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.world.Block;
 import net.mcforge.world.BlockUpdate;
@@ -49,7 +50,7 @@ public class Cuboid extends PlayerCommand {
             x2 = b.getX();
             y2 = b.getY();
             z2 = b.getZ();
-            
+            p.sendMessage(ChatColor.Yellow + "Please wait..");
             if (ct == CuboidType.Normal) {
                 for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); xx++) {
                     for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); yy++) {

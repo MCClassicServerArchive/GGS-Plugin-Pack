@@ -46,6 +46,8 @@ import net.mcforge.plugin.commands.Nick;
 import net.mcforge.plugin.commands.Pay;
 import net.mcforge.plugin.commands.Place;
 import net.mcforge.plugin.commands.Players;
+import net.mcforge.plugin.commands.Replace;
+import net.mcforge.plugin.commands.Replaceall;
 import net.mcforge.plugin.commands.Rules;
 import net.mcforge.plugin.commands.Save;
 import net.mcforge.plugin.commands.Spawn;
@@ -59,8 +61,8 @@ import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
-    private static final String VERSION = "1.0.2";
-    private static final String CONFIG_VERSION = "#VERSION.2";
+    private static final String VERSION = "1.1.0";
+    private static final String CONFIG_VERSION = "#VERSION.3";
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
         new Afk(),
@@ -83,6 +85,8 @@ public class Main extends Plugin implements Updatable, Listener {
         new Place(),
         new Players(),
         new Rules(),
+        new Replace(),
+        new Replaceall(),
         new Save(),
         new Spawn(),
         new Stop(),
