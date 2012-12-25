@@ -13,6 +13,7 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
 import net.mcforge.groups.Group;
+import net.mcforge.plugin.Main.Main;
 
 @ManualLoad
 public class CmdGroup extends Command {
@@ -99,6 +100,25 @@ public class CmdGroup extends Command {
 						player.sendMessage("Failed to set permission level of group!");
 					}
 				}
+				else if (args[2].startsWith("color:")) {
+					if (args[2].length() == 6) {
+						help(player);
+						return;
+					}
+					ChatColor color = ChatColor.fromName(args[2].substring(6));
+					if (color == null) {
+						player.sendMessage("Invalid group color specified!");
+						Main.displayValidColors(player);
+						return;
+					}
+					if (GroupManagerAPI.editGroupColor(args[1], color)) {
+						player.sendMessage("Successfully changed the group's color!");
+					}
+					else {
+						player.sendMessage("Failed to set color of group!");
+					}
+					
+				}
 				else if (args[2].startsWith("+op") || args[2].startsWith("-op")) {
 					if (GroupManagerAPI.editGroupIsOp(args[1], args[2].startsWith("+op"))) {
 						player.sendMessage("Successfully changed group operator status!");
@@ -111,6 +131,9 @@ public class CmdGroup extends Command {
 					help(player);
 				}
 			}
+			else {
+				help(player);
+			}
 		}
 		
 		else if (args.length == 4) {
@@ -122,6 +145,8 @@ public class CmdGroup extends Command {
 					player.sendMessage("Failed to create group!");
 				}
 			}
+			else
+				help(player);
 		}
 		
 		else if (args.length == 5) {
@@ -133,6 +158,8 @@ public class CmdGroup extends Command {
 					player.sendMessage("Failed to create group!");
 				}
 			}
+			else
+				help(player);
 		}
 		
 		else {
@@ -147,6 +174,7 @@ public class CmdGroup extends Command {
 		executor.sendMessage("/group set <groupname> <name:newname> - gives group a new name");
 		executor.sendMessage("/group set <groupname> <permission:number> - sets permission level for group");
 		executor.sendMessage("/group set <groupname> <+op/-op> - sets if group is an operator group or not");
+		executor.sendMessage("/group set <groupname> <color:newcolor> - sets the group's default color");
 		executor.sendMessage("/group info <name> - shows group information");
 		executor.sendMessage("/group list - get group list");
 	}

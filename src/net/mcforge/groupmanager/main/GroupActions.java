@@ -22,10 +22,10 @@ public class GroupActions {
 		Group group = Group.find(groupname);
 		if (player != null && group != null)
 		{
-			player.setGroup(group);
-			if (player.getDisplayColor() == ChatColor.White){
+			if (player.getDisplayColor() == player.getGroup().color){
 				player.setDisplayColor(group.color);
 			} 
+			player.setGroup(group);
 			return true;
 		}
 		return false;

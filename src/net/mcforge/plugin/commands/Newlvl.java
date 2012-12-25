@@ -73,8 +73,8 @@ public class Newlvl extends Command {
 		executor.sendMessage("/newlvl <name> - creates a new 64x64x64 level");
 		String typeList = "";
 		List<Generator> gens = executor.getServer().getGeneratorHandler().getGenerators();
-		for (int i = 0; i < gens.size(); i++) { //TODO make messages return null
-			typeList += gens.get(i) + ", ";
+		for (int i = 0; i < gens.size(); i++) {
+			typeList += gens.get(i).getName() + ", ";
 		}
 		typeList = typeList.substring(0, typeList.length() - 2);
 		executor.sendMessage("Types: " + typeList);
@@ -82,7 +82,7 @@ public class Newlvl extends Command {
 
 	private void createLevel(CommandExecutor player, String name, short w, short h, short l, Generator gen) {
 		LevelHandler handler = player.getServer().getLevelHandler();
-		//handler.loadLevels();
+
 		if (handler.findLevel(name) == null) {
 			player.sendMessage(ChatColor.Yellow + "Creating " + ChatColor.White + name + "," + ChatColor.Yellow + " please wait...");
 			handler.newLevel(name, w, h, l, gen);
