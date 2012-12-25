@@ -161,7 +161,6 @@ public class Main extends Plugin implements Updatable, Listener {
         p = new GlobalChatPlugin(getServer());
         addPlugin(p, savedefaults);
         //--Load plugins--
-
         getServer().Log("MCForge Defaults loaded!");
         if (savedefaults) {
             try {
