@@ -7,15 +7,12 @@
  ******************************************************************************/
 package net.mcforge.plugin.commands;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Locale;
+import java.util.List;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
-import net.mcforge.server.Server;
 import net.mcforge.world.Generator;
 import net.mcforge.world.LevelHandler;
 import net.mcforge.world.generator.FlatGrass;
@@ -55,24 +52,12 @@ public class Newlvl extends Command {
 			gen = new FlatGrass(player.getServer());
 		}
 		else if (args.length == 5) {
-			try {
-				Class<?> _class = Class.forName("net.mcforge.world.generator." + getGoodFormat(args[4]));
-				if (Generator.class.isAssignableFrom(_class)) {
-					Constructor<?> construct = _class.getConstructor(Server.class);
-					gen = (Generator)construct.newInstance(player.getServer());
-				}
-			} catch (ClassNotFoundException e) {
-			} catch (NoSuchMethodException e) {
-			} catch (SecurityException e) {
-			} catch (InstantiationException e) {
-			} catch (IllegalAccessException e) {
-			} catch (IllegalArgumentException e) {
-			} catch (InvocationTargetException e) {
-			}
+		    gen = player.getServer().getGeneratorHandler().findGenerator(args[4]);
 			if (gen == null) {
 				gen = new FlatGrass(player.getServer());
 				player.sendMessage("The type " + args[4] + " could not be found..");
-				player.sendMessage("Defaulting to FlatGrass");
+				help(player);
+				return;
 			}
 		}
 		else {
@@ -86,9 +71,13 @@ public class Newlvl extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/newlvl <name> <w> <h> <l> [type] - creates a new level with the specified dimensions");
 		executor.sendMessage("/newlvl <name> - creates a new 64x64x64 level");
-		executor.sendMessage("Types: ");
-		executor.sendMessage("Flat");
-		executor.sendMessage("Island");
+		String typeList = "";
+		List<Generator> gens = executor.getServer().getGeneratorHandler().getGenerators();
+		for (int i = 0; i < gens.size(); i++) { //TODO make messages return null
+			typeList += gens.get(i) + ", ";
+		}
+		typeList = typeList.substring(0, typeList.length() - 2);
+		executor.sendMessage("Types: " + typeList);
 	}
 
 	private void createLevel(CommandExecutor player, String name, short w, short h, short l, Generator gen) {
@@ -103,9 +92,4 @@ public class Newlvl extends Command {
 			player.sendMessage(ChatColor.Dark_Red + "Level \"" + name + "\" already exists!");
 		}
 	}
-	private String getGoodFormat(String s) {
-		String temp = s.toLowerCase(Locale.ENGLISH);
-		return temp.substring(0, 1).toUpperCase() + temp.substring(1);
-	}
 }
-

@@ -29,7 +29,20 @@ import net.mcforge.server.Server;
 import net.mcforge.util.FileUtils;
 
 public class BanHandler extends Plugin implements Listener {
-
+	
+	@Override
+	public String getName() {
+		return "BanHandler";
+	}
+	@Override
+	public String getVersion() {
+		return "1.0.0";
+	}
+	@Override
+	public String getAuthor() {
+		return "MCForge Dev Team"; //I have no idea who made the plugin, feel free to change the name
+	}
+	
 	public BanHandler(Server server) {
 		super(server);
 		this.server = server;
