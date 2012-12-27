@@ -10,14 +10,15 @@ package net.mcforge.plugin.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.world.Level;
 import net.mcforge.world.LevelHandler;
 
 @ManualLoad
-public class Loaded extends Command {
+public class Loaded extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
-		return new String[0];
+		return new String[] { "levels" };
 	}
 
 	@Override
@@ -52,5 +53,10 @@ public class Loaded extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/loaded - shows the currently loaded levels");
 	}
+
+    @Override
+    public String getType() {
+        return "information";
+    }
 }
 

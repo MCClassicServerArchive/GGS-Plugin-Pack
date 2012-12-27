@@ -14,9 +14,10 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Kick extends Command {
+public class Kick extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "k" };
@@ -70,4 +71,9 @@ public class Kick extends Command {
 	public void help(CommandExecutor player) {
 		player.sendMessage("/kick <player> [reason] - kicks the specified player with the specified reason");
 	}
+
+    @Override
+    public String getType() {
+        return "moderation";
+    }
 }

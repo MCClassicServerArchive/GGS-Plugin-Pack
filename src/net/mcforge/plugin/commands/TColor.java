@@ -1,12 +1,15 @@
 package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.Main.Main;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.server.Server;
 
-public class TColor extends Command {
+@ManualLoad
+public class TColor extends Command implements HelpItem {
 
 	@Override
 	public String getName() {
@@ -104,4 +107,9 @@ public class TColor extends Command {
 			executor.sendMessage("/tcolor <color> - changes your title color");
 		Main.displayValidColors(executor);
 	}
+
+    @Override
+    public String getType() {
+        return "personalization";
+    }
 }

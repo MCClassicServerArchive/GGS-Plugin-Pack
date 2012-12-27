@@ -11,11 +11,12 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.world.Block;
 import net.mcforge.world.Level;
 
 @ManualLoad
-public class Place extends PlayerCommand {
+public class Place extends PlayerCommand implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "pl" };
@@ -102,4 +103,9 @@ public class Place extends PlayerCommand {
 		executor.sendMessage("/place <x> <y> <z> - places a stone block at the specified location");
 		executor.sendMessage("/place <x> <y> <z> <block> - places the specified block at the specified location");
 	}
+
+    @Override
+    public String getType() {
+        return "build";
+    }
 }

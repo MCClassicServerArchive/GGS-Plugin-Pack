@@ -13,9 +13,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Summon extends PlayerCommand  {
+public class Summon extends PlayerCommand implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "s" };
@@ -81,5 +82,10 @@ public class Summon extends PlayerCommand  {
 		executor.sendMessage("/summon <player> - summons the specified player to you");
 		executor.sendMessage("/summon all - summons every player on the same level to you");
 	}
+
+    @Override
+    public String getType() {
+        return "other";
+    }
 }
 

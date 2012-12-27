@@ -160,10 +160,13 @@ public class GlobalChatBot implements Runnable {
 		}
 		catch (InterruptedException e) {
 		}
-		reader.close();
-		writer.close(); 
+		if (reader != null)
+		    reader.close();
+		if (writer != null)
+		    writer.close(); 
 		try {
-			socket.close();
+		    if (socket != null)
+		        socket.close();
 		}
 		catch (IOException e) {
 			e.printStackTrace();

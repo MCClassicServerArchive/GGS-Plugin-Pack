@@ -13,9 +13,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Muted extends Command  {
+public class Muted extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -54,8 +55,12 @@ public class Muted extends Command  {
   */
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/take <player> <amount> - takes the specified amount of " + 
-	                         executor.getServer().CurrencyName + " from the specified player!");
+		executor.sendMessage("/muted - Shows who is muted on the server");
 	}
+
+    @Override
+    public String getType() {
+        return "moderation";
+    }
 }
 

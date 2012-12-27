@@ -10,10 +10,12 @@ package net.mcforge.plugin.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.plugin.help.HelpItem;
+
 import java.io.IOException;
 
 @ManualLoad
-public class Stop extends Command {
+public class Stop extends Command implements HelpItem {
 	@Override
 	public String getName() {
 		return "stop";
@@ -51,5 +53,10 @@ public class Stop extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/stop - shuts the server down");
 	}
+
+    @Override
+    public String getType() {
+        return "mod";
+    }
 }
 

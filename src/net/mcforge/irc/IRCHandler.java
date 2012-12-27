@@ -26,6 +26,8 @@ public class IRCHandler {
 	 * @param message - the message to send
 	 */
 	protected void sendRaw(String message) {
+	    if (bot == null || bot.writer == null)
+	        return;
 		try {
 			bot.writer.out().append(message + "\r\n");
 		}

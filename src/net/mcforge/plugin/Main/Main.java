@@ -21,6 +21,7 @@ import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
 import net.mcforge.API.player.PlayerBanRequestEvent;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.API.plugin.CommandLoadEvent;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.banhandler.BanHandler;
 import net.mcforge.chat.ChatColor;
@@ -61,13 +62,16 @@ import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Take;
 import net.mcforge.plugin.commands.Title;
 import net.mcforge.plugin.commands.Unban;
+import net.mcforge.plugin.commands.Whisper;
+import net.mcforge.plugin.help.HelpItemManager;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
-    private static final String VERSION = "1.1.0";
-    private static final String CONFIG_VERSION = "#VERSION.3";
+    private static final String VERSION = "1.2.0";
+    private static final String CONFIG_VERSION = "#VERSION.4";
+    public static final HelpItemManager helpmanager = new HelpItemManager();
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
         new Afk(),
@@ -102,7 +106,8 @@ public class Main extends Plugin implements Updatable, Listener {
         new TColor(),
         new Title(),
         new TP(),
-        new Unban()
+        new Unban(),
+        new Whisper()
     };
     private static final ArrayList<Plugin> plugins = new ArrayList<Plugin>();
     public Main(Server server) {
@@ -148,6 +153,7 @@ public class Main extends Plugin implements Updatable, Listener {
 
     @Override
     public void onLoad(String[] arg0) {
+        helpmanager.init(getServer());
         boolean savedefaults = true;
         try {
             savedefaults = !loadOptions();
@@ -198,11 +204,6 @@ public class Main extends Plugin implements Updatable, Listener {
         new File("properties/mcforge_plugin.config").createNewFile();
         PrintWriter out = new PrintWriter("properties/mcforge_plugin.config");
         out.println(CONFIG_VERSION);
-        out.println("#Here you can enable and disable plugins that are loaded");
-        out.println("#By the mcforge plugin.");
-        out.println("#To disable a plugin/command, simply put a # infront of it.");
-        out.println("#You can also remove the line, but then you might forget");
-        out.println("#The command/plugin name if you ever want to enable it again :P");
         for (String s : data) {
             out.println(s);
         }
@@ -211,6 +212,7 @@ public class Main extends Plugin implements Updatable, Listener {
 
     @Override
     public void onUnload() {
+        helpmanager.deinit();
         unloadCommands(COMMANDS);
 
         //--Unload plugins--
@@ -224,8 +226,18 @@ public class Main extends Plugin implements Updatable, Listener {
         for (Command c : commands) {
             if (add)
                 load.add(c.getName());
-            if ((!add && load.contains(c.getName())) || add)
+            if ((!add && load.contains(c.getName())) || add) {
                 getServer().getCommandHandler().addCommand(c);
+                try {
+                    if (getServer().VERSION_NUMBER < 600.7) {
+                        CommandLoadEvent cle = new CommandLoadEvent(c, getServer());
+                        getServer().getEventSystem().callEvent(cle);
+                    }
+                } catch (Exception e) {
+                    CommandLoadEvent cle = new CommandLoadEvent(c, getServer());
+                    getServer().getEventSystem().callEvent(cle);
+                }
+            }
         }
     }
 

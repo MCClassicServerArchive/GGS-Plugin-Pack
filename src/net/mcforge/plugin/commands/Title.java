@@ -1,11 +1,13 @@
 package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.server.Server;
-
-public class Title extends Command {
+@ManualLoad
+public class Title extends Command implements HelpItem {
 
 	@Override
 	public String getName() {
@@ -91,4 +93,9 @@ public class Title extends Command {
 		if (executor instanceof Player)
 			executor.sendMessage("/title <title> - changes your title");
 	}
+
+    @Override
+    public String getType() {
+        return "personalization";
+    }
 }

@@ -12,9 +12,10 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Me extends PlayerCommand {
+public class Me extends PlayerCommand implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -49,4 +50,9 @@ public class Me extends PlayerCommand {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("What do you need help with, m'boy? Are you stuck down a well?");
 	}
+
+    @Override
+    public String getType() {
+        return "other";
+    }
 }

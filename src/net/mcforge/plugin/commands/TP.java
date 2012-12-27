@@ -11,9 +11,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class TP extends PlayerCommand {
+public class TP extends PlayerCommand implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -72,5 +73,10 @@ public class TP extends PlayerCommand {
 		executor.sendMessage("/tp <player> - teleports you to a player");
 		executor.sendMessage("/tp <player1> <player2> - teleports player1 to player2");
 	}
+
+    @Override
+    public String getType() {
+        return "other";
+    }
 }
 

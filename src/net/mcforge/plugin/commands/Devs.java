@@ -12,10 +12,11 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.server.Server;
 
 @ManualLoad
-public class Devs extends PlayerCommand  {
+public class Devs extends PlayerCommand implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "devs" };
@@ -48,5 +49,10 @@ public class Devs extends PlayerCommand  {
 		executor.sendMessage("/developers - shows the MCForge developer list");
 		executor.sendMessage("Shortcuts: /devs");
 	}
+
+    @Override
+    public String getType() {
+        return "information";
+    }
 }
 

@@ -12,10 +12,11 @@ import java.io.IOException;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.world.Level;
 
 @ManualLoad
-public class Save extends Command {
+public class Save extends Command implements HelpItem {
 
 	@Override
 	public void execute(CommandExecutor arg0, String[] arg1) {
@@ -72,6 +73,11 @@ public class Save extends Command {
 	public boolean isOpCommandDefault() {
 		return true;
 	}
+
+    @Override
+    public String getType() {
+        return "mod";
+    }
 
 }
 

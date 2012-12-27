@@ -1,11 +1,13 @@
 package net.mcforge.plugin.commands;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
-
-public class Nick extends Command {
+import net.mcforge.plugin.help.HelpItem;
+@ManualLoad
+public class Nick extends Command implements HelpItem {
 
     @Override
     public void execute(CommandExecutor ce, String[] args) {
@@ -87,6 +89,11 @@ public class Nick extends Command {
     @Override
     public boolean isOpCommandDefault() {
         return false;
+    }
+
+    @Override
+    public String getType() {
+        return "personalization";
     }
 
 }

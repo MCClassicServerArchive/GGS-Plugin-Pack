@@ -13,9 +13,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Players extends Command {
+public class Players extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "online", "who" };
@@ -58,4 +59,9 @@ public class Players extends Command {
 		executor.sendMessage("/players - shows the list of online players");
 		executor.sendMessage("Shortcuts: /online, /who");
 	}
+
+    @Override
+    public String getType() {
+        return "information";
+    }
 }

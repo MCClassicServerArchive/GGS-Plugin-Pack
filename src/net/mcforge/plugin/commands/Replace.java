@@ -5,15 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.action.Action;
 import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.world.Block;
 import net.mcforge.world.BlockUpdate;
-
-public class Replace extends PlayerCommand {
+@ManualLoad
+public class Replace extends PlayerCommand implements HelpItem {
 
     @Override
     public void execute(Player p, String[] args) {
@@ -104,6 +106,11 @@ public class Replace extends PlayerCommand {
     @Override
     public boolean runInSeperateThread() {
         return true;
+    }
+
+    @Override
+    public String getType() {
+        return "build";
     }
 
 }

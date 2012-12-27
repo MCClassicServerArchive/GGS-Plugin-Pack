@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.mcforge.API.CommandExecutor;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.action.Action;
 import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.world.Block;
 import net.mcforge.world.BlockUpdate;
-
-public class Cuboid extends PlayerCommand {
+@ManualLoad
+public class Cuboid extends PlayerCommand implements HelpItem {
 
     Block block;
     @Override
@@ -248,5 +250,10 @@ public class Cuboid extends PlayerCommand {
                 return Random;
             return Normal;
         }
+    }
+
+    @Override
+    public String getType() {
+        return "build";
     }
 }

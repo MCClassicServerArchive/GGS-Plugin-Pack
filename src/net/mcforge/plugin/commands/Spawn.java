@@ -11,9 +11,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Spawn extends PlayerCommand
+public class Spawn extends PlayerCommand implements HelpItem
 {
 	@Override
 	public String[] getShortcuts()
@@ -49,5 +50,10 @@ public class Spawn extends PlayerCommand
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/spawn - Sends you to the spawn of the current map.");
 	}
+
+    @Override
+    public String getType() {
+        return "mod";
+    }
 }
 

@@ -11,12 +11,13 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.world.LevelHandler;
 
 import java.io.File;
 
 @ManualLoad
-public class Load extends Command {
+public class Load extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -60,5 +61,10 @@ public class Load extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/load - Loads an existing level");
 	}
+
+    @Override
+    public String getType() {
+        return "mod";
+    }
 }
 

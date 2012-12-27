@@ -11,9 +11,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Afk extends PlayerCommand
+public class Afk extends PlayerCommand implements HelpItem
 {
 	@Override
 	public String[] getShortcuts()
@@ -58,5 +59,10 @@ public class Afk extends PlayerCommand
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/afk - marks you as afk or back");
 	}
+
+    @Override
+    public String getType() {
+        return "information";
+    }
 }
 

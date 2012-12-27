@@ -11,9 +11,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Give extends Command  {
+public class Give extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -71,5 +72,10 @@ public class Give extends Command  {
 		executor.sendMessage("/give <player> <amount> - gives the specified amount of " + 
 	                         executor.getServer().CurrencyName + " to the specified player!");
 	}
+
+    @Override
+    public String getType() {
+        return "eco";
+    }
 }
 

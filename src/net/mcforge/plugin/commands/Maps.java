@@ -10,10 +10,12 @@ package net.mcforge.plugin.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.plugin.help.HelpItem;
+
 import java.io.File;
 
 @ManualLoad
-public class Maps extends Command {
+public class Maps extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -56,5 +58,10 @@ public class Maps extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/maps - shows all the maps the server has");
 	}
+
+    @Override
+    public String getType() {
+        return "information";
+    }
 }
 

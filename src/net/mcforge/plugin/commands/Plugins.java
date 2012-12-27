@@ -17,10 +17,11 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.chat.Messages;
+import net.mcforge.plugin.help.HelpItem;
 
 
 @ManualLoad
-public class Plugins extends Command  {
+public class Plugins extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -103,5 +104,10 @@ public class Plugins extends Command  {
 		}
 		return Messages.join(toJoin.toArray(new String[toJoin.size()]), separator);
 	}
+
+    @Override
+    public String getType() {
+        return "information";
+    }
 }
 

@@ -12,13 +12,15 @@ import java.util.ArrayList;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.EventHandler;
 import net.mcforge.API.Listener;
+import net.mcforge.API.ManualLoad;
 import net.mcforge.API.player.PlayerChatEvent;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.server.Server;
-
-public class Mute extends Command implements Listener {
+@ManualLoad
+public class Mute extends Command implements Listener, HelpItem {
 
 	boolean init;
 	public static ArrayList<Player> muted = new ArrayList<Player>();
@@ -100,5 +102,10 @@ public class Mute extends Command implements Listener {
 			event.setCancel(true);
 		}
 	}
+
+    @Override
+    public String getType() {
+        return "moderation";
+    }
 
 }

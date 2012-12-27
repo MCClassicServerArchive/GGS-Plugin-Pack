@@ -13,12 +13,13 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 import net.mcforge.server.Server;
 import net.mcforge.world.Level;
 import net.mcforge.world.LevelHandler;
 
 @ManualLoad
-public class Goto extends PlayerCommand {
+public class Goto extends PlayerCommand implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "g" };
@@ -84,5 +85,10 @@ public class Goto extends PlayerCommand {
 		if (executor.getServer().loadOnGoto)
 			executor.sendMessage("Server will automatically load the level if it isn't already loaded!");
 	}
+
+    @Override
+    public String getType() {
+        return "other";
+    }
 }
 

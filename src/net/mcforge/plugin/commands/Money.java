@@ -11,9 +11,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Money extends Command  {
+public class Money extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -64,4 +65,9 @@ public class Money extends Command  {
 		if (executor instanceof Player)
 			executor.sendMessage("/money - shows your money");
 	}
+
+    @Override
+    public String getType() {
+        return "eco";
+    }
 }

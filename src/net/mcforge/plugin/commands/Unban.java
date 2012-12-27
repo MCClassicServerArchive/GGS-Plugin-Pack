@@ -11,9 +11,10 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.banhandler.BanHandler;
+import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Unban extends Command {
+public class Unban extends Command implements HelpItem {
 
 	@Override
 	public String[] getShortcuts() {
@@ -55,5 +56,10 @@ public class Unban extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/unban <player> - unbans a banned player");
 	}
+
+    @Override
+    public String getType() {
+        return "mod";
+    }
 }
 
