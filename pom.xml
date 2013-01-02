@@ -18,6 +18,12 @@
       </plugin>
     </plugins>
   </build>
+  <repository>
+    <repository>
+      <id>MCForge</id>
+      <url>http://ci.battlenexus.net:9090/plugin/repository/project/MCForge-Core/LastSuccessful/repository/</url>
+    </repository>
+  </repository>
   <dependencies>
    <dependency>
       <groupId>mysql</groupId>
@@ -39,7 +45,6 @@
    	<groupId>net.mcforge</groupId>
    	<artifactId>MCForge</artifactId>
    	<version>6.0.0-beta7-SNAPSHOT</version>
-   	<scope>provided</scope>
    </dependency>
   </dependencies>  
 </project>
