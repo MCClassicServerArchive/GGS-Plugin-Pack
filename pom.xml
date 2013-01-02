@@ -18,11 +18,11 @@
       </plugin>
     </plugins>
   </build>
-  <repositorys>
+  <repositories>
     <repository>
       <id>MCForge</id>
       <url>http://ci.battlenexus.net:9090/plugin/repository/project/MCForge-Core/LastSuccessful/repository/</url>
-    </repository>
+    </repositories>
   </repositorys>
   <dependencies>
    <dependency>
