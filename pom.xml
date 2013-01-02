@@ -18,12 +18,12 @@
       </plugin>
     </plugins>
   </build>
-  <repository>
+  <repositorys>
     <repository>
       <id>MCForge</id>
       <url>http://ci.battlenexus.net:9090/plugin/repository/project/MCForge-Core/LastSuccessful/repository/</url>
     </repository>
-  </repository>
+  </repositorys>
   <dependencies>
    <dependency>
       <groupId>mysql</groupId>
