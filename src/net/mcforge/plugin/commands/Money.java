@@ -56,7 +56,7 @@ public class Money extends Command implements HelpItem {
 			}
 		}
 		
-		executor.sendMessage(who.getName() + " has &6" + who.getValue("mcf_money") + " " + executor.getServer().CurrencyName);
+		executor.sendMessage(who.getName() + " has &6" + who.getAttribute("mcf_money") + " " + executor.getServer().CurrencyName);
 	}
 
 	@Override

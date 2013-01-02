@@ -74,6 +74,6 @@ public class Kick extends Command implements HelpItem {
 
     @Override
     public String getType() {
-        return "moderation";
+        return "mod";
     }
 }

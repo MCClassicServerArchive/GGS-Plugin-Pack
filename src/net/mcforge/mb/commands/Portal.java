@@ -72,8 +72,8 @@ public class Portal extends PlayerCommand {
 	
 	public void show(Player p) {
 		boolean show = false;
-		if (p.hasValue("showportal")) {
-			show = p.getValue("showportal");
+		if (p.hasAttribute("showportal")) {
+			show = p.getAttribute("showportal");
 		}
 		show = !show;
 		for (int x = 0; x < p.getLevel().width; x++) {
@@ -90,7 +90,7 @@ public class Portal extends PlayerCommand {
 			}
 		}
 		p.sendMessage("Now " + (show ? "showing" : "hiding") + " portals");
-		p.setValue("showportal", show);
+		p.setAttribute("showportal", show);
 	}
 
 	public class Run extends Thread {

@@ -12,48 +12,48 @@ public abstract class DataHandler {
 	protected final static String ignoring = "gc_ignoring";
 	
 	public static void preparePlayer(Player p) {
-		if (!p.hasValue(readRules))
-			p.setValue(readRules, false);
-		if (!p.hasValue(agreed))
-			p.setValue(agreed, false);
-		if (!p.hasValue(ignoring))
-			p.setValue(ignoring, false);
+		if (!p.hasAttribute(readRules))
+			p.setAttribute(readRules, false);
+		if (!p.hasAttribute(agreed))
+			p.setAttribute(agreed, false);
+		if (!p.hasAttribute(ignoring))
+			p.setAttribute(ignoring, false);
 	}
 	
 	public static boolean readGCRules(Player p) {
-		if (!p.hasValue(readRules))
-			p.setValue(readRules, false);
-		return p.getValue(readRules);
+		if (!p.hasAttribute(readRules))
+			p.setAttribute(readRules, false);
+		return p.getAttribute(readRules);
 	}
 	
 	public static boolean agreedToRules(Player p) {
-		if (!p.hasValue(agreed))
-			p.setValue(agreed, false);
+		if (!p.hasAttribute(agreed))
+			p.setAttribute(agreed, false);
 		
-		return p.getValue(agreed);
+		return p.getAttribute(agreed);
 	}
 	
 	public static boolean ignoringGC(Player p) {
-		if (!p.hasValue(ignoring))
-			p.setValue(ignoring, false);
+		if (!p.hasAttribute(ignoring))
+			p.setAttribute(ignoring, false);
 		
-		return p.getValue(ignoring);
+		return p.getAttribute(ignoring);
 	}
 	
-	public static synchronized void setValue(Player p, String identKey, Object value, boolean save) {
-		p.setValue(identKey, value); //i like making my saving synced, dun judge :<
+	public static synchronized void setValue(Player p, String identKey, Object Attribute, boolean save) {
+		p.setAttribute(identKey, Attribute); //i like making my saving synced, dun judge :<
 		if (save)
 			saveValue(p, identKey);
 	}
 	
-	public static synchronized void setValue(Player p, String identKey, Object value) {
-		setValue(p, identKey, value, false);
+	public static synchronized void setValue(Player p, String identKey, Object Attribute) {
+		setValue(p, identKey, Attribute, false);
 	}
 	public static void saveValue(Player p, String identKey) {
-		if (!p.hasValue(identKey))
+		if (!p.hasAttribute(identKey))
 			return;
 		try {
-			p.saveValue(identKey);
+			p.saveAttribute(identKey);
 		}
 		catch (NotSerializableException e) {
 			e.printStackTrace();

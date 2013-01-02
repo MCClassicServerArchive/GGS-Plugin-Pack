@@ -60,7 +60,7 @@ public class Muted extends Command implements HelpItem {
 
     @Override
     public String getType() {
-        return "moderation";
+        return "mod";
     }
 }
 

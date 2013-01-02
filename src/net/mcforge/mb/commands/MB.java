@@ -73,8 +73,8 @@ public class MB extends PlayerCommand {
 	
 	private void show(Player p) {
 		boolean show = false;
-		if (p.hasValue("showmb")) {
-			show = p.getValue("showmb");
+		if (p.hasAttribute("showmb")) {
+			show = p.getAttribute("showmb");
 		}
 		show = !show;
 		for (int x = 0; x < p.getLevel().width; x++) {
@@ -91,7 +91,7 @@ public class MB extends PlayerCommand {
 			}
 		}
 		p.sendMessage("Now " + (show ? "showing" : "hiding") + " messageblocks");
-		p.setValue("showmb", show);
+		p.setAttribute("showmb", show);
 	}
 	
 	private class Run extends Thread {

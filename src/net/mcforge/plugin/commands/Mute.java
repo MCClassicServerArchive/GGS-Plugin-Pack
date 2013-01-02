@@ -105,7 +105,7 @@ public class Mute extends Command implements Listener, HelpItem {
 
     @Override
     public String getType() {
-        return "moderation";
+        return "mod";
     }
 
 }
