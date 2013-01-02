@@ -22,8 +22,8 @@
     <repository>
       <id>MCForge</id>
       <url>http://ci.battlenexus.net:9090/plugin/repository/project/MCForge-Core/LastSuccessful/repository/</url>
-    </repositories>
-  </repositorys>
+    </repository>
+  </repositories>
   <dependencies>
    <dependency>
       <groupId>mysql</groupId>
