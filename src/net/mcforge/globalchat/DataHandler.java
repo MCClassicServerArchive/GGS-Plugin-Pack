@@ -23,21 +23,21 @@ public abstract class DataHandler {
 	public static boolean readGCRules(Player p) {
 		if (!p.hasAttribute(readRules))
 			p.setAttribute(readRules, false);
-		return p.getAttribute(readRules);
+		return ((Boolean)(p.getAttribute(readRules))).booleanValue();
 	}
 	
 	public static boolean agreedToRules(Player p) {
 		if (!p.hasAttribute(agreed))
 			p.setAttribute(agreed, false);
 		
-		return p.getAttribute(agreed);
+		return ((Boolean)(p.getAttribute(agreed))).booleanValue();
 	}
 	
 	public static boolean ignoringGC(Player p) {
 		if (!p.hasAttribute(ignoring))
 			p.setAttribute(ignoring, false);
 		
-		return p.getAttribute(ignoring);
+		return ((Boolean)(p.getAttribute(ignoring))).booleanValue();
 	}
 	
 	public static synchronized void setValue(Player p, String identKey, Object Attribute, boolean save) {
