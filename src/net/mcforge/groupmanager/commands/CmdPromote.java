@@ -6,9 +6,9 @@
  * http://www.gnu.org/licenses/gpl.html
  ******************************************************************************/
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package net.mcforge.groupmanager.commands;
 
 import net.mcforge.API.CommandExecutor;
@@ -42,22 +42,28 @@ public class CmdPromote extends Command {
 	}
 
 	@Override
-	public void execute(CommandExecutor player, String[] args) {
-		if (args.length == 1)
-		{
-			if (GroupManagerAPI.promotePlayer(args[0]))
-			{
-				player.sendMessage("Promoted '" + Player.find(GroupPlugin.server, args[0]).username + "'");
-				Player.find(GroupPlugin.server, args[0]).sendMessage("You have been promoted!");
+	public void execute(CommandExecutor executor, String[] args) {
+		if (args.length == 1) {
+			Player who = executor.getServer().findPlayer(args[0]);
+			if (executor.getServer().findPlayer(args[0]) == executor) {
+				executor.sendMessage("You can't promote yourself!");
+				return;
 			}
-			else
-			{
-				player.sendMessage("Couldn't promote '" + args[0] + "'");
+			if (who.getGroup().permissionlevel >= executor.getGroup().permissionlevel) {
+				executor.sendMessage("You can't promote players of the equal or higher rank!");
+				return;
+			}
+
+			if (GroupManagerAPI.promotePlayer(args[0])) {
+				executor.sendMessage("Promoted '" + Player.find(GroupPlugin.server, args[0]).username + "'");
+				Player.find(GroupPlugin.server, args[0]).sendMessage("You have been promoted to " + executor.getGroup().name + "!");
+			}
+			else {
+				executor.sendMessage("Couldn't promote '" + args[0] + "'");
 			}
 		}
-		else
-		{
-			help(player);
+		else {
+			help(executor);
 			return;
 		}
 	}
@@ -66,6 +72,5 @@ public class CmdPromote extends Command {
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/promote <player> - promotes a player");
 	}
-	
-}
 
+}

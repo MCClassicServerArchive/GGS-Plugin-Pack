@@ -43,22 +43,30 @@ public class CmdSetGroup extends Command {
 	}
 
 	@Override
-	public void execute(CommandExecutor player, String[] args) {
+	public void execute(CommandExecutor executor, String[] args) {
 		if (args.length == 2)
 		{
-			if (GroupManagerAPI.setPlayerGroup(args[0], args[1]))
-			{
-				player.sendMessage("Successfully changed rank!");
+			Player who = executor.getServer().findPlayer(args[0]);
+			if (executor.getServer().findPlayer(args[0]) == executor) {
+				executor.sendMessage("You can't change your own rank!");
+				return;
+			}
+			if (who.getGroup().permissionlevel >= executor.getGroup().permissionlevel) {
+				executor.sendMessage("You can't rank players of the equal or higher rank!");
+				return;
+			}
+			
+			if (GroupManagerAPI.setPlayerGroup(args[0], args[1])) {
+				executor.sendMessage("Successfully changed rank!");
 				Player.find(GroupPlugin.server, args[0]).sendMessage("Your rank was changed to " + Group.find(args[1]).name);
 			}
-			else
-			{
-				player.sendMessage("Failed to set player's rank!");
+			else {
+				executor.sendMessage("Failed to set player's rank!");
 			}
 		}
 		else
 		{
-			help(player);
+			help(executor);
 			return;
 		}
 	}

@@ -32,9 +32,8 @@ public class IRCHandler {
 			if (!DataHandler.ignoringGC(players.get(i))) {
 				players.get(i).sendMessage(message);
 			}
-			else
-				players.get(i).sendMessage("You are a faggot!");
 		}
+		players = null;
 	}
 	
 	/**

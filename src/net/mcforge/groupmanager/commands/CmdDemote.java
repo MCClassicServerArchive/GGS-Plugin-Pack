@@ -42,22 +42,29 @@ public class CmdDemote extends Command {
 	}
 
 	@Override
-	public void execute(CommandExecutor player, String[] args) {
-		if (args.length == 1)
-		{
-			if (GroupManagerAPI.demotePlayer(args[0]))
-			{
-				player.sendMessage("Demoted '" + Player.find(GroupPlugin.server, args[0]).getName() + "'");
+	public void execute(CommandExecutor executor, String[] args) {
+		if (args.length == 1) {
+			Player who = executor.getServer().findPlayer(args[0]);
+			if (executor.getServer().findPlayer(args[0]) == executor) {
+				executor.sendMessage("You can't demote yourself!");
+				return;
+			}
+			if (who.getGroup().permissionlevel >= executor.getGroup().permissionlevel) {
+				executor.sendMessage("You can't demote players of the equal or higher rank!");
+				return;
+			}
+			
+			
+			if (GroupManagerAPI.demotePlayer(args[0])) {
+				executor.sendMessage("Demoted '" + Player.find(GroupPlugin.server, args[0]).getName() + "'");
 				Player.find(GroupPlugin.server, args[0]).sendMessage("You have been demoted!");
 			}
-			else
-			{
-				player.sendMessage("Couldn't demote '" + args[0] + "'");
+			else {
+				executor.sendMessage("Couldn't demote '" + args[0] + "'");
 			}
 		}
-		else
-		{
-			help(player);
+		else {
+			help(executor);
 			return;
 		}
 	}

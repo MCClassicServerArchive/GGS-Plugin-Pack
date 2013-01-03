@@ -38,9 +38,8 @@ public class Me extends PlayerCommand implements HelpItem {
 
 	@Override
 	public void execute(Player player, String[] args) {
-		if (args[0] == "") {
-			help(player);
-			return;
+		if (args.length == 0) {
+			player.sendMessage("You!");
 		}
 		String message = Messages.join(args, " ");
 		player.getChat().serverBroadcast("&6*" + player.getDisplayColor() + player.username + " " + message);

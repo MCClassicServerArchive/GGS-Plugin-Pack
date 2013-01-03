@@ -56,7 +56,6 @@ public class GlobalChatBot implements Runnable {
 		String[] info = gcData.split("&");
 		this.server = info[0];
 		channel = info[1];
-		channel = "#SWAG";
 	}
 	
 	public void startBot() throws IOException {
