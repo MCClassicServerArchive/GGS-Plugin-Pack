@@ -64,6 +64,10 @@ public class GlobalChatBot implements Runnable {
 		reader = new Scanner(socket.getInputStream());
 		handler.setNick(username);
 		handler.sendUserMsg(username, true);
+		if (username.startsWith("ForgeBot")) {
+			s.Log("You're currently using the default Global Chat bot nickname!");
+			s.Log("Consider changing your bot's nickname in the server properties!");
+		}
 		isRunning = true;
 		botThread = new Thread(this);
 		botThread.start();
@@ -96,6 +100,9 @@ public class GlobalChatBot implements Runnable {
 			else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel.toLowerCase(Locale.ENGLISH)) && 
 					!handler.hasCode(line, "005")) {
 				String message = handler.getMessage(line);
+				if (message.startsWith("\u0001") && message.endsWith("\u0001")) {
+					continue;
+				}
 				if (message.startsWith("^")) {
 					if (message.startsWith("^UGCS")) {
 						//TODO: bodhi will handle this

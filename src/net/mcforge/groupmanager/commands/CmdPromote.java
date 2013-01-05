@@ -15,7 +15,8 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.groupmanager.API.GroupManagerAPI;
-import net.mcforge.groupmanager.main.GroupPlugin;
+import net.mcforge.groupmanager.main.GroupActions;
+import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 
 @ManualLoad
@@ -43,30 +44,70 @@ public class CmdPromote extends Command {
 
 	@Override
 	public void execute(CommandExecutor executor, String[] args) {
-		if (args.length == 1) {
+		if (args.length == 1)
+		{
 			Player who = executor.getServer().findPlayer(args[0]);
-			if (executor.getServer().findPlayer(args[0]) == executor) {
-				executor.sendMessage("You can't promote yourself!");
-				return;
-			}
-			if (who.getGroup().permissionlevel >= executor.getGroup().permissionlevel) {
-				executor.sendMessage("You can't promote players of the equal or higher rank!");
-				return;
-			}
-
-			if (GroupManagerAPI.promotePlayer(args[0])) {
-				executor.sendMessage("Promoted '" + Player.find(GroupPlugin.server, args[0]).username + "'");
-				Player.find(GroupPlugin.server, args[0]).sendMessage("You have been promoted to " + executor.getGroup().name + "!");
+			if (who != null) {
+				if (executor.getServer().findPlayer(args[0]) == executor) {
+					executor.sendMessage("You can't change your own rank!");
+					return;
+				}
+				if (who.getGroup().permissionlevel >= executor.getGroup().permissionlevel) {
+					executor.sendMessage("You can't rank players of the equal or higher rank!");
+					return;
+				}
+				
+				Group toRank = GroupActions.getNextRank(args[0]);
+				if (toRank != null) {
+					if (toRank.permissionlevel >= executor.getGroup().permissionlevel) {
+						executor.sendMessage("You can't rank players to a rank higher than or equal to yours!");
+						return;
+					}
+				}
+				
+				if (GroupManagerAPI.promotePlayer(args[0])) {
+					Player pl = executor.getServer().findPlayer(args[0]);
+					executor.getServer().sendGlobalMessage(pl.getDisplayColor() + pl.username + 
+                            							   executor.getServer().defaultColor + 
+                            							   " was promoted to " + pl.getGroup().color + pl.getGroup().name);
+				}
+				else {
+					executor.sendMessage("Failed to set player's rank!");
+				}
 			}
 			else {
-				executor.sendMessage("Couldn't promote '" + args[0] + "'");
+				Group ranked = Group.getGroup(args[0]);
+				if (ranked == null) {
+					Group.getDefault().addMember(args[0]);
+					ranked = Group.getDefault();
+				}
+				if (ranked.permissionlevel >= executor.getGroup().permissionlevel) {
+					executor.sendMessage("You can't rank players of the equal or higher rank!");
+					return;
+				}
+				Group toRank = GroupActions.getNextRank(args[0]);
+				if (toRank != null) {
+					if (toRank.permissionlevel >= executor.getGroup().permissionlevel) {
+						executor.sendMessage("You can't rank players to a rank higher than or equal to yours!");
+						return;
+					}
+				}
+				if (GroupManagerAPI.promotePlayer(args[0])) {
+					executor.getServer().sendGlobalMessage("&f(Offline)" + args[0] +
+														   executor.getServer().defaultColor + 
+														   " was promoted to " + toRank.color + toRank.name);
+				}
+				else {
+					executor.sendMessage("Failed to set player's rank!");
+				}
 			}
 		}
 		else {
 			help(executor);
 			return;
 		}
-	}
+    }
+	
 
 	@Override
 	public void help(CommandExecutor executor) {

@@ -40,6 +40,7 @@ public class Me extends PlayerCommand implements HelpItem {
 	public void execute(Player player, String[] args) {
 		if (args.length == 0) {
 			player.sendMessage("You!");
+			return;
 		}
 		String message = Messages.join(args, " ");
 		player.getChat().serverBroadcast("&6*" + player.getDisplayColor() + player.username + " " + message);
