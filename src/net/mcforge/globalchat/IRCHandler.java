@@ -42,14 +42,14 @@ public class IRCHandler {
 	 * @param message - the message to send
 	 */
 	protected void sendRaw(String message) {
-	    if (bot == null || bot.writer == null)
+	    if (bot == null || bot.getWriter() == null)
 	        return;
 		try {
-			bot.writer.out().append(message + "\r\n");
+			bot.getWriter().append(message + "\r\n");
+			bot.getWriter().flush();
 		}
 		catch (IOException e) {
 		}
-		bot.writer.flush();
 	}
 
 	/**
@@ -101,6 +101,11 @@ public class IRCHandler {
 	public void sendMessage(String message) {
 		if (bot.connected)
 			sendRaw("PRIVMSG " + bot.getChannel() + " :" + message);
+	}
+	
+	public void sendNotice(String user, String message) {
+		if (bot.connected)
+			sendRaw("NOTICE " + user + " :" + message);
 	}
 	
 	/**

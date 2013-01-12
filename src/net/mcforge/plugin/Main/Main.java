@@ -33,7 +33,6 @@ import net.mcforge.plugin.commands.Afk;
 import net.mcforge.plugin.commands.Ban;
 import net.mcforge.plugin.commands.Color;
 import net.mcforge.plugin.commands.Cuboid;
-import net.mcforge.plugin.commands.Devs;
 import net.mcforge.plugin.commands.Give;
 import net.mcforge.plugin.commands.Goto;
 import net.mcforge.plugin.commands.Help;
@@ -55,6 +54,7 @@ import net.mcforge.plugin.commands.Replaceall;
 import net.mcforge.plugin.commands.Rules;
 import net.mcforge.plugin.commands.Save;
 import net.mcforge.plugin.commands.Spawn;
+import net.mcforge.plugin.commands.Staff;
 import net.mcforge.plugin.commands.Stop;
 import net.mcforge.plugin.commands.Summon;
 import net.mcforge.plugin.commands.TColor;
@@ -69,7 +69,7 @@ import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
 
 public class Main extends Plugin implements Updatable, Listener {
-    private static final String VERSION = "1.2.0";
+    private static final String VERSION = "5.5.5";
     private static final String CONFIG_VERSION = "#VERSION.4";
     public static final HelpItemManager helpmanager = new HelpItemManager();
     private ArrayList<String> load = new ArrayList<String>();
@@ -78,7 +78,6 @@ public class Main extends Plugin implements Updatable, Listener {
         new Ban(),
         new Color(),
         new Cuboid(),
-        new Devs(),
         new Give(),
         new Goto(),
         new Help(),
@@ -100,6 +99,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Replaceall(),
         new Save(),
         new Spawn(),
+        new Staff(),
         new Stop(),
         new Summon(),
         new Take(),

@@ -69,7 +69,7 @@ public class CmdSetGroup extends Command {
 					Player pl = executor.getServer().findPlayer(args[0]);
 					executor.getServer().sendGlobalMessage(pl.getDisplayColor() + Utils.getPossessiveForm(pl.username) + 
                             							   executor.getServer().defaultColor + 
-                            							   " rank was set to " + pl.getGroup().color + pl.getGroup().name);
+                            							   " rank was set to " + toRank.color + toRank.name);
 				}
 				else {
 					executor.sendMessage("Failed to set player's rank!");

@@ -74,8 +74,6 @@ public class TColor extends Command implements HelpItem {
 				prefix = prefix.substring(1);
 			else if (prefix.startsWith("&") && prefix.charAt(2) == '[')
 				prefix = prefix.substring(0, 2) + prefix.substring(3, prefix.length());
-			else
-				executor.sendMessage(prefix);
 			
 			if (prefix.endsWith("] "))
 				prefix = prefix.substring(0, prefix.length() - 2);
@@ -94,7 +92,7 @@ public class TColor extends Command implements HelpItem {
 				prefix = parsedColor + "[" + prefix + parsedColor + "] ";
 			}
 		}
-		who.setPrefix(prefix);
+		who.setRawPrefix(prefix);
 		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the tcolor " + parsedColor + color);
 	}
 	

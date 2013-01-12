@@ -77,13 +77,10 @@ public class Title extends Command implements HelpItem {
 				if (prefix.charAt(prefix.length() - 2) == '&') {
 					prefix = prefix.substring(0, prefix.length() - 2);
 				}
-				else {
-					executor.sendMessage("" + prefix.charAt(prefix.length() - 2));
-				}
 				prefix = color + "[" + specified + color + "] ";
 			}
 		}
-		who.setPrefix(prefix);
+		who.setRawPrefix(prefix);
 		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the title " + who.getPrefix());
 	}
 	

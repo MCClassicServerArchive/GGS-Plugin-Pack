@@ -69,7 +69,7 @@ public class CmdDemote extends Command {
 					Player pl = executor.getServer().findPlayer(args[0]);
 					executor.getServer().sendGlobalMessage(pl.getDisplayColor() + pl.username + 
                             							   executor.getServer().defaultColor + 
-                            							   " was demoted to " + pl.getGroup().color + pl.getGroup().name);
+                            							   " was demoted to " + toRank.color + toRank.name);
 				}
 				else {
 					executor.sendMessage("Failed to set player's rank!");
