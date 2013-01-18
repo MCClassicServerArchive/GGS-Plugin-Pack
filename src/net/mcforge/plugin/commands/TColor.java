@@ -3,6 +3,7 @@ package net.mcforge.plugin.commands;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.Main.Main;
 import net.mcforge.plugin.help.HelpItem;
@@ -19,7 +20,7 @@ public class TColor extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() { 
 		return new String[] { "titlecolor", "tcolour", "titlecolour" };
-	} //not really shortcuts, but just there so it's easier to type
+	}
 
 	@Override
 	public int getDefaultPermissionLevel() {
@@ -56,11 +57,8 @@ public class TColor extends Command implements HelpItem {
 			}
 		}
 		String color = args.length == 1 ? args[0] : args[1];
-		net.mcforge.chat.ChatColor parsedColor;
-        if (s.VERSION.equals("6.0.0b5")) //Time to work my gypsy magic
-            parsedColor = net.mcforge.chat.ChatColor.parse(net.mcforge.backwardscompatible.ChatColor.fromName(color).getColor());
-        else
-            parsedColor = net.mcforge.chat.ChatColor.fromName(color);
+		ChatColor parsedColor = ChatColor.fromName(color);
+		
 		if (parsedColor == null) {
 			executor.sendMessage("Invalid color!");
 			Main.displayValidColors(executor);
@@ -76,8 +74,6 @@ public class TColor extends Command implements HelpItem {
 				prefix = prefix.substring(1);
 			else if (prefix.startsWith("&") && prefix.charAt(2) == '[')
 				prefix = prefix.substring(0, 2) + prefix.substring(3, prefix.length());
-			else
-				executor.sendMessage(prefix);
 			
 			if (prefix.endsWith("] "))
 				prefix = prefix.substring(0, prefix.length() - 2);

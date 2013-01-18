@@ -1,13 +1,15 @@
 package net.mcforge.globalchat;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.URL;
-import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.Scanner;
 
 import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
@@ -17,13 +19,14 @@ import net.mcforge.util.WebUtils;
 public class GlobalChatBot implements Runnable {
 	protected final IRCHandler handler;
 	protected Server s;
-
-	protected Formatter writer;
-	private Scanner reader;
-	private Socket socket;
-
+	
+	protected Socket socket;
+	private BufferedReader reader;
+	private BufferedWriter writer;
+	
 	protected final String REALNAME = "MCForge GC Bot";
-	protected String username;
+	protected String username;	
+	protected String consoleNick = "Console";
 	
 	private String server = "irc.mcforge.net";
 	private String channel = "#GlobalChat";
@@ -56,23 +59,37 @@ public class GlobalChatBot implements Runnable {
 		String[] info = gcData.split("&");
 		this.server = info[0];
 		channel = info[1];
-		channel = "#SWAG";
 	}
 	
 	public void startBot() throws IOException {
 		socket = new Socket(server, port);
-		writer = new Formatter(socket.getOutputStream());
-		reader = new Scanner(socket.getInputStream());
-		handler.setNick(username);
-		handler.sendUserMsg(username, true);
-		isRunning = true;
+
+		if (username.startsWith("ForgeBot")) {
+			s.Log("You're currently using the default Global Chat bot nickname!");
+			s.Log("Consider changing your bot's nickname in the server properties!");
+		}
+
 		botThread = new Thread(this);
 		botThread.start();
 	}
 	@Override
-	public void run() {
+	public void run() {	
+		s.Log("Runningthisthread");
+
 		String line;
-		while ((line = reader.nextLine()) != null && isRunning) {
+		try  {
+			isRunning = true;
+			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			
+			handler.setNick(username);
+			handler.sendUserMsg(username, true);
+
+		while (isRunning) {
+			line = reader.readLine();
+			if (line == null) {
+				continue;
+			}
 			if (handler.hasCode(line, "004")) {
 				handler.joinChannel(channel);
 				s.Log("Bot joined the Global Chat!");
@@ -89,14 +106,21 @@ public class GlobalChatBot implements Runnable {
 			}
 		}
 		connected = true;
-
-		while ((line = reader.nextLine()) != null && isRunning) {
+		
+		while (isRunning) {
+			line = reader.readLine();
+			if (line == null) {
+				continue;
+			}
 			if (line.startsWith("PING ")) {
 				handler.pong(line);
 			}
 			else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel.toLowerCase(Locale.ENGLISH)) && 
 					!handler.hasCode(line, "005")) {
 				String message = handler.getMessage(line);
+				if (message.startsWith("\u0001") && message.endsWith("\u0001")) {
+					continue;
+				}
 				if (message.startsWith("^")) {
 					if (message.startsWith("^UGCS")) {
 						//TODO: bodhi will handle this
@@ -134,6 +158,11 @@ public class GlobalChatBot implements Runnable {
 				String toSend = incoming + handler.getSender(line) + ": &f" +  message;
 				handler.messagePlayers(toSend);
 			}
+			else if (line.split(":")[1].contains("PRIVMSG " + username)) {
+				if (handler.getMessage(line).equals("\u0001" + "VERSION" + "\u0001")) {
+					handler.sendNotice(handler.getSender(line), "\u0001" + "VERSION MCForge " + s.VERSION + " : " + System.getProperty("os.name") + "\u0001");
+				}
+			}
 			else if (handler.hasCode(line, "474")) {
 				String providedReason = handler.getMessage(line);
 				String banReason = providedReason.equals("Cannot join channel (+b)") ? "You're banned" : providedReason;
@@ -143,10 +172,21 @@ public class GlobalChatBot implements Runnable {
 			}
 		}
 		disposeBot();
+		}
+		catch(Exception ex) {
+		}
 	}
 	public String getChannel() {
 		return channel;
 	}
+
+	public BufferedReader getReader() {
+		return reader;
+	}
+	public BufferedWriter getWriter() {
+		return writer;
+	}
+	
 	public void disposeBot() {
 		handler.sendPart(quitMessage);
 		try {
@@ -160,11 +200,12 @@ public class GlobalChatBot implements Runnable {
 		}
 		catch (InterruptedException e) {
 		}
-		if (reader != null)
-		    reader.close();
-		if (writer != null)
-		    writer.close(); 
 		try {
+			if (reader != null)
+			    reader.close();
+			if (writer != null)
+			    writer.close();
+			
 		    if (socket != null)
 		        socket.close();
 		}

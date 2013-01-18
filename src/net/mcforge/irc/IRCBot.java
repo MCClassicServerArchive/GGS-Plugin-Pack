@@ -113,9 +113,13 @@ public class IRCBot implements Runnable { // TODO: add opchat chan support
 			}
 			else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel.toLowerCase(Locale.ENGLISH)) && 
 					!line.split(" ")[1].equals("005")) {
-				String toSend = ChatColor.Purple + "[IRC]" +  handler.getSender(line) + ": " +  handler.getMessage(line);
+				String message = handler.getMessage(line);
+				if (message.startsWith("\u0001") && message.endsWith("\u0001")) {
+					continue;
+				}
+				String toSend = ChatColor.Purple + "[IRC]" +  handler.getSender(line) + ": " + message;
 				plugin.getServer().getMessages().serverBroadcast(toSend);
-				getPlugin().getServer().Log("[IRC]" +  handler.getSender(line) + ": " +  handler.getMessage(line));
+				getPlugin().getServer().Log("[IRC]" +  handler.getSender(line) + ": " + message);
 			}
 			else if (line.contains("PRIVMSG " + userName)) {
 				IRCUser u = new IRCUser(handler.getSender(line), this);

@@ -7,15 +7,16 @@
  ******************************************************************************/
 package net.mcforge.plugin.commands;
 
+import java.util.List;
+
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
-import net.mcforge.API.plugin.PlayerCommand;
+import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.Messages;
-import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.help.HelpItem;
 
 @ManualLoad
-public class Me extends PlayerCommand implements HelpItem {
+public class Staff extends Command implements HelpItem {
 	@Override
 	public String[] getShortcuts() {
 		return new String[0];
@@ -23,7 +24,7 @@ public class Me extends PlayerCommand implements HelpItem {
 
 	@Override
 	public String getName() {
-		return "me";
+		return "staff";
 	}
 
 	@Override
@@ -37,22 +38,23 @@ public class Me extends PlayerCommand implements HelpItem {
 	}
 
 	@Override
-	public void execute(Player player, String[] args) {
-		if (args.length == 0) {
-			player.sendMessage("You!");
-			return;
-		}
-		String message = Messages.join(args, " ");
-		player.getChat().serverBroadcast("&6*" + player.getDisplayColor() + player.username + " " + message);
+	public void execute(CommandExecutor player, String[] args) {
+		List<String> devList = player.getServer().getPrivilegesHandler().getDevs();
+		List<String> modList = player.getServer().getPrivilegesHandler().getMods();
+		List<String> gcList = player.getServer().getPrivilegesHandler().getGCStaff();
+		player.sendMessage("&9MCForge developers: &e" + Messages.join(devList.toArray(new String[devList.size()]), "&f, &e"));
+		player.sendMessage("&9MCForge moderators: &e" + Messages.join((String[])modList.toArray(new String[modList.size()]), "&f, &e"));
+		player.sendMessage("&9MCForge GC staff: &e" + Messages.join((String[])gcList.toArray(new String[gcList.size()]), "&f, &e"));
 	}
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("What do you need help with, m'boy? Are you stuck down a well?");
+		executor.sendMessage("/staff - shows the MCForge staff list");
 	}
 
     @Override
     public String getType() {
-        return "other";
+        return "information";
     }
 }
+

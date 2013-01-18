@@ -61,10 +61,19 @@ public class GlobalChatPlugin extends Plugin {
 		Properties p = getServer().getSystemProperties();
 	    String name = "ForgeBot" + new Random(System.currentTimeMillis()).nextInt(1000000000);
 	    String quitMessage = "Server shutting down...";
+	    String consoleNick = "Console";
 	    boolean enabled = true;
+	    if (!p.hasValue("GC-Console-Nick")) {
+	    	p.addSetting("GC-Console-Nick", "Console");
+	    	p.addComment("GC-Console-Nick", "The nickname for the Console in GC");
+	    	saveConfig();
+	    }
+	    else
+	    	consoleNick = p.getValue("GC-Console-Nick");
+	    
 	    if (!p.hasValue("GC-Enabled")) { 
-	    	p.addComment("GC-Enabled", "Whether the Global Chat is enabled");
 	    	p.addSetting("GC-Enabled", true);
+	    	p.addComment("GC-Enabled", "Whether the Global Chat is enabled");
 	    	saveConfig();
 	    }
 	    else
@@ -89,6 +98,7 @@ public class GlobalChatPlugin extends Plugin {
 	    	return;
 	    
 		gcBot = new GlobalChatBot(this, getServer(), name, quitMessage);
+		gcBot.consoleNick = consoleNick;
 		try {
 			gcBot.startBot();
 		}

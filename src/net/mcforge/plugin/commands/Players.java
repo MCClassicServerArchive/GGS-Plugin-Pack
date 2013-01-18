@@ -7,13 +7,16 @@
  ******************************************************************************/
 package net.mcforge.plugin.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
+import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.server.Server;
 
 @ManualLoad
 public class Players extends Command implements HelpItem {
@@ -39,21 +42,64 @@ public class Players extends Command implements HelpItem {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		List<Player> players = player.getServer().getPlayers();
-		int size = players.size();
-		if (size == 0) {
+		if (player.getServer().getPlayers().size() == 0) {
 			player.sendMessage("There are no online players!");
 			return;
 		}
-		String list = "";
-		for (int i = 0; i < size; i++) {
-			list += players.get(i).username + ", ";
+		
+		List<String> devs = player.getServer().getPrivilegesHandler().getDevs();
+		List<Player> online = getOnlineStaff(player.getServer(), devs);
+		if (online.size() != 0) {
+			player.sendMessage("&9Developers&e: " + joinPlayerList(online, "&f,&e ", false));
 		}
-		list = list.substring(0, list.length() - 2); //TODO: sort by group
-		player.sendMessage(String.format("There %s %d player%s online: %s",
-				size == 1 ? "is" : "are", size, size == 1 ? "" : "s", list));
+		
+		online.clear();
+		List<String> mods = player.getServer().getPrivilegesHandler().getMods();
+		online = getOnlineStaff(player.getServer(), mods);
+		if (online.size() != 0) {
+			player.sendMessage("&9Moderators&e: " + joinPlayerList(online, "&f,&e ", false));
+		}
+		
+		online.clear();
+		List<String> gc = player.getServer().getPrivilegesHandler().getGCStaff();
+		online = getOnlineStaff(player.getServer(), gc);
+		if (online.size() != 0) {
+			player.sendMessage("&9GC Staff&e: " + joinPlayerList(online, "&f,&e ", false));
+		}
+		
+		List<Group> groups = Group.getGroupList();
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+			List<Player> players = group.getOnlinePlayers();
+			player.sendMessage(group.color + group.name + "&f: " + joinPlayerList(players, "&f, ", true));			
+		}
 	}
-
+	private List<Player> getOnlineStaff(Server s, List<String> rawList) {
+		List<Player> online = new ArrayList<Player>();
+		for (int i = 0; i < rawList.size(); i++) {
+			Player p = s.getPlayer(rawList.get(i));
+			if (p != null) {
+				online.add(p);
+			}
+		}
+		return online;
+	}
+	private String joinPlayerList(List<Player> list, String separator, boolean color) {
+		Player[] array = list.toArray(new Player[list.size()]);
+		if (array.length == 0) {
+			return "";
+		}
+		String ret = "";
+		
+		for (int i = 0; i < array.length; i++) {
+			if (color) {
+				ret += array[i].getDisplayColor();
+			}
+			ret += array[i].username + separator;
+		}
+		
+		return ret.substring(0, ret.length() - separator.length());
+	}
 	@Override
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/players - shows the list of online players");

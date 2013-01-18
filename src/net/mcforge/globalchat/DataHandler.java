@@ -41,7 +41,7 @@ public abstract class DataHandler {
 	}
 	
 	public static synchronized void setValue(Player p, String identKey, Object Attribute, boolean save) {
-		p.setAttribute(identKey, Attribute); //i like making my saving synced, dun judge :<
+		p.setAttribute(identKey, Attribute);
 		if (save)
 			saveValue(p, identKey);
 	}

@@ -11,6 +11,7 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.Messages;
 import net.mcforge.iomodel.Player;
+import net.mcforge.system.Console;
 
 public class CmdGC extends Command {
 
@@ -49,8 +50,16 @@ public class CmdGC extends Command {
 			return;
 		}
 		String joined = Messages.join(args);
-		GlobalChatPlugin.gcBot.handler.sendMessage(executor.getName() + ": " + joined);
-		GlobalChatPlugin.gcBot.handler.messagePlayers(GlobalChatBot.outgoing + executor.getName() + "&f: " + joined);
+		if (executor instanceof Console) {
+			String nick = GlobalChatPlugin.gcBot.consoleNick;
+			nick = nick.equalsIgnoreCase("Console") ? nick : "<C>" + nick;
+			GlobalChatPlugin.gcBot.handler.sendMessage(nick + ": " + joined);
+			GlobalChatPlugin.gcBot.handler.messagePlayers(GlobalChatBot.outgoing + nick + ":&f " + joined);
+		}
+		else {
+			GlobalChatPlugin.gcBot.handler.sendMessage(executor.getName() + ": " + joined);
+			GlobalChatPlugin.gcBot.handler.messagePlayers(GlobalChatBot.outgoing + executor.getName() + ":&f " + joined);
+		}
 	}
 	@Override
 	public void help(CommandExecutor executor) {
