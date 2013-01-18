@@ -42,7 +42,7 @@ public class Loaded extends Command implements HelpItem {
 		StringBuilder finalStr = new StringBuilder();
 
 		for (Level l : handler.getLevelList()) {
-			finalStr.append(l.name);
+			finalStr.append(l.getName());
 			finalStr.append(", ");
 		}
 

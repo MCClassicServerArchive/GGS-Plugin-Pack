@@ -40,10 +40,10 @@ public class Save extends Command implements HelpItem {
 					l.save();
 				} catch (IOException e) {
 					e.printStackTrace();
-					arg0.sendMessage("There was an error saving " + l.name + "!");
+					arg0.sendMessage("There was an error saving " + l.getName() + "!");
 					return;
 				}
-				arg0.sendMessage(l.name + " saved!");
+				arg0.sendMessage(l.getName() + " saved!");
 			}
 		}
 	}

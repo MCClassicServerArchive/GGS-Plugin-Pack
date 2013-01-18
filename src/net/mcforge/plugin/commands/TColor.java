@@ -96,7 +96,7 @@ public class TColor extends Command implements HelpItem {
 				prefix = parsedColor + "[" + prefix + parsedColor + "] ";
 			}
 		}
-		who.setPrefix(prefix);
+		who.setRawPrefix(prefix);
 		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the tcolor " + parsedColor + color);
 	}
 	

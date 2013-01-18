@@ -142,7 +142,7 @@ public class MessageBlockPlugin extends Plugin {
 				Level l;
 				boolean tried = false;
 				while ((l = getServer().getLevelHandler().findLevel(Level)) == null && !tried) {
-					getServer().getLevelHandler().loadLevel("levels/" + Level + ".ggs");
+					getServer().getLevelHandler().loadClassicLevel("levels/" + Level + ".ggs");
 					tried = true;
 				}
 				if (l == null) {
@@ -168,7 +168,7 @@ public class MessageBlockPlugin extends Plugin {
 				Level l, l2;
 				boolean tried = false;
 				while ((l = getServer().getLevelHandler().findLevel(Level2)) == null && !tried) {
-					getServer().getLevelHandler().loadLevel("levels/" + Level2 + ".ggs");
+					getServer().getLevelHandler().loadClassicLevel("levels/" + Level2 + ".ggs");
 					tried = true;
 				}
 				if (l == null) {
@@ -176,7 +176,7 @@ public class MessageBlockPlugin extends Plugin {
 					continue;
 				}
 				while ((l2 = getServer().getLevelHandler().findLevel(Level3)) == null && !tried) {
-					getServer().getLevelHandler().loadLevel("levels/" + Level3 + ".ggs");
+					getServer().getLevelHandler().loadClassicLevel("levels/" + Level3 + ".ggs");
 					tried = true;
 				}
 				if (l2 == null) {
@@ -203,7 +203,7 @@ public class MessageBlockPlugin extends Plugin {
 				Level l;
 				boolean tried = false;
 				while ((l = getServer().getLevelHandler().findLevel(Level1)) == null && !tried) {
-					getServer().getLevelHandler().loadLevel("levels/" + Level1 + ".ggs");
+					getServer().getLevelHandler().loadClassicLevel("levels/" + Level1 + ".ggs");
 					tried = true;
 				}
 				if (l == null) {

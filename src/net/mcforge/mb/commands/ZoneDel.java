@@ -98,9 +98,9 @@ public class ZoneDel extends PlayerCommand {
 		@Override
 		public void run() {
 			Block b;
-			for (int x = 0; x < l.width; x++) {
-				for (int y = 0; y < l.height; y++) {
-					for (int z = 0; z < l.depth; z++) {
+			for (int x = 0; x < l.getWidth(); x++) {
+				for (int y = 0; y < l.getHeight(); y++) {
+					for (int z = 0; z < l.getDepth(); z++) {
 						b = l.getTile(x, y, z);
 						if (b instanceof ZoneBlock)
 							remove(x, y, z, l, (ZoneBlock)b, p.getServer());

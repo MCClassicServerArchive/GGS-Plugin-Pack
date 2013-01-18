@@ -76,9 +76,9 @@ public class Portal extends PlayerCommand {
 			show = ((Boolean)(p.getAttribute("showportal"))).booleanValue();
 		}
 		show = !show;
-		for (int x = 0; x < p.getLevel().width; x++) {
-			for (int y = 0; y < p.getLevel().height; y++) {
-				for (int z = 0; z < p.getLevel().depth; z++) {
+		for (int x = 0; x < p.getLevel().getWidth(); x++) {
+			for (int y = 0; y < p.getLevel().getHeight(); y++) {
+				for (int z = 0; z < p.getLevel().getDepth(); z++) {
 					if (p.getLevel().getTile(x, y, z) instanceof PortalBlock) {
 						PortalBlock pb = (PortalBlock)p.getLevel().getTile(x, y, z);
 						if (show)

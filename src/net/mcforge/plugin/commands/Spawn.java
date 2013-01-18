@@ -43,7 +43,7 @@ public class Spawn extends PlayerCommand implements HelpItem
 	@Override
 	public void execute(Player player, String[] args)
 	{
-		player.setPos((short)((0.5 + player.getLevel().spawnx) * 32), (short)((1 + player.getLevel().spawny) * 32), (short)((0.5 + player.getLevel().spawnz) * 32));
+		player.setPos((short)((0.5 + player.getLevel().getSpawnX()) * 32), (short)((1 + player.getLevel().getSpawnY()) * 32), (short)((0.5 + player.getLevel().getSpawnZ()) * 32));
 	}
 
 	@Override

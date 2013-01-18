@@ -83,7 +83,7 @@ public class Title extends Command implements HelpItem {
 				prefix = color + "[" + specified + color + "] ";
 			}
 		}
-		who.setPrefix(prefix);
+		who.setRawPrefix(prefix);
 		s.sendGlobalMessage(who.getDisplayName() + s.defaultColor + " got the title " + who.getPrefix());
 	}
 	

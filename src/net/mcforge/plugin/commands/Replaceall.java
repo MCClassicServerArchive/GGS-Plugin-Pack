@@ -42,9 +42,9 @@ public class Replaceall extends PlayerCommand implements HelpItem {
         }
         ArrayList<BlockUpdate> bu = new ArrayList<BlockUpdate>();
         p.sendMessage(ChatColor.Yellow + "Please wait..");
-        for (int xx = 0; xx <= p.getLevel().width; xx++) {
-            for (int yy = 0; yy <= p.getLevel().height; yy++) {
-                for (int zz = 0; zz <= p.getLevel().depth; zz++) {
+        for (int xx = 0; xx <= p.getLevel().getWidth(); xx++) {
+            for (int yy = 0; yy <= p.getLevel().getHeight(); yy++) {
+                for (int zz = 0; zz <= p.getLevel().getDepth(); zz++) {
                     if (oldTypes.contains(p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
                 }
             }

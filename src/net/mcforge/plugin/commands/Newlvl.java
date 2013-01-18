@@ -86,7 +86,7 @@ public class Newlvl extends Command implements HelpItem {
 
 		if (handler.findLevel(name) == null) {
 			player.sendMessage(ChatColor.Yellow + "Creating " + ChatColor.White + name + "," + ChatColor.Yellow + " please wait...");
-			handler.newLevel(name, w, h, l, gen);
+			handler.newClassicLevel(name, w, h, l, gen);
 			player.sendMessage(ChatColor.Bright_Green + "Created new level: \"" + name + "\"!");
 		}
 		else {

@@ -49,7 +49,7 @@ public class Goto extends PlayerCommand implements HelpItem {
 
 			if (level != null) {
 				player.changeLevel(level);
-				s.sendGlobalMessage(player.getDisplayName() + s.defaultColor + " went to &b" + level.name);
+				s.sendGlobalMessage(player.getDisplayName() + s.defaultColor + " went to &b" + level.getName());
 			}
 			else {
 				if (player.getServer().loadOnGoto) {
@@ -57,13 +57,13 @@ public class Goto extends PlayerCommand implements HelpItem {
 					for (int i = 0; i < files.length; i++) {
 						File fi = new File(files[i]);
 						if (fi.getName().equalsIgnoreCase(args[0] + ".ggs")) {
-							Level found = handler.loadLevel("levels/" + fi.getName());
+							Level found = handler.loadClassicLevel("levels/" + fi.getName());
 							if (found == null) {
 								player.sendMessage("Level doesn't exist...");
 								return;
 							}
 							player.changeLevel(found);
-							s.sendGlobalMessage(player.getDisplayName() + s.defaultColor + " went to &b" + found.name);
+							s.sendGlobalMessage(player.getDisplayName() + s.defaultColor + " went to &b" + found.getName());
 							return;
 						}
 					}

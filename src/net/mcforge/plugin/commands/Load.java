@@ -45,7 +45,7 @@ public class Load extends Command implements HelpItem {
 			File levelFile = new File("levels/" + args[0] + ".ggs");
 
 			if (levelFile.exists()) {
-				handler.loadLevel(levelFile.getPath());
+				handler.loadClassicLevel(levelFile.getPath());
 				player.sendMessage(ChatColor.Bright_Green + "+ " + ChatColor.White + args[0] + " loaded!");
 			}
 			else {

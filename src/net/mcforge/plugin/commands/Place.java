@@ -90,8 +90,8 @@ public class Place extends PlayerCommand implements HelpItem {
 		}
 		//TODO: check for permissions
 		Level level = executor.getLevel();
-		if (y >= level.height)
-			y = (short)(level.height - 1);
+		if (y >= level.getHeight())
+			y = (short)(level.getHeight() - 1);
 		
 		Player.GlobalBlockChange(x, y, z, b, level, executor.getServer());
 	}
