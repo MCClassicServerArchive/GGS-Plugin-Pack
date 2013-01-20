@@ -52,17 +52,6 @@ public abstract class DataHandler {
 	public static void saveValue(Player p, String identKey) {
 		if (!p.hasAttribute(identKey))
 			return;
-		try {
-			p.saveAttribute(identKey);
-		}
-		catch (NotSerializableException e) {
-			e.printStackTrace();
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		p.saveAttribute(identKey);
 	}
 }
