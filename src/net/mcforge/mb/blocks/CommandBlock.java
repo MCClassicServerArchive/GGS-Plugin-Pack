@@ -9,7 +9,7 @@ package net.mcforge.mb.blocks;
 
 import net.mcforge.API.plugin.Command;
 import net.mcforge.server.Server;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 
 public class CommandBlock extends Block {
 	

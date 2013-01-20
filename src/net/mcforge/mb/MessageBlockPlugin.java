@@ -28,7 +28,7 @@ import net.mcforge.mb.commands.Zone;
 import net.mcforge.mb.commands.ZoneDel;
 import net.mcforge.mb.events.Events;
 import net.mcforge.server.Server;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 import net.mcforge.world.Level;
 
 @ManualLoad

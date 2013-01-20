@@ -7,7 +7,7 @@
  ******************************************************************************/
 package net.mcforge.mb.blocks;
 
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 import net.mcforge.world.Level;
 
 public class PortalBlock extends Block {

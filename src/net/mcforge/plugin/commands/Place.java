@@ -12,7 +12,7 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.help.HelpItem;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 import net.mcforge.world.Level;
 
 @ManualLoad

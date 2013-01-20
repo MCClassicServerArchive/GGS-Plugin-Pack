@@ -14,7 +14,7 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.PortalBlock;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 import net.mcforge.world.Level;
 
 public class Portal extends PlayerCommand {

@@ -16,7 +16,7 @@ import net.mcforge.iomodel.Player;
 import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.server.Server;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 import net.mcforge.world.Level;
 
 public class ZoneDel extends PlayerCommand {

@@ -12,8 +12,8 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.help.HelpItem;
-import net.mcforge.world.Block;
-import net.mcforge.world.BlockUpdate;
+import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.BlockUpdate;
 @ManualLoad
 public class Replace extends PlayerCommand implements HelpItem {
 

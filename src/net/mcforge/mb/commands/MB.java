@@ -16,7 +16,7 @@ import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.CommandBlock;
 import net.mcforge.mb.blocks.MessageBlock;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 
 @ManualLoad
 public class MB extends PlayerCommand {

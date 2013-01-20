@@ -23,7 +23,7 @@ import net.mcforge.mb.blocks.CommandBlock;
 import net.mcforge.mb.blocks.PortalBlock;
 import net.mcforge.mb.blocks.MessageBlock;
 import net.mcforge.mb.blocks.ZoneBlock;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 import net.mcforge.world.PlaceMode;
 import net.mcforge.API.server.ServerStartedEvent;;
 

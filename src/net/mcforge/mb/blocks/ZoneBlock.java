@@ -9,7 +9,7 @@ package net.mcforge.mb.blocks;
 
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 
 public class ZoneBlock extends Block {
 	private static final long serialVersionUID = -1429204508778865220L;

@@ -7,7 +7,7 @@
  ******************************************************************************/
 package net.mcforge.mb.blocks;
 
-import net.mcforge.world.Block;
+import net.mcforge.world.blocks.Block;
 
 public class MessageBlock extends Block {
 	
