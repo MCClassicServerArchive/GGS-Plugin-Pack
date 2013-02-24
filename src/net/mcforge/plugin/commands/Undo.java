@@ -42,7 +42,6 @@ public class Undo extends Command {
     // /undo
     @Override
     public void execute(CommandExecutor player, String[] args) {
-        int maxundo = 30;
         int lowestperm = 0;
         if (!player.getGroup().hasAttribute("maxUndo")) {
             player.getGroup().setAttribute("maxUndo", "30");
@@ -50,7 +49,7 @@ public class Undo extends Command {
         }
         else {
             try {
-                maxundo = Integer.parseInt(player.getGroup().getAttribute("maxUndo"));
+                Integer.parseInt(player.getGroup().getAttribute("maxUndo"));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             } catch (GroupAttributeNotFoundException e) {

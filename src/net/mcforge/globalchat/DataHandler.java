@@ -1,9 +1,5 @@
 package net.mcforge.globalchat;
 
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.sql.SQLException;
-
 import net.mcforge.iomodel.Player;
 
 public abstract class DataHandler {

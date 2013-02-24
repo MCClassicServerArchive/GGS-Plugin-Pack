@@ -10,6 +10,7 @@ package net.mcforge.globalchat;
 import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.Messages;
+import net.mcforge.globalchat.GCCPBanService.GCCPBan;
 import net.mcforge.iomodel.Player;
 import net.mcforge.system.Console;
 
@@ -35,6 +36,11 @@ public class CmdGC extends Command {
 	public void execute(CommandExecutor executor, String[] args) {
 		if (executor instanceof Player) {
 			Player p = (Player)executor;
+			if (GCCPBanService.isPlayerBanned(p)) {
+			    GCCPBan ban = GCCPBanService.getPlayerBan(p);
+			    p.sendMessage("You are &cBANNED" + p.getServer().defaultColor + " from Global Chat by '" + ban.getBannedBy() + "' because: &d'" + ban.getBanReason() + "'");
+			    return;
+			}
 			if (DataHandler.ignoringGC(p)) {
 				executor.sendMessage("You can't use the Global Chat while you're ignoring it");
 				executor.sendMessage("If you want to unignore the Global Chat, type /gcignore");

@@ -99,6 +99,7 @@ public class GlobalChatPlugin extends Plugin {
 	    
 		gcBot = new GlobalChatBot(this, getServer(), name, quitMessage);
 		gcBot.consoleNick = consoleNick;
+		GCCPBanService.updateBanList();
 		try {
 			gcBot.startBot();
 		}
