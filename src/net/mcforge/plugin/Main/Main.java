@@ -25,6 +25,8 @@ import net.mcforge.API.plugin.CommandLoadEvent;
 import net.mcforge.API.plugin.Plugin;
 import net.mcforge.banhandler.BanHandler;
 import net.mcforge.chat.ChatColor;
+import net.mcforge.copy.Copy;
+import net.mcforge.copy.Paste;
 import net.mcforge.globalchat.GlobalChatPlugin;
 import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.irc.IRCPlugin;
@@ -78,6 +80,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Afk(),
         new Ban(),
         new Color(),
+        new Copy(),
         new Cuboid(),
         new Give(),
         new Goto(),
@@ -92,6 +95,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Muted(),
         new Newlvl(),
         new Nick(),
+        new Paste(),
         new Pay(),
         new Place(),
         new Players(),
