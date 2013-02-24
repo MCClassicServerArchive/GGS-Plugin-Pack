@@ -62,6 +62,7 @@ import net.mcforge.plugin.commands.TP;
 import net.mcforge.plugin.commands.Take;
 import net.mcforge.plugin.commands.Title;
 import net.mcforge.plugin.commands.Unban;
+import net.mcforge.plugin.commands.Undo;
 import net.mcforge.plugin.commands.Whisper;
 import net.mcforge.plugin.help.HelpItemManager;
 import net.mcforge.server.Server;
@@ -107,6 +108,7 @@ public class Main extends Plugin implements Updatable, Listener {
         new Title(),
         new TP(),
         new Unban(),
+        new Undo(),
         new Whisper()
     };
     private static final ArrayList<Plugin> plugins = new ArrayList<Plugin>();

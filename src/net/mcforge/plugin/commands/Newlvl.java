@@ -39,6 +39,11 @@ public class Newlvl extends Command implements HelpItem {
 	public int getDefaultPermissionLevel() {
 		return 0;
 	}
+	
+	@Override
+	public boolean runInSeperateThread() {
+	    return true;
+	}
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {

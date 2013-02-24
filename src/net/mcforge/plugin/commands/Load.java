@@ -32,6 +32,11 @@ public class Load extends Command implements HelpItem {
 	public boolean isOpCommandDefault() {
 		return true;
 	}
+	
+	@Override
+    public boolean runInSeperateThread() {
+        return true;
+    }
 
 	@Override
 	public int getDefaultPermissionLevel() {

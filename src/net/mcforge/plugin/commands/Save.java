@@ -47,6 +47,11 @@ public class Save extends Command implements HelpItem {
 			}
 		}
 	}
+	
+	@Override
+    public boolean runInSeperateThread() {
+        return true;
+    }
 
 	@Override
 	public int getDefaultPermissionLevel() {

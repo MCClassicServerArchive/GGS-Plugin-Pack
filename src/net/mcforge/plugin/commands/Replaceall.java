@@ -45,13 +45,21 @@ public class Replaceall extends PlayerCommand implements HelpItem {
         for (int xx = 0; xx <= p.getLevel().getWidth(); xx++) {
             for (int yy = 0; yy <= p.getLevel().getHeight(); yy++) {
                 for (int zz = 0; zz <= p.getLevel().getDepth(); zz++) {
-                    if (oldTypes.contains(p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
+                    if (hasType(oldTypes, p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
                 }
             }
         }
         p.sendMessage(bu.size() + " blocks.");
         Player.GlobalBlockChange(bu.toArray(new BlockUpdate[bu.size()]), p.getLevel(), p.getServer());
         bu.clear();
+    }
+    
+    private boolean hasType(ArrayList<Block> array, Block block) {
+        for (Block b : array) {
+            if (block.ID == b.ID && block.name.equals(b.name))
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -79,8 +87,7 @@ public class Replaceall extends PlayerCommand implements HelpItem {
     public boolean isOpCommandDefault() {
         return false;
     }
-
-
+    
     @Override
     public boolean runInSeperateThread() {
         return true;

@@ -39,6 +39,8 @@ public class Cuboid extends PlayerCommand implements HelpItem {
         int x1, x2, y1, y2, z1, z2;
         try {
             b = bb.waitForResponse();
+            if (b.isCancelled())
+                return;
             if (block == null || block.name.equals("NULL"))
                 block = b.getHolding();
             x1 = b.getX();
@@ -49,6 +51,8 @@ public class Cuboid extends PlayerCommand implements HelpItem {
             bb = new BlockChangeAction();
             bb.setPlayer(p);
             b = bb.waitForResponse();
+            if (b.isCancelled())
+                return;
             x2 = b.getX();
             y2 = b.getY();
             z2 = b.getZ();
@@ -178,7 +182,7 @@ public class Cuboid extends PlayerCommand implements HelpItem {
                 }
             }
             p.sendMessage(bu.size() + " blocks.");
-            Player.GlobalBlockChange(bu.toArray(new BlockUpdate[bu.size()]), p.getLevel(), p.getServer());
+            p.globalBlockChange(bu.toArray(new BlockUpdate[bu.size()]));
             bu.clear();
             block = null;
         } catch (IllegalAccessException e) {

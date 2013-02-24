@@ -64,7 +64,7 @@ public class Replace extends PlayerCommand implements HelpItem {
             for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); xx++) {
                 for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); yy++) {
                     for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
-                        if (oldTypes.contains(p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
+                        if (hasType(oldTypes, p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
                     }
                 }
             }
@@ -74,6 +74,14 @@ public class Replace extends PlayerCommand implements HelpItem {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private boolean hasType(ArrayList<Block> array, Block block) {
+        for (Block b : array) {
+            if (block.ID == b.ID && block.name.equals(b.name))
+                return true;
+        }
+        return false;
     }
 
     @Override
