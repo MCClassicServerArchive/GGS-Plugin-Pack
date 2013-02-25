@@ -13,6 +13,7 @@ package net.mcforge.groupmanager.API;
 
 import net.mcforge.chat.ChatColor;
 import net.mcforge.groupmanager.main.GroupActions;
+import net.mcforge.groupmanager.main.GroupPlugin;
 import net.mcforge.groups.Group;
 
 /**
@@ -133,7 +134,7 @@ public class GroupManagerAPI {
 	 * @return if successful
 	 */
 	public static boolean editGroupColor(String groupname, ChatColor color) {
-		return Group.find(groupname).setColor(color);
+		return Group.find(groupname).setColor(color, GroupPlugin.server);
 	}
 
 	/**

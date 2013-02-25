@@ -70,7 +70,7 @@ public class Players extends Command implements HelpItem {
 		List<Group> groups = Group.getGroupList();
 		for (int i = 0; i < groups.size(); i++) {
 			Group group = groups.get(i);
-			List<Player> players = group.getOnlinePlayers();
+			List<Player> players = group.getOnlinePlayers(player.getServer());
 			player.sendMessage(group.color + group.name + "&f: " + joinPlayerList(players, "&f, ", true));			
 		}
 	}

@@ -37,7 +37,7 @@ public class Copy extends PlayerCommand {
                     return;
                 }
                 new File("system/copy_data/" + file + ".copy").delete();
-                player.sendMessage(ChatColor.Red + "- " + player.getServer().defaultColor + "File deleted!");
+                player.sendMessage(ChatColor.Red + "- " + player.getServer().defaultColor + "File deleted.");
                 return;
             }
             else if (args[0].equalsIgnoreCase("list")) {
@@ -46,6 +46,11 @@ public class Copy extends PlayerCommand {
                 for (File f : copyFiles) {
                     player.sendMessage(f.getName().split("\\.")[0]);
                 }
+                return;
+            }
+            else if (args[0].equalsIgnoreCase("clear")) {
+                CopyPasteService.clearData(player);
+                player.sendMessage(ChatColor.Red + "- " + player.getServer().defaultColor + "Clipboard cleared.");
                 return;
             }
             for (int i = 0; i < args.length; i++) {

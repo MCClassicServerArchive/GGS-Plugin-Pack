@@ -127,7 +127,7 @@ public class GroupActions {
 	}
 
 	public static boolean createGroup(String name, ChatColor color, int permission, boolean isop) {
-		Group g = new Group(name, permission, isop, color, null, GroupPlugin.server);
+		Group g = new Group(name, permission, isop, color, null);
 		return Group.add(g);
 	}
 

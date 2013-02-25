@@ -7,21 +7,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
+import net.mcforge.API.EventHandler;
+import net.mcforge.API.Listener;
+import net.mcforge.API.player.PlayerDisconnectEvent;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
+import net.mcforge.server.Server;
 import net.mcforge.system.Serializer;
 import net.mcforge.system.Serializer.SaveType;
 import net.mcforge.world.blocks.BlockUpdate;
 
-public class CopyPasteService {
+public class CopyPasteService implements Listener {
     
     private static HashMap<Player, BlockUpdate[]> copy_cache = new HashMap<Player, BlockUpdate[]>();
     private static final Serializer<BlockUpdate[]> SAVER = new Serializer<BlockUpdate[]>(SaveType.GZIP_JAVA);
+    private static boolean initran;
+    
+    private static void init(Server server) {
+        if (initran)
+            return;
+        server.getEventSystem().registerEvents(new CopyPasteService());
+        initran = true;
+    }
     
     public static void addCopyData(Player p, BlockUpdate[] data) {
+        init(p.getServer());
         if (copy_cache.containsKey(p))
             copy_cache.remove(p);
         copy_cache.put(p, data);
+    }
+    
+    public static void clearData(Player p) {
+        if (!copy_cache.containsKey(p))
+            return;
+        copy_cache.remove(p);
     }
     
     public static BlockUpdate[] getData(Player p) {
@@ -77,6 +96,12 @@ public class CopyPasteService {
             e.printStackTrace();
             p.sendMessage(ChatColor.Dark_Red + "Error saving clipboard!");
         }
+    }
+    
+    @EventHandler
+    public void onDisconnect(PlayerDisconnectEvent event) {
+        if (copy_cache.containsKey(event.getPlayer()))
+            clearData(event.getPlayer());
     }
 
 }
