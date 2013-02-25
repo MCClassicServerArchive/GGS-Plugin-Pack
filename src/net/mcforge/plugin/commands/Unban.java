@@ -11,7 +11,7 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.banhandler.BanHandler;
-import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.API.help.HelpItem;
 
 @ManualLoad
 public class Unban extends Command implements HelpItem {

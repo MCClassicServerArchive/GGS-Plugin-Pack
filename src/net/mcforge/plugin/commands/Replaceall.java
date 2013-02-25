@@ -9,7 +9,7 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
-import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.API.help.HelpItem;
 import net.mcforge.world.blocks.Block;
 import net.mcforge.world.blocks.BlockUpdate;
 @ManualLoad

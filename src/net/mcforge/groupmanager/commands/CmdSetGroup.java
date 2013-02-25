@@ -115,7 +115,7 @@ public class CmdSetGroup extends Command {
 
 	@Override
 	public void help(CommandExecutor executor) {
-		executor.sendMessage("/setgroup <player> <group> - sets player group");
+		executor.sendMessage("/setgroup <player> <group> - Sets player group");
 	}
 	
 }

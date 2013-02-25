@@ -4,7 +4,7 @@ import net.mcforge.API.CommandExecutor;
 import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
-import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.API.help.HelpItem;
 import net.mcforge.server.Server;
 @ManualLoad
 public class Title extends Command implements HelpItem {

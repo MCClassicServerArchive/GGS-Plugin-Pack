@@ -5,7 +5,7 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
-import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.API.help.HelpItem;
 @ManualLoad
 public class Nick extends Command implements HelpItem {
 

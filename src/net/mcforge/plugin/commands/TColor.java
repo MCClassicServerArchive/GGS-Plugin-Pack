@@ -6,7 +6,7 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.plugin.Main.Main;
-import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.API.help.HelpItem;
 import net.mcforge.server.Server;
 
 @ManualLoad

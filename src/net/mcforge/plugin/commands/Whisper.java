@@ -10,7 +10,7 @@ import net.mcforge.API.Priority;
 import net.mcforge.API.player.PlayerChatEvent;
 import net.mcforge.API.plugin.Command;
 import net.mcforge.iomodel.Player;
-import net.mcforge.plugin.help.HelpItem;
+import net.mcforge.API.help.HelpItem;
 import net.mcforge.server.Server;
 @ManualLoad
 public class Whisper extends Command implements Listener, HelpItem {

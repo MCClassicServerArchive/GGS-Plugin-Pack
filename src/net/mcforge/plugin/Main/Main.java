@@ -37,7 +37,6 @@ import net.mcforge.plugin.commands.Color;
 import net.mcforge.plugin.commands.Cuboid;
 import net.mcforge.plugin.commands.Give;
 import net.mcforge.plugin.commands.Goto;
-import net.mcforge.plugin.commands.Help;
 import net.mcforge.plugin.commands.Kick;
 import net.mcforge.plugin.commands.Load;
 import net.mcforge.plugin.commands.Loaded;
@@ -66,7 +65,6 @@ import net.mcforge.plugin.commands.Title;
 import net.mcforge.plugin.commands.Unban;
 import net.mcforge.plugin.commands.Undo;
 import net.mcforge.plugin.commands.Whisper;
-import net.mcforge.plugin.help.HelpItemManager;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
@@ -74,7 +72,6 @@ import net.mcforge.system.updater.UpdateType;
 public class Main extends Plugin implements Updatable, Listener {
     private static final String VERSION = "5.5.5";
     private static final String CONFIG_VERSION = "#VERSION.4";
-    public static final HelpItemManager helpmanager = new HelpItemManager();
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
         new Afk(),
@@ -84,7 +81,6 @@ public class Main extends Plugin implements Updatable, Listener {
         new Cuboid(),
         new Give(),
         new Goto(),
-        new Help(),
         new Kick(),
         new Load(),
         new Loaded(),
@@ -159,7 +155,6 @@ public class Main extends Plugin implements Updatable, Listener {
 
     @Override
     public void onLoad(String[] arg0) {
-        helpmanager.init(getServer());
         boolean savedefaults = true;
         try {
             savedefaults = !loadOptions();
@@ -218,7 +213,6 @@ public class Main extends Plugin implements Updatable, Listener {
 
     @Override
     public void onUnload() {
-        helpmanager.deinit();
         unloadCommands(COMMANDS);
 
         //--Unload plugins--
