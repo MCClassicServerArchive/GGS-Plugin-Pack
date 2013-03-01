@@ -277,10 +277,6 @@ public class Main extends Plugin implements Updatable, Listener {
     public String getVersion() {
     	return VERSION;
     }
-    @Override
-    public String getCheckURL() {
-        return "http://update.mcforge.net/VERSION_2/defaults/current.txt";
-    }
 
     @Override
     public String getCurrentVersion() {
@@ -290,11 +286,6 @@ public class Main extends Plugin implements Updatable, Listener {
     @Override
     public String getDownloadPath() {
         return "plugins/Defaults.jar";
-    }
-
-    @Override
-    public String getDownloadURL() {
-        return "http://update.mcforge.net/VERSION_2/defaults/Defaults.jar";
     }
 
     @Override
@@ -316,6 +307,16 @@ public class Main extends Plugin implements Updatable, Listener {
         }
         getServer().sendGlobalMessage(event.getBanner().getName() + " banned " + event.getPlayer().getDisplayName() + ChatColor.White + " for " + ChatColor.Dark_Red + event.getReason());
         BanHandler.banHandler.ban(name);
+    }
+
+    @Override
+    public String getInfoURL() {
+        return "http://update.mcforge.net/VERSION_2/defaults/updatej";
+    }
+
+    @Override
+    public String getWebsite() {
+        return "http://www.mcforge.net";
     }
 }
 

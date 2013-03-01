@@ -129,9 +129,9 @@ public class GlobalChatBot implements Runnable {
                                 handler.sendMessage("^Name: " + s.Name);
                                 handler.sendMessage("^Description: " + s.description);
                                 handler.sendMessage("^MoTD: " + s.MOTD);
-                                handler.sendMessage("^Version: MCForge " + s.VERSION);
+                                handler.sendMessage("^Version: MCForge " + Server.CORE_VERSION);
                                 handler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hashCode());
-                                handler.sendMessage("Players: " + s.getPlayers().size() + "/" + s.MaxPlayers);
+                                handler.sendMessage("^Players: " + s.getPlayers().size() + "/" + s.MaxPlayers);
                             }
                         }
                         else if (message.startsWith("^SENDRULES ")) {
@@ -159,6 +159,10 @@ public class GlobalChatBot implements Runnable {
                             }
                             players = null;
                         }
+                        else if (message.startsWith("^ISSERVER ")) {
+                            if (message.split(" ").length > 1 && message.split(" ")[1].equals(username))
+                                handler.sendMessage("^IMASERVER");
+                        }
                         continue;
                     }
                     String toSend = incoming + handler.getSender(line) + ": &f" +  message;
@@ -166,7 +170,7 @@ public class GlobalChatBot implements Runnable {
                 }
                 else if (line.split(":")[1].contains("PRIVMSG " + username)) {
                     if (handler.getMessage(line).equals("\u0001" + "VERSION" + "\u0001")) {
-                        handler.sendNotice(handler.getSender(line), "\u0001" + "VERSION MCForge " + s.VERSION + " : " + System.getProperty("os.name") + "\u0001");
+                        handler.sendNotice(handler.getSender(line), "\u0001" + "VERSION MCForge " + Server.CORE_VERSION + " : " + System.getProperty("os.name") + "\u0001");
                     }
                 }
                 else if (handler.hasCode(line, "474")) {
