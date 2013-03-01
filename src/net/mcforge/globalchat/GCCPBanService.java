@@ -18,6 +18,7 @@ public class GCCPBanService {
         try {
             InputStream input = new URL(BAN_LIST_URL).openStream();
             ban_list = LOADER.getObject(input, GCCPBan[].class);
+            input.close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

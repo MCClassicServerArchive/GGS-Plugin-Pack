@@ -11,12 +11,16 @@
  */
 package net.mcforge.groupmanager.main;
 
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.sql.SQLException;
+
 import net.mcforge.chat.ChatColor;
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
 
 public class GroupActions {
-	public static boolean setGroup(String playername, String groupname) {
+	public static boolean setGroup(String playername, String groupname) throws NotSerializableException, SQLException, IOException {
 		Player player = GroupPlugin.find(playername);
 		Group group = Group.find(groupname);
 		if (group == null) { return false; }
@@ -27,18 +31,25 @@ public class GroupActions {
 			player.setGroup(group);
 			return true;
 		}
-		else {
-			Group old = Group.getGroup(playername);
-			old.removeMember(playername);
-			group.addMember(playername);
-			//TODO: change player's color
-			return true;
-		}
+		
+		Group old = Group.getGroup(playername);
+		old.removeMember(playername);
+		group.addMember(playername);
+
+		Player.setAttribute("mcf_color", group.color, playername, GroupPlugin.server);
+		return true;
 	}
 
-	public static boolean promote(String username) {
-		Group startgroup = Group.getGroup(username);
-		if (startgroup == null) { return false; }
+	public static boolean promote(String username) throws NotSerializableException, SQLException, IOException {
+		Player p = GroupPlugin.server.findPlayer(username);
+		Group startgroup = null;
+		
+		if (p != null) {
+			startgroup = Group.getGroup(p);
+		}
+		if (startgroup == null) {
+			startgroup = Group.getGroup(username);
+		}
 		Group lowestabove = null;
 		for (Group g : Group.getGroupList()) {
 			if (g.permissionlevel > startgroup.permissionlevel) {
@@ -51,11 +62,10 @@ public class GroupActions {
 			}
 		}
 		if (lowestabove == null) { return false; }
-		Player p = GroupPlugin.find(username);
 		if (p == null) {
 			startgroup.removeMember(username);
 			lowestabove.addMember(username);
-			//TODO: colors
+			Player.setAttribute("mcf_color", lowestabove.color, username, GroupPlugin.server);
 		}
 		else {
 			p.setGroup(lowestabove);
@@ -63,9 +73,16 @@ public class GroupActions {
 		return true;
 	}
 
-	public static boolean demote(String username) {
-		Group startgroup = Group.getGroup(username);
-		if (startgroup == null) { return false; }
+	public static boolean demote(String username) throws NotSerializableException, SQLException, IOException {
+		Player p = GroupPlugin.server.findPlayer(username);
+		Group startgroup = null;
+		
+		if (p != null) {
+			startgroup = Group.getGroup(p);
+		}
+		if (startgroup == null) {
+			startgroup = Group.getGroup(username);
+		}
 		Group highestbelow = null;
 		for (Group g : Group.getGroupList()) {
 			if (g.permissionlevel < startgroup.permissionlevel) {
@@ -78,11 +95,10 @@ public class GroupActions {
 			}
 		}
 		if (highestbelow == null) { return false; }
-		Player p = GroupPlugin.find(username);
 		if (p == null) {
 			startgroup.removeMember(username);
 			highestbelow.addMember(username);
-			//TODO: colors
+			Player.setAttribute("mcf_color", highestbelow.color, username, GroupPlugin.server);
 		}
 		else {
 			p.setGroup(highestbelow);
@@ -91,7 +107,15 @@ public class GroupActions {
 	}
 
 	public static Group getNextRank(String username) {
-		Group startgroup = Group.getGroup(username);
+		Player p = GroupPlugin.server.findPlayer(username);
+		Group startgroup = null;
+		
+		if (p != null) {
+			startgroup = Group.getGroup(p);
+		}
+		if (startgroup == null) {
+			startgroup = Group.getGroup(username);
+		}
 		if (startgroup == null) { return null; }
 		Group lowestabove = null;
 		for (Group g : Group.getGroupList()) {
@@ -104,12 +128,15 @@ public class GroupActions {
 				}
 			}
 		}
-		if (lowestabove == null) { return null; }
+		if (lowestabove == null) {System.out.println("NOLOWAB"); return null; }
 		return lowestabove;
 	}
 
 	public static Group getPreviousRank(String username) {
-		Group startgroup = Group.getGroup(username);
+		Group startgroup = Group.getGroup(GroupPlugin.server.findPlayer(username));
+		if (startgroup == null) {
+			startgroup = Group.getGroup(username);
+		}
 		if (startgroup == null) { return null; }
 		Group highestbelow = null;
 		for (Group g : Group.getGroupList()) {

@@ -133,24 +133,23 @@ public class Main extends Plugin implements Updatable, Listener {
             in.close();
             return true;
         }
-        else {
-            getServer().Log("Adding new commands to config..");
-            ArrayList<String> write = new ArrayList<String>();
-            while ((strLine = br.readLine()) != null) {
-                write.add(strLine);
-                if (!strLine.startsWith("#"))
-                    load.add(strLine);
-            }
-            in.close();
-            for (Command c : COMMANDS) {
-                if (!write.contains(c.getName()))
-                    write.add(c.getName());
-            }
-            updateConfig(write.toArray(new String[write.size()]));
-            write.clear();
-            getServer().Log("Done!");
-            return true;
-        }
+        
+		getServer().Log("Adding new commands to config..");
+		ArrayList<String> write = new ArrayList<String>();
+		while ((strLine = br.readLine()) != null) {
+		    write.add(strLine);
+		    if (!strLine.startsWith("#"))
+		        load.add(strLine);
+		}
+		in.close();
+		for (Command c : COMMANDS) {
+		    if (!write.contains(c.getName()))
+		        write.add(c.getName());
+		}
+		updateConfig(write.toArray(new String[write.size()]));
+		write.clear();
+		getServer().Log("Done!");
+		return true;
     }
 
     @Override

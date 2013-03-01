@@ -65,8 +65,8 @@ public class IRCHandler {
 	 * @param nick - The nickname to use
 	 * @param visible - Whether the bot will be marked as visible
 	 */
-	public void sendUserMsg(String nick, boolean visible) {
-		sendRaw(String.format("USER %s %d * :%s", nick, visible ? 0 : 8, bot.REALNAME));
+	public void sendUserMsg(boolean visible) {
+		sendRaw(String.format("USER %s %d * :%s", bot.CONSTNAME, visible ? 0 : 8, bot.REALNAME));
 	}
 
 	/**

@@ -25,6 +25,7 @@ public class GlobalChatBot implements Runnable {
     private BufferedWriter writer;
 
     protected final String REALNAME = "MCForge GC Bot";
+    protected final String CONSTNAME = "MCFServer";
     protected String username;	
     protected String consoleNick = "Console";
 
@@ -41,7 +42,7 @@ public class GlobalChatBot implements Runnable {
     protected final static String incoming = "&6>[Global]";
 
 
-    public GlobalChatBot(GlobalChatPlugin plugin, Server server, String username, String quitMessage) {
+    public GlobalChatBot(Server server, String username, String quitMessage) {
         this.username = username;
         this.quitMessage = quitMessage;
         s = server;
@@ -83,7 +84,7 @@ public class GlobalChatBot implements Runnable {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
             handler.setNick(username);
-            handler.sendUserMsg(username, true);
+            handler.sendUserMsg(true);
 
             while (isRunning) {
                 line = reader.readLine();
@@ -130,8 +131,8 @@ public class GlobalChatBot implements Runnable {
                                 handler.sendMessage("^Description: " + s.description);
                                 handler.sendMessage("^MoTD: " + s.MOTD);
                                 handler.sendMessage("^Version: MCForge " + s.VERSION);
-                                handler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hashCode());
-                                handler.sendMessage("Players: " + s.getPlayers().size() + "/" + s.MaxPlayers);
+                                handler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hash);
+                                handler.sendMessage("^Players: " + s.getPlayers().size() + "/" + s.MaxPlayers);
                             }
                         }
                         else if (message.startsWith("^SENDRULES ")) {
@@ -177,7 +178,7 @@ public class GlobalChatBot implements Runnable {
                     return;
                 }
             }
-            disposeBot();
+            System.out.println("OUTOFYERLOOP YAAAY!");
         }
         catch(Exception ex) {
         }
@@ -195,17 +196,8 @@ public class GlobalChatBot implements Runnable {
 
     public void disposeBot() {
         handler.sendPart(quitMessage);
-        try {
-            Thread.sleep(200);
-        }
-        catch (InterruptedException e) {
-        }
         handler.sendQuit(quitMessage);
-        try {
-            Thread.sleep(200);
-        }
-        catch (InterruptedException e) {
-        }
+
         try {
             if (reader != null)
                 reader.close();

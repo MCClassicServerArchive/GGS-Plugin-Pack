@@ -43,8 +43,8 @@ public class Staff extends Command implements HelpItem {
 		List<String> modList = player.getServer().getPrivilegesHandler().getMods();
 		List<String> gcList = player.getServer().getPrivilegesHandler().getGCStaff();
 		player.sendMessage("&9MCForge developers: &e" + Messages.join(devList.toArray(new String[devList.size()]), "&f, &e"));
-		player.sendMessage("&9MCForge moderators: &e" + Messages.join((String[])modList.toArray(new String[modList.size()]), "&f, &e"));
-		player.sendMessage("&9MCForge GC staff: &e" + Messages.join((String[])gcList.toArray(new String[gcList.size()]), "&f, &e"));
+		player.sendMessage("&9MCForge moderators: &e" + Messages.join(modList.toArray(new String[modList.size()]), "&f, &e"));
+		player.sendMessage("&9MCForge GC staff: &e" + Messages.join(gcList.toArray(new String[gcList.size()]), "&f, &e"));
 	}
 
 	@Override
