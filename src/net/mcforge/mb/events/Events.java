@@ -66,10 +66,9 @@ public class Events implements Listener {
 				else {
 					if (antirepeat.get(event.getPlayer()).equals(mb.getMessage()))
 						return;
-					else {
-						antirepeat.remove(event.getPlayer());
-						antirepeat.put(event.getPlayer(), mb.getMessage());
-					}
+					
+					antirepeat.remove(event.getPlayer());
+					antirepeat.put(event.getPlayer(), mb.getMessage());
 				}
 			}
 			event.getPlayer().sendMessage(mb.getMessage());
@@ -84,10 +83,9 @@ public class Events implements Listener {
 				else {
 					if (antirepeat.get(event.getPlayer()).equals(cb.getMessage()))
 						return;
-					else {
-						antirepeat.remove(event.getPlayer());
-						antirepeat.put(event.getPlayer(), cb.getMessage());
-					}
+					
+					antirepeat.remove(event.getPlayer());
+					antirepeat.put(event.getPlayer(), cb.getMessage());
 				}
 			}
 			final Command c = cb.getCommand(event.getPlayer().getServer());
@@ -126,12 +124,11 @@ public class Events implements Listener {
 					event.setCancel(true);
 					return;
 				}
-				else {
-					event.getPlayer().sendMessage(ChatColor.Red + "Sorry, but you cant build here!");
-					event.getPlayer().sendMessage("This zone is owned by " + zb.getOwnersString());
-					event.setCancel(true);
-					return;
-				}
+				
+				event.getPlayer().sendMessage(ChatColor.Red + "Sorry, but you cant build here!");
+				event.getPlayer().sendMessage("This zone is owned by " + zb.getOwnersString());
+				event.setCancel(true);
+				return;
 			}
 		}
 		if (event.getPlaceType() == PlaceMode.BREAK) {
@@ -147,10 +144,9 @@ public class Events implements Listener {
 							event.setCancel(true);
 							return;
 						}
-						else {
-							antirepeat.remove(event.getPlayer());
-							antirepeat.put(event.getPlayer(), mb.getMessage());
-						}
+						
+						antirepeat.remove(event.getPlayer());
+						antirepeat.put(event.getPlayer(), mb.getMessage());
 					}
 				}
 				event.getPlayer().sendMessage(mb.getMessage());
@@ -192,11 +188,10 @@ public class Events implements Listener {
 					event.setCancel(true);
 					return;
 				}
-				else {
-					event.getPlayer().sendMessage(ChatColor.Red + "Sorry, but you cant build here!");
-					event.getPlayer().sendMessage("This zone is owned by " + zb.getOwnersString());
-					return;
-				}
+				
+				event.getPlayer().sendMessage(ChatColor.Red + "Sorry, but you cant build here!");
+				event.getPlayer().sendMessage("This zone is owned by " + zb.getOwnersString());
+				return;
 			}
 		}
 	}

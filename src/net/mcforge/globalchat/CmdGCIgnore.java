@@ -17,32 +17,31 @@ public class CmdGCIgnore extends PlayerCommand {
 	public String getName() {
 		return "globalchatignore";
 	}
+
 	@Override
 	public String[] getShortcuts() {
 		return new String[] { "gcignore", "ignoregc" };
 	}
+
 	@Override
 	public int getDefaultPermissionLevel() {
 		return 0;
 	}
+
 	@Override
 	public boolean isOpCommandDefault() {
 		return false;
 	}
+
 	@Override
 	public void execute(Player executor, String[] args) {
 		boolean ignoring = DataHandler.ignoringGC(executor);
-		if (ignoring) {
-			DataHandler.setValue(executor, DataHandler.ignoring, false, true);
-			executor.sendMessage("You are no longer ignoring the Global Chat!");
-			return;
-		}
-		else {
-			DataHandler.setValue(executor, DataHandler.ignoring, true, true);
-			executor.sendMessage("You are now ignoring the Global Chat!");
-			return;
-		}
+		DataHandler.setValue(executor, DataHandler.ignoring, !ignoring, true);
+
+		executor.sendMessage(ignoring ? "You are no longer ignoring the Global Chat!"
+				: "You are now ignoring the Global Chat!");
 	}
+
 	@Override
 	public void help(CommandExecutor executor) {
 		executor.sendMessage("/gcignore - ignore the Global Chat");

@@ -11,6 +11,10 @@
  */
 package net.mcforge.groupmanager.API;
 
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.sql.SQLException;
+
 import net.mcforge.chat.ChatColor;
 import net.mcforge.groupmanager.main.GroupActions;
 import net.mcforge.groupmanager.main.GroupPlugin;
@@ -28,7 +32,7 @@ public class GroupManagerAPI {
 	 *            name of the player to demote
 	 * @return if successful
 	 */
-	public static boolean demotePlayer(String playername) {
+	public static boolean demotePlayer(String playername) throws NotSerializableException, SQLException, IOException {
 		return GroupActions.demote(playername);
 	}
 
@@ -39,7 +43,7 @@ public class GroupManagerAPI {
 	 *            name of the player to promote
 	 * @return if successful
 	 */
-	public static boolean promotePlayer(String playername) {
+	public static boolean promotePlayer(String playername) throws NotSerializableException, SQLException, IOException {
 		return GroupActions.promote(playername);
 	}
 
@@ -52,7 +56,7 @@ public class GroupManagerAPI {
 	 *            the group name
 	 * @return if successful
 	 */
-	public static boolean setPlayerGroup(String playername, String groupname) {
+	public static boolean setPlayerGroup(String playername, String groupname) throws NotSerializableException, SQLException, IOException {
 		return GroupActions.setGroup(playername, groupname);
 	}
 

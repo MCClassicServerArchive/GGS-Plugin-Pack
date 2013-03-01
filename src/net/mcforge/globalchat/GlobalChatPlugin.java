@@ -97,7 +97,7 @@ public class GlobalChatPlugin extends Plugin {
 	    if (!enabled)
 	    	return;
 	    
-		gcBot = new GlobalChatBot(this, getServer(), name, quitMessage);
+		gcBot = new GlobalChatBot(getServer(), name, quitMessage);
 		gcBot.consoleNick = consoleNick;
 		GCCPBanService.updateBanList();
 		try {
