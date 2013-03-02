@@ -75,8 +75,6 @@ public class GlobalChatBot implements Runnable {
     }
     @Override
     public void run() {	
-        s.Log("Runningthisthread");
-
         String line;
         try  {
             isRunning = true;
@@ -182,7 +180,6 @@ public class GlobalChatBot implements Runnable {
                     return;
                 }
             }
-            System.out.println("OUTOFYERLOOP YAAAY!");
         }
         catch(Exception ex) {
         }

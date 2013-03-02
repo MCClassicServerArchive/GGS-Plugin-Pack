@@ -61,7 +61,7 @@ public class AdminVerification extends Plugin {
 
 		if (!properties.hasValue("Identification-Toggle")) {
 			properties.addSetting("Identification-Toggle", (identificationToggle = false));
-			properties.addComment("Identification-Toggle", "Whether staff can choose not to identify. Note that this is a security risk!");
+			properties.addComment("Identification-Toggle", "Whether staff can choose not to identify. Note that this is a security risk");
 		}
 		else {
 			identificationToggle = properties.getBool("Identification-Toggle");

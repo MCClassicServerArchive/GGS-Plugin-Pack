@@ -36,10 +36,11 @@ public class EventListener implements Listener {
 	public void onPlayerConnect(PlayerConnectEvent e) {
 		Player who = e.getPlayer();
 		if (who.getGroup().permissionlevel < AdminVerification.identificationPerm) { return; }
-		
-		if (!who.hasAttribute("mcf_verifies")) {
-			Verifier.setVerifies(who, true);
-		}
+		if (AdminVerification.identificationToggle) {
+			if (!who.hasAttribute("mcf_verifies")) {
+				Verifier.setVerifies(who, true);
+			}
+		} 
 		
 		Verifier.setVerified(who, false);
 		Verifier.setTries(who, 0);
