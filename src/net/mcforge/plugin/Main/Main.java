@@ -71,7 +71,7 @@ import net.mcforge.system.updater.UpdateType;
 import net.mcforge.verification.AdminVerification;
 
 public class Main extends Plugin implements Updatable, Listener {
-    private static final String VERSION = "5.5.5";
+    private static final String VERSION = "1.0.0";
     private static final String CONFIG_VERSION = "#VERSION.4";
     private ArrayList<String> load = new ArrayList<String>();
     private static final Command[] COMMANDS = new Command[] {
@@ -279,10 +279,6 @@ public class Main extends Plugin implements Updatable, Listener {
     public String getVersion() {
     	return VERSION;
     }
-    @Override
-    public String getCheckURL() {
-        return "http://update.mcforge.net/VERSION_2/defaults/current.txt";
-    }
 
     @Override
     public String getCurrentVersion() {
@@ -292,11 +288,6 @@ public class Main extends Plugin implements Updatable, Listener {
     @Override
     public String getDownloadPath() {
         return "plugins/Defaults.jar";
-    }
-
-    @Override
-    public String getDownloadURL() {
-        return "http://update.mcforge.net/VERSION_2/defaults/Defaults.jar";
     }
 
     @Override
@@ -318,6 +309,16 @@ public class Main extends Plugin implements Updatable, Listener {
         }
         getServer().sendGlobalMessage(event.getBanner().getName() + " banned " + event.getPlayer().getDisplayName() + ChatColor.White + " for " + ChatColor.Dark_Red + event.getReason());
         BanHandler.banHandler.ban(name);
+    }
+
+    @Override
+    public String getInfoURL() {
+        return "http://update.mcforge.net/VERSION_2/defaults/updatej";
+    }
+
+    @Override
+    public String getWebsite() {
+        return "http://www.mcforge.net";
     }
 }
 
