@@ -55,6 +55,20 @@ public class CmdGC extends Command {
 			executor.sendMessage("You have to specify a message!");
 			return;
 		}
+		
+		if (args[0].equalsIgnoreCase("ignore")) {
+			executor.sendMessage("&cThe command to ignore the Global Chat is &b/gcignore");
+		}
+		else if (args[0].equalsIgnoreCase("info")) {
+			executor.sendMessage("&cThe command to view the Global Chat info is &b/gcinfo");
+		}
+		else if (args[0].equalsIgnoreCase("rules")) {
+			executor.sendMessage("&cThe command to view the Global Chat rules is &b/gcrules");
+		}
+		else if (args[0].equalsIgnoreCase("agree")) {
+			executor.sendMessage("&cThe command to agree to the Global Chat rules is &b/gcagree");
+		}
+		
 		String joined = Messages.join(args);
 		if (executor instanceof Console) {
 			String nick = GlobalChatPlugin.gcBot.consoleNick;

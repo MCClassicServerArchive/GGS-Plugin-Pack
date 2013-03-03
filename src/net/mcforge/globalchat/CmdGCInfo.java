@@ -40,7 +40,7 @@ public class CmdGCInfo extends Command {
 		String[] lines;
 		
 		try {
-			u = new URL("http://dl.dropbox.com/u/56214562/gcinfo.txt"); //TODO: get from wouts' webserver
+			u = new URL("http://server.mcforge.net/gcinfo.txt");
 			lines = WebUtils.readContentsToArray(u);
 		}
 		catch (MalformedURLException e) {
