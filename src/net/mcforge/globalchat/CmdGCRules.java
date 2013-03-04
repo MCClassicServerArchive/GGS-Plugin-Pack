@@ -40,7 +40,7 @@ public class CmdGCRules extends Command {
 		String[] lines;
 		
 		try {
-			u = new URL("http://dl.dropbox.com/u/56214562/gcrules.txt"); //TODO: get from wouts' webserver
+			u = new URL("http://server.mcforge.net/gcrules.txt");
 			lines = WebUtils.readContentsToArray(u);
 		}
 		catch (MalformedURLException e) {

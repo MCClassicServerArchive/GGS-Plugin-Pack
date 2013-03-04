@@ -68,6 +68,7 @@ import net.mcforge.plugin.commands.Whisper;
 import net.mcforge.server.Server;
 import net.mcforge.system.updater.Updatable;
 import net.mcforge.system.updater.UpdateType;
+import net.mcforge.verification.AdminVerification;
 
 public class Main extends Plugin implements Updatable, Listener {
     private static final String VERSION = "1.0.0";
@@ -169,6 +170,8 @@ public class Main extends Plugin implements Updatable, Listener {
         p = new IRCPlugin(getServer());
         addPlugin(p, savedefaults);
         p = new GlobalChatPlugin(getServer());
+        addPlugin(p, savedefaults);
+        p = new AdminVerification(getServer());
         addPlugin(p, savedefaults);
         //--Load plugins--
         getServer().Log("MCForge Defaults loaded!");

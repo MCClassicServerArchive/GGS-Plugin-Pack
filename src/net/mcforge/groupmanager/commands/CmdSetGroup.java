@@ -48,7 +48,7 @@ public class CmdSetGroup extends Command {
 		if (args.length == 2) {
 			Player who = executor.getServer().findPlayer(args[0]);
 			if (who != null) {
-				if (executor.getServer().findPlayer(args[0]) == executor && (!(executor instanceof Console))) {
+				if (executor.getServer().findPlayer(args[0]) == executor) {
 					executor.sendMessage("You can't change your own rank!");
 					return;
 				}
@@ -63,7 +63,7 @@ public class CmdSetGroup extends Command {
 					return;
 				}
 				
-				if (toRank.permissionlevel >= executor.getGroup().permissionlevel) {
+				if (toRank.permissionlevel >= executor.getGroup().permissionlevel && (!(executor instanceof Console))) {
 					executor.sendMessage("You can't rank players to a rank higher than or equal to yours!");
 					return;
 				}
@@ -97,14 +97,14 @@ public class CmdSetGroup extends Command {
 					ranked = Group.getDefault();
 				}
 
-				if (ranked.permissionlevel >= executor.getGroup().permissionlevel) {
+				if (ranked.permissionlevel >= executor.getGroup().permissionlevel && (!(executor instanceof Console))) {
 					executor.sendMessage("You can't rank players of the equal or higher rank!");
 					return;
 				}
 
 				Group toRank = Group.find(args[1]);
 				if (toRank != null) {
-					if (toRank.permissionlevel >= executor.getGroup().permissionlevel) {
+					if (toRank.permissionlevel >= executor.getGroup().permissionlevel && (!(executor instanceof Console))) {
 						executor.sendMessage("You can't rank players to a rank higher than or equal to yours!");
 						return;
 					}
