@@ -7,10 +7,10 @@
  ******************************************************************************/
 package net.mcforge.mb.blocks;
 
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 import net.mcforge.world.Level;
 
-public class PortalBlock extends Block {
+public class PortalBlock extends ClassicBlock {
 	private static final long serialVersionUID = 1808391182561161713L;
 	private POS pos;
 	private boolean isExit;
@@ -19,7 +19,7 @@ public class PortalBlock extends Block {
 	public PortalBlock(byte ID, String name) {
 		super(ID, name);
 	}
-	public PortalBlock(int x, int y, int z, Level l, Block placed) {
+	public PortalBlock(int x, int y, int z, Level l, ClassicBlock placed) {
 		this(placed.getVisibleBlock(), placed.name);
 		this.pos = new POS(x, y + 32, z, l);
 		this.canWalk = placed.canWalkThrough();

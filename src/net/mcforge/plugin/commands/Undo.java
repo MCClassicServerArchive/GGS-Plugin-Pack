@@ -123,7 +123,7 @@ public class Undo extends Command {
             player.sendMessage("Which is " + data.size() + " block changes.");
             Level foundLevel;
             for (BlockData d : data) {
-                if ((foundLevel = who.getServer().getLevelHandler().findLevel(d.getLevel())) != null) {
+                if ((foundLevel = who.getServer().getClassicLevelHandler().findLevel(d.getLevel())) != null) {
                     Player.GlobalBlockChange((short)d.getX(), (short)d.getY(), (short)d.getZ(), d.getBlock(), foundLevel, who.getServer(), true);
                 }
             }
@@ -139,7 +139,7 @@ public class Undo extends Command {
             player.sendMessage("Which is " + data.size() + " block changes.");
             Level foundLevel;
             for (BlockData d : data) {
-                if ((foundLevel = player.getServer().getLevelHandler().findLevel(d.getLevel())) != null) {
+                if ((foundLevel = player.getServer().getClassicLevelHandler().findLevel(d.getLevel())) != null) {
                     Player.GlobalBlockChange((short)d.getX(), (short)d.getY(), (short)d.getZ(), d.getBlock(), foundLevel, player.getServer(), true);
                 }
             }

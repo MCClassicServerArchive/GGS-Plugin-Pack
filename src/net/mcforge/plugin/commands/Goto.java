@@ -44,7 +44,7 @@ public class Goto extends PlayerCommand implements HelpItem {
 	public void execute(Player player, String[] args) {
 		if (args.length == 1) {
 			Server s = player.getServer();
-			LevelHandler handler = s.getLevelHandler();
+			LevelHandler handler = s.getClassicLevelHandler();
 			Level level = handler.findLevel(args[0]);
 
 			if (level != null) {
@@ -57,7 +57,7 @@ public class Goto extends PlayerCommand implements HelpItem {
 					for (int i = 0; i < files.length; i++) {
 						File fi = new File(files[i]);
 						if (fi.getName().equalsIgnoreCase(args[0] + ".ggs")) {
-							Level found = handler.loadClassicLevel("levels/" + fi.getName());
+							Level found = handler.loadLevel(new File("levels/" + fi.getName()));
 							if (found == null) {
 								player.sendMessage("Level doesn't exist...");
 								return;

@@ -24,6 +24,7 @@ import net.mcforge.mb.blocks.PortalBlock;
 import net.mcforge.mb.blocks.MessageBlock;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 import net.mcforge.world.PlaceMode;
 import net.mcforge.API.server.ServerStartedEvent;;
 
@@ -119,7 +120,7 @@ public class Events implements Listener {
 			if (b instanceof ZoneBlock) {
 				ZoneBlock zb = (ZoneBlock)b;
 				if (zb.canBuild(event.getPlayer()) || MessageBlockPlugin.INSTANCE.permissionoverride <= event.getPlayer().getGroup().permissionlevel) {
-					ZoneBlock newb = zb.clone(event.getBlock());
+					ClassicBlock newb = zb.clone(event.getBlock());
 					Player.GlobalBlockChange(event.getX(), event.getY(), event.getZ(), newb, event.getLevel(), event.getServer());
 					event.setCancel(true);
 					return;
@@ -183,7 +184,7 @@ public class Events implements Listener {
 					event.getPlayer().sendMessage(s);
 				}
 				if (zb.canBuild(event.getPlayer())) {
-					ZoneBlock newb = zb.clone(Block.getBlock("Air"));
+					ZoneBlock newb = zb.clone(ClassicBlock.getBlock("Air"));
 					Player.GlobalBlockChange(event.getX(), event.getY(), event.getZ(), newb, event.getLevel(), event.getServer());
 					event.setCancel(true);
 					return;

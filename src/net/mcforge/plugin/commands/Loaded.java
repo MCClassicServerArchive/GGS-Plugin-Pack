@@ -38,7 +38,7 @@ public class Loaded extends Command implements HelpItem {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		LevelHandler handler = player.getServer().getLevelHandler();
+		LevelHandler handler = player.getServer().getClassicLevelHandler();
 		StringBuilder finalStr = new StringBuilder();
 
 		for (Level l : handler.getLevelList()) {

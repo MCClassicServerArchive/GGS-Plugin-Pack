@@ -11,7 +11,7 @@ import net.mcforge.system.Serializer.SaveType;
 
 public class GCCPBanService {
     private static GCCPBan[] ban_list;
-    private static final Serializer<GCCPBan[]> LOADER = new Serializer<GCCPBan[]>(SaveType.JSON);
+    private static final Serializer<GCCPBan[]> LOADER = new Serializer<GCCPBan[]>(SaveType.JSON, 0L);
     private static final String BAN_LIST_URL = "http://server.mcforge.net/gcbanned.txt";
 
     public static void updateBanList() {

@@ -12,8 +12,8 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.API.help.HelpItem;
-import net.mcforge.world.blocks.Block;
 import net.mcforge.world.blocks.BlockUpdate;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 @ManualLoad
 public class Replace extends PlayerCommand implements HelpItem {
 
@@ -25,10 +25,10 @@ public class Replace extends PlayerCommand implements HelpItem {
             return;
         }
         List<String> temp = Arrays.asList(args[0].split("\\,"));
-        ArrayList<Block> oldTypes = new ArrayList<Block>();
-        Block block;
+        ArrayList<ClassicBlock> oldTypes = new ArrayList<ClassicBlock>();
+        ClassicBlock block;
         for (String blockname : temp) {
-            if ((block = Block.getBlock(blockname)) == null) {
+            if ((block = ClassicBlock.getBlock(blockname)) == null) {
                 p.sendMessage("Invalid block " + blockname);
                 continue;
             }
@@ -37,7 +37,7 @@ public class Replace extends PlayerCommand implements HelpItem {
             block = null;
         }
         
-        Block newblock = Block.getBlock(args[1]);
+        ClassicBlock newblock = ClassicBlock.getBlock(args[1]);
         
         BlockChangeAction b = null;
         Action<BlockChangeAction> bb = new BlockChangeAction();
@@ -64,7 +64,7 @@ public class Replace extends PlayerCommand implements HelpItem {
             for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); xx++) {
                 for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); yy++) {
                     for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
-                        if (hasType(oldTypes, p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
+                        if (hasType(oldTypes, (ClassicBlock)p.getLevel().getTile(xx, yy, zz))) bu.add(new BlockUpdate(newblock, xx, yy, zz));
                     }
                 }
             }
@@ -76,8 +76,8 @@ public class Replace extends PlayerCommand implements HelpItem {
         }
     }
     
-    private boolean hasType(ArrayList<Block> array, Block block) {
-        for (Block b : array) {
+    private boolean hasType(ArrayList<ClassicBlock> array, ClassicBlock block) {
+        for (ClassicBlock b : array) {
             if (block.ID == b.ID && block.name.equals(b.name))
                 return true;
         }

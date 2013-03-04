@@ -17,6 +17,7 @@ import net.mcforge.mb.MessageBlockPlugin;
 import net.mcforge.mb.blocks.ZoneBlock;
 import net.mcforge.server.Server;
 import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 import net.mcforge.world.Level;
 
 public class ZoneDel extends PlayerCommand {
@@ -60,7 +61,7 @@ public class ZoneDel extends PlayerCommand {
 	}
 	
 	private void remove(int x, int y, int z, Level l, ZoneBlock zb, Server server) {
-		Player.GlobalBlockChange((short)x, (short)y, (short)z, Block.getBlock(zb.getVisibleBlock()), l, server);
+		Player.GlobalBlockChange((short)x, (short)y, (short)z, ClassicBlock.getBlock(zb.getVisibleBlock()), l, server);
 	}
 	private void checkandremove(int x, int y, int z, Level l, Server server, ZoneBlock zb) {
 		if (l.getTile(x + 1, y, z) instanceof ZoneBlock && ((ZoneBlock)l.getTile(x + 1, y, z)).getOwners() == zb.getOwners()) {

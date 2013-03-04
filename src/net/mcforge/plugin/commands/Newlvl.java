@@ -15,8 +15,8 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.API.help.HelpItem;
 import net.mcforge.world.generator.Generator;
+import net.mcforge.world.generator.classicmodel.FlatGrass;
 import net.mcforge.world.LevelHandler;
-import net.mcforge.world.generator.model.FlatGrass;
 
 @ManualLoad
 public class Newlvl extends Command implements HelpItem {
@@ -87,11 +87,11 @@ public class Newlvl extends Command implements HelpItem {
 	}
 
 	private void createLevel(CommandExecutor player, String name, short w, short h, short l, Generator gen) {
-		LevelHandler handler = player.getServer().getLevelHandler();
+		LevelHandler handler = player.getServer().getClassicLevelHandler();
 
 		if (handler.findLevel(name) == null) {
 			player.sendMessage(ChatColor.Yellow + "Creating " + ChatColor.White + name + "," + ChatColor.Yellow + " please wait...");
-			handler.newClassicLevel(name, w, h, l, gen);
+			handler.generateLevel(name, gen, w, h, l);
 			player.sendMessage(ChatColor.Bright_Green + "Created new level: \"" + name + "\"!");
 		}
 		else {

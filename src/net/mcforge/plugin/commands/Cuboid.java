@@ -11,25 +11,25 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.API.help.HelpItem;
-import net.mcforge.world.blocks.Block;
 import net.mcforge.world.blocks.BlockUpdate;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 @ManualLoad
 public class Cuboid extends PlayerCommand implements HelpItem {
 
-    Block block;
+    ClassicBlock block;
     @Override
     public void execute(Player p, String[] arg1) {
         CuboidType ct = CuboidType.Normal;
         ArrayList<BlockUpdate> bu = new ArrayList<BlockUpdate>();
         if (arg1.length == 2) {
-            block = Block.getBlock(arg1[0]);
+            block = ClassicBlock.getBlock(arg1[0]);
             ct = CuboidType.parse(arg1[1]);
         }
         else if (arg1.length == 1) {
-            if (Block.getBlock(arg1[0]).name.equals("NULL"))
+            if (ClassicBlock.getBlock(arg1[0]).name.equals("NULL"))
                 ct = CuboidType.parse(arg1[0]);
             else
-                block = Block.getBlock(arg1[0]);
+                block = ClassicBlock.getBlock(arg1[0]);
         }
         p.sendMessage("Using cuboid type: \"" + ct.getType() + "\"");
         BlockChangeAction b = null;

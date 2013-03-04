@@ -12,7 +12,7 @@ import net.mcforge.API.ManualLoad;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.iomodel.Player;
 import net.mcforge.API.help.HelpItem;
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 import net.mcforge.world.Level;
 
 @ManualLoad
@@ -39,7 +39,7 @@ public class Place extends PlayerCommand implements HelpItem {
 
 	@Override
 	public void execute(Player executor, String[] args) {
-		Block b = Block.getBlock("stone");
+	    ClassicBlock b = ClassicBlock.getBlock("stone");
 		short x = (short) (executor.getX() / 32), 
 			  y = (short) ((executor.getY() / 32) - 1), 
 			  z = (short) (executor.getZ() / 32);
@@ -48,7 +48,7 @@ public class Place extends PlayerCommand implements HelpItem {
 		case 0:
 			break;
 		case 1:
-			b = Block.getBlock(args[0]);
+			b = ClassicBlock.getBlock(args[0]);
 			if (b.name.equals("NULL")) {
 				executor.sendMessage("Invalid block type!");
 				return;
@@ -77,7 +77,7 @@ public class Place extends PlayerCommand implements HelpItem {
 				return;
 			}
 
-			b = Block.getBlock(args[3]);
+			b = ClassicBlock.getBlock(args[3]);
 			if (b.name.equals("NULL")) {
 				executor.sendMessage("Invalid block type!");
 				return;

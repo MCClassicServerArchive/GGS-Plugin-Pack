@@ -20,7 +20,7 @@ import net.mcforge.world.blocks.BlockUpdate;
 public class CopyPasteService implements Listener {
     
     private static HashMap<Player, BlockUpdate[]> copy_cache = new HashMap<Player, BlockUpdate[]>();
-    private static final Serializer<BlockUpdate[]> SAVER = new Serializer<BlockUpdate[]>(SaveType.GZIP_JAVA);
+    private static final Serializer<BlockUpdate[]> SAVER = new Serializer<BlockUpdate[]>(SaveType.GZIP_JAVA, 0L);
     private static boolean initran;
     
     private static void init(Server server) {

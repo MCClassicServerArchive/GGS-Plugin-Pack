@@ -7,9 +7,9 @@
  ******************************************************************************/
 package net.mcforge.mb.blocks;
 
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 
-public class MessageBlock extends Block {
+public class MessageBlock extends ClassicBlock {
 	
 	private static final long serialVersionUID = 1808391182561161713L;
 	private String message;
@@ -20,7 +20,7 @@ public class MessageBlock extends Block {
 		super(ID, name);
 	}
 	
-	public MessageBlock(String message, Block placed) {
+	public MessageBlock(String message, ClassicBlock placed) {
 		this(placed.getVisibleBlock(), placed.name);
 		this.message = message;
 		this.canWalk = placed.canWalkThrough();

@@ -11,8 +11,8 @@ import net.mcforge.API.action.BlockChangeAction;
 import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
-import net.mcforge.world.blocks.Block;
 import net.mcforge.world.blocks.BlockUpdate;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 
 public class Copy extends PlayerCommand {
 
@@ -68,11 +68,11 @@ public class Copy extends PlayerCommand {
             }
         }
         
-        ArrayList<Block> ignore = new ArrayList<Block>();
+        ArrayList<ClassicBlock> ignore = new ArrayList<ClassicBlock>();
         if (ignore_list != null) {
             for (String b : ignore_list) {
-                if (Block.getBlock(b) != null)
-                    ignore.add(Block.getBlock(b));
+                if (ClassicBlock.getBlock(b) != null)
+                    ignore.add(ClassicBlock.getBlock(b));
             }
         }
         
@@ -101,12 +101,12 @@ public class Copy extends PlayerCommand {
             for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); xx++) {
                 for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); yy++) {
                     for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); zz++) {
-                        if (player.getLevel().getTile(xx, yy, zz).ID == 0 && !includeair)
+                        if (player.getLevel().getTile(xx, yy, zz).getVisibleBlock() == 0 && !includeair)
                             continue;
-                        if (!hasType(ignore, player.getLevel().getTile(xx, yy, zz))) { 
-                            bu.add(new BlockUpdate(player.getLevel().getTile(xx, yy, zz), (xx - x1), (yy - y1), (zz - z1)));
+                        if (!hasType(ignore, (ClassicBlock)player.getLevel().getTile(xx, yy, zz))) { 
+                            bu.add(new BlockUpdate((ClassicBlock)player.getLevel().getTile(xx, yy, zz), (xx - x1), (yy - y1), (zz - z1)));
                             if (cut)
-                                Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, Block.getBlock("air"), player.getLevel(), player.getServer());
+                                Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, ClassicBlock.getBlock("air"), player.getLevel(), player.getServer());
                         }
                     }
                 }
@@ -119,8 +119,8 @@ public class Copy extends PlayerCommand {
         }
     }
     
-    private boolean hasType(ArrayList<Block> array, Block block) {
-        for (Block b : array) {
+    private boolean hasType(ArrayList<ClassicBlock> array, ClassicBlock block) {
+        for (ClassicBlock b : array) {
             if (block.ID == b.ID && block.name.equals(b.name))
                 return true;
         }

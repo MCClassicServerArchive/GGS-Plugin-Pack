@@ -28,7 +28,7 @@ import net.mcforge.mb.commands.Zone;
 import net.mcforge.mb.commands.ZoneDel;
 import net.mcforge.mb.events.Events;
 import net.mcforge.server.Server;
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 import net.mcforge.world.Level;
 
 @ManualLoad
@@ -141,8 +141,8 @@ public class MessageBlockPlugin extends Plugin {
 				}
 				Level l;
 				boolean tried = false;
-				while ((l = getServer().getLevelHandler().findLevel(Level)) == null && !tried) {
-					getServer().getLevelHandler().loadClassicLevel("levels/" + Level + ".ggs");
+				while ((l = getServer().getClassicLevelHandler().findLevel(Level)) == null && !tried) {
+					getServer().getClassicLevelHandler().loadClassicLevel("levels/" + Level + ".ggs");
 					tried = true;
 				}
 				if (l == null) {
@@ -151,9 +151,9 @@ public class MessageBlockPlugin extends Plugin {
 				}
 				MessageBlock mb;
 				if (!usetile)
-					mb = new MessageBlock(message, Block.getBlock(b));
+					mb = new MessageBlock(message, ClassicBlock.getBlock(b));
 				else
-					mb = new MessageBlock(message, l.getTile(x1, y1, z1));
+					mb = new MessageBlock(message, (ClassicBlock)l.getTile(x1, y1, z1));
 				Player.GlobalBlockChange((short)x1, (short)y1, (short)z1, mb, l, getServer());
 			}
 			else if (type.equals("PORTAL")) {
@@ -167,25 +167,25 @@ public class MessageBlockPlugin extends Plugin {
 				String Level3 = args[8]; //End Level
 				Level l, l2;
 				boolean tried = false;
-				while ((l = getServer().getLevelHandler().findLevel(Level2)) == null && !tried) {
-					getServer().getLevelHandler().loadClassicLevel("levels/" + Level2 + ".ggs");
+				while ((l = getServer().getClassicLevelHandler().findLevel(Level2)) == null && !tried) {
+					getServer().getClassicLevelHandler().loadClassicLevel("levels/" + Level2 + ".ggs");
 					tried = true;
 				}
 				if (l == null) {
 					getServer().Log("Could not find " + Level2 + "!");
 					continue;
 				}
-				while ((l2 = getServer().getLevelHandler().findLevel(Level3)) == null && !tried) {
-					getServer().getLevelHandler().loadClassicLevel("levels/" + Level3 + ".ggs");
+				while ((l2 = getServer().getClassicLevelHandler().findLevel(Level3)) == null && !tried) {
+					getServer().getClassicLevelHandler().loadClassicLevel("levels/" + Level3 + ".ggs");
 					tried = true;
 				}
 				if (l2 == null) {
 					getServer().Log("Could not find " + Level3 + "!");
 					continue;
 				}
-				PortalBlock pb1 = new PortalBlock(x2, y2, z2, l2, l.getTile(x1, y1, z1));
+				PortalBlock pb1 = new PortalBlock(x2, y2, z2, l2, (ClassicBlock)l.getTile(x1, y1, z1));
 				Player.GlobalBlockChange((short)(x1 / 32), (short)(y1 / 32), (short)(z1 / 32), pb1, l, getServer());
-				PortalBlock pb2 = new PortalBlock(x1, y1, z1, l, Block.getBlock("Air"));
+				PortalBlock pb2 = new PortalBlock(x1, y1, z1, l, ClassicBlock.getBlock("Air"));
 				pb2.setExit(true);
 				Player.GlobalBlockChange((short)(x2 / 32), (short)(y2 / 32), (short)(z2 / 32), pb2, l2, getServer());
 			}
@@ -202,8 +202,8 @@ public class MessageBlockPlugin extends Plugin {
 				String Level1 = args[8];
 				Level l;
 				boolean tried = false;
-				while ((l = getServer().getLevelHandler().findLevel(Level1)) == null && !tried) {
-					getServer().getLevelHandler().loadClassicLevel("levels/" + Level1 + ".ggs");
+				while ((l = getServer().getClassicLevelHandler().findLevel(Level1)) == null && !tried) {
+					getServer().getClassicLevelHandler().loadClassicLevel("levels/" + Level1 + ".ggs");
 					tried = true;
 				}
 				if (l == null) {
@@ -213,7 +213,7 @@ public class MessageBlockPlugin extends Plugin {
 				for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); ++xx) {
 					for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
 						for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
-							ZoneBlock zb = new ZoneBlock(new String[] { owner }, l.getTile(xx, yy, zz));
+							ZoneBlock zb = new ZoneBlock(new String[] { owner }, (ClassicBlock)l.getTile(xx, yy, zz));
 							Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, l, getServer());
 						}
 					}

@@ -14,12 +14,12 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.PortalBlock;
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 import net.mcforge.world.Level;
 
 public class Portal extends PlayerCommand {
 
-	Block b;
+    ClassicBlock b;
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length != 0) {
@@ -28,8 +28,8 @@ public class Portal extends PlayerCommand {
 				return;
 			}
 			int startindex = 0;
-			if (!Block.getBlock(arg1[0]).name.equals("NULL")) {
-				b = Block.getBlock(arg1[0]);
+			if (!ClassicBlock.getBlock(arg1[0]).name.equals("NULL")) {
+				b = ClassicBlock.getBlock(arg1[0]);
 				startindex++;
 			}
 			String message = "";
@@ -82,7 +82,7 @@ public class Portal extends PlayerCommand {
 					if (p.getLevel().getTile(x, y, z) instanceof PortalBlock) {
 						PortalBlock pb = (PortalBlock)p.getLevel().getTile(x, y, z);
 						if (show)
-							p.sendBlockChange((short)x, (short)y, (short)z, (pb.isExit() ? Block.getBlock("Red") : Block.getBlock("Green")));
+							p.sendBlockChange((short)x, (short)y, (short)z, (pb.isExit() ? ClassicBlock.getBlock("Red") : ClassicBlock.getBlock("Green")));
 						else
 							p.sendBlockChange((short)x, (short)y, (short)z, pb);
 					}
@@ -118,9 +118,9 @@ public class Portal extends PlayerCommand {
 				final Level endl = player.getLevel();
 				
 				
-				PortalBlock pb1 = new PortalBlock(endx, endy, endz, endl, (b == null ? Block.getBlock("Blue") : b));
+				PortalBlock pb1 = new PortalBlock(endx, endy, endz, endl, (b == null ? ClassicBlock.getBlock("Blue") : b));
 				Player.GlobalBlockChange((short)(startx / 32), (short)(starty / 32), (short)(startz / 32), pb1, startl, player.getServer());
-				PortalBlock pb2 = new PortalBlock(startx, starty, startz, startl, Block.getBlock("Air"));
+				PortalBlock pb2 = new PortalBlock(startx, starty, startz, startl, ClassicBlock.getBlock("Air"));
 				pb2.setExit(true);
 				Player.GlobalBlockChange((short)(endx / 32), (short)(endy / 32), (short)(endz / 32), pb2, endl, player.getServer());
 				player.sendMessage("&3Exit" + ChatColor.White + " block placed.");

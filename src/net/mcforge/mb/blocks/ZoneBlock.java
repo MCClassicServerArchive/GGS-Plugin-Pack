@@ -9,9 +9,9 @@ package net.mcforge.mb.blocks;
 
 import net.mcforge.groups.Group;
 import net.mcforge.iomodel.Player;
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 
-public class ZoneBlock extends Block {
+public class ZoneBlock extends ClassicBlock {
 	private static final long serialVersionUID = -1429204508778865220L;
 	
 	private String[] owners;
@@ -21,7 +21,7 @@ public class ZoneBlock extends Block {
 		super(ID, name);
 	}
 	
-	public ZoneBlock(String[] owners, Block b) {
+	public ZoneBlock(String[] owners, ClassicBlock b) {
 		this(b.getVisibleBlock(), b.name);
 		this.owners = owners;
 	}
@@ -52,7 +52,7 @@ public class ZoneBlock extends Block {
 	 * @return
 	 *        The new ZoneBlock
 	 */
-	public ZoneBlock clone(Block b) {
+	public ZoneBlock clone(ClassicBlock b) {
 		ZoneBlock bb = new ZoneBlock(owners, b);
 		return bb;
 	}

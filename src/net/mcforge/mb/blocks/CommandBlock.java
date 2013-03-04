@@ -9,9 +9,9 @@ package net.mcforge.mb.blocks;
 
 import net.mcforge.API.plugin.Command;
 import net.mcforge.server.Server;
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 
-public class CommandBlock extends Block {
+public class CommandBlock extends ClassicBlock {
 	
 	private static final long serialVersionUID = 1808391182561161713L;
 	private String message;
@@ -22,7 +22,7 @@ public class CommandBlock extends Block {
 		super(ID, name);
 	}
 	
-	public CommandBlock(String message, Block placed) {
+	public CommandBlock(String message, ClassicBlock placed) {
 		this(placed.getVisibleBlock(), placed.name);
 		this.message = message;
 		this.canWalk = placed.canWalkThrough();

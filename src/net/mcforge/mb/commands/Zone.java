@@ -15,6 +15,7 @@ import net.mcforge.API.plugin.PlayerCommand;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.ZoneBlock;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 
 @ManualLoad
 public class Zone extends PlayerCommand {
@@ -76,7 +77,7 @@ public class Zone extends PlayerCommand {
 				for (int xx = Math.min(x1, x2); xx <= Math.max(x1, x2); ++xx) {
 					for (int yy = Math.min(y1, y2); yy <= Math.max(y1, y2); ++yy) {
 						for (int zz = Math.min(z1, z2); zz <= Math.max(z1, z2); ++zz) {
-							ZoneBlock zb = new ZoneBlock(owner, player.getLevel().getTile(xx, yy, zz));
+							ZoneBlock zb = new ZoneBlock(owner, (ClassicBlock)player.getLevel().getTile(xx, yy, zz));
 							Player.GlobalBlockChange((short)xx, (short)yy, (short)zz, zb, player.getLevel(), player.getServer());
 						}
 					}

@@ -21,10 +21,10 @@ public class Save extends Command implements HelpItem {
 	@Override
 	public void execute(CommandExecutor arg0, String[] arg1) {
 		if (arg1.length == 0) {
-			final int size = arg0.getServer().getLevelHandler().getLevelList().size();
+			final int size = arg0.getServer().getClassicLevelHandler().getLevelList().size();
 			for (int i = 0; i < size; i++) {
 				try {
-					arg0.getServer().getLevelHandler().getLevelList().get(i).save();
+					arg0.getServer().getClassicLevelHandler().getLevelList().get(i).save();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -32,7 +32,7 @@ public class Save extends Command implements HelpItem {
 			arg0.sendMessage("Saved " + size + " " + (size == 1 ? "map" : "maps") + "!");
 		}
 		else {
-			Level l = arg0.getServer().getLevelHandler().findLevel(arg1[0]);
+			Level l = arg0.getServer().getClassicLevelHandler().findLevel(arg1[0]);
 			if (l == null)
 				arg0.sendMessage("Level not found!");
 			else {

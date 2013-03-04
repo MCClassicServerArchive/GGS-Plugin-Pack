@@ -46,11 +46,11 @@ public class Load extends Command implements HelpItem {
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
 		if (args.length == 1) {
-			LevelHandler handler = player.getServer().getLevelHandler();
+			LevelHandler handler = player.getServer().getClassicLevelHandler();
 			File levelFile = new File("levels/" + args[0] + ".ggs");
 
 			if (levelFile.exists()) {
-				handler.loadClassicLevel(levelFile.getPath());
+				handler.loadLevel(levelFile);
 				player.sendMessage(ChatColor.Bright_Green + "+ " + ChatColor.White + args[0] + " loaded!");
 			}
 			else {

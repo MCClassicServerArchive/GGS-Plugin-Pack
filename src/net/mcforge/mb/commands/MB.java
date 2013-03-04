@@ -16,12 +16,12 @@ import net.mcforge.chat.ChatColor;
 import net.mcforge.iomodel.Player;
 import net.mcforge.mb.blocks.CommandBlock;
 import net.mcforge.mb.blocks.MessageBlock;
-import net.mcforge.world.blocks.Block;
+import net.mcforge.world.blocks.classicmodel.ClassicBlock;
 
 @ManualLoad
 public class MB extends PlayerCommand {
 
-	private Block b;
+	private ClassicBlock b;
 	@Override
 	public void execute(Player player, String[] arg1) {
 		if (arg1.length == 0) { help(player); return; }
@@ -30,8 +30,8 @@ public class MB extends PlayerCommand {
 			return;
 		}
 		int startindex = 0;
-		if (!Block.getBlock(arg1[0]).name.equals("NULL")) {
-			b = Block.getBlock(arg1[0]);
+		if (!ClassicBlock.getBlock(arg1[0]).name.equals("NULL")) {
+			b = ClassicBlock.getBlock(arg1[0]);
 			startindex++;
 		}
 		String message = "";
@@ -83,7 +83,7 @@ public class MB extends PlayerCommand {
 					if (p.getLevel().getTile(x, y, z) instanceof MessageBlock) {
 						MessageBlock pb = (MessageBlock)p.getLevel().getTile(x, y, z);
 						if (show)
-							p.sendBlockChange((short)x, (short)y, (short)z, Block.getBlock("White"));
+							p.sendBlockChange((short)x, (short)y, (short)z, ClassicBlock.getBlock("White"));
 						else
 							p.sendBlockChange((short)x, (short)y, (short)z, pb);
 					}
@@ -105,17 +105,17 @@ public class MB extends PlayerCommand {
 			action.setPlayer(player);
 			try {
 				BlockChangeAction response = action.waitForResponse();
-				Block mb;
+				ClassicBlock mb;
 				if (message.startsWith("/") && player.getServer().getCommandHandler().find(message.substring(1).split("\\ ")[0]) != null) {
 					if (b == null)
-						mb = new CommandBlock(message, Block.getBlock((byte)36));
+						mb = new CommandBlock(message, ClassicBlock.getBlock((byte)36));
 					else
 						mb = new CommandBlock(message, b);
 					player.sendMessage(ChatColor.Bright_Green + "Command Block placed!");
 				}
 				else {
 					if (b == null)
-						mb = new MessageBlock(message, Block.getBlock((byte)36));
+						mb = new MessageBlock(message, ClassicBlock.getBlock((byte)36));
 					else
 						mb = new MessageBlock(message, b);
 					player.sendMessage(ChatColor.Bright_Green + "Message Block placed!");
