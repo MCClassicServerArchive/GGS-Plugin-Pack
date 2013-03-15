@@ -45,7 +45,7 @@ public class Summon extends PlayerCommand implements HelpItem {
 			return;
 		}
 		if (args[0].equalsIgnoreCase("all")) {
-			List<Player> players = executor.getServer().getPlayers();
+			List<Player> players = executor.getServer().getClassicPlayers();
 			for (int i = 0; i < players.size(); i++) {
 				Player pl = players.get(i);
 				if ((pl.getLevel() == executor.getLevel()) && 

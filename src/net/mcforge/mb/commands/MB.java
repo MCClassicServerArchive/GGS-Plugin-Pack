@@ -74,7 +74,7 @@ public class MB extends PlayerCommand {
 	private void show(Player p) {
 		boolean show = false;
 		if (p.hasAttribute("showmb")) {
-			show = ((Boolean)(p.getAttribute("showmb"))).booleanValue();
+			show = ((Boolean)(p.getAttribute("showmb", Boolean.class))).booleanValue();
 		}
 		show = !show;
 		for (int x = 0; x < p.getLevel().getWidth(); x++) {

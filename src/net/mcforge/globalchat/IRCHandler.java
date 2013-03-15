@@ -27,7 +27,7 @@ public class IRCHandler {
 	 * Sends a message to all the players that aren't ignoring the Global Chat
 	 */
 	public void messagePlayers(String message) {
-		List<Player> players = bot.s.getPlayers();
+		List<Player> players = bot.s.getClassicPlayers();
 		for (int i = 0; i < players.size(); i++) {
 			if (!DataHandler.ignoringGC(players.get(i))) {
 				players.get(i).sendMessage(message);

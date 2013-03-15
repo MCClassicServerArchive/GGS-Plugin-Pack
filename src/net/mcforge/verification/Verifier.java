@@ -21,7 +21,7 @@ public abstract class Verifier {
 	}
 	
 	protected static boolean verifies(Player p) {
-		return p.getAttribute("mcf_verifies");
+		return p.getAttribute("mcf_verifies", Boolean.class);
 	}
 	
 	protected static void setVerifies(Player p, boolean verifies) {
@@ -29,7 +29,7 @@ public abstract class Verifier {
 	}
 	
 	protected static boolean isVerified(Player p) {
-		return p.getAttribute("mcf_verified");
+		return p.getAttribute("mcf_verified", Boolean.class);
 	}
 	
 	protected static void setVerified(Player p, boolean verified) {
@@ -37,7 +37,7 @@ public abstract class Verifier {
 	}
 	
 	protected static int getTries(Player p) {
-		return p.getAttribute("mcf_identtries");
+		return p.getAttribute("mcf_identtries", Integer.class);
 	}
 	
 	protected static void setTries(Player p, int tries) {

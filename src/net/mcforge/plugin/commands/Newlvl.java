@@ -15,6 +15,7 @@ import net.mcforge.API.plugin.Command;
 import net.mcforge.chat.ChatColor;
 import net.mcforge.API.help.HelpItem;
 import net.mcforge.world.generator.Generator;
+import net.mcforge.world.generator.classicmodel.ClassicGenerator;
 import net.mcforge.world.generator.classicmodel.FlatGrass;
 import net.mcforge.world.LevelHandler;
 
@@ -47,7 +48,7 @@ public class Newlvl extends Command implements HelpItem {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		Generator gen = null;
+		Generator<?> gen = null;
 		if (args.length == 1) {
 			short sh = 64;
 			gen = new FlatGrass(player.getServer());
@@ -65,6 +66,11 @@ public class Newlvl extends Command implements HelpItem {
 				help(player);
 				return;
 			}
+			if (!(gen instanceof ClassicGenerator)) {
+			    player.sendMessage("The type " + args[4] + " is invalid!");
+			    help(player);
+			    return;
+			}
 		}
 		else {
 			help(player);
@@ -78,7 +84,7 @@ public class Newlvl extends Command implements HelpItem {
 		executor.sendMessage("/newlvl <name> <w> <h> <l> [type] - creates a new level with the specified dimensions");
 		executor.sendMessage("/newlvl <name> - creates a new 64x64x64 level");
 		String typeList = "";
-		List<Generator> gens = executor.getServer().getGeneratorHandler().getGenerators();
+		List<Generator<?>> gens = executor.getServer().getGeneratorHandler().getGenerators();
 		for (int i = 0; i < gens.size(); i++) {
 			typeList += gens.get(i).getName() + ", ";
 		}
@@ -86,7 +92,7 @@ public class Newlvl extends Command implements HelpItem {
 		executor.sendMessage("Types: " + typeList);
 	}
 
-	private void createLevel(CommandExecutor player, String name, short w, short h, short l, Generator gen) {
+	private void createLevel(CommandExecutor player, String name, short w, short h, short l, Generator<?> gen) {
 		LevelHandler handler = player.getServer().getClassicLevelHandler();
 
 		if (handler.findLevel(name) == null) {

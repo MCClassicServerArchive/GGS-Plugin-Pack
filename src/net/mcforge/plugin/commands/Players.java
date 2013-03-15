@@ -42,7 +42,7 @@ public class Players extends Command implements HelpItem {
 
 	@Override
 	public void execute(CommandExecutor player, String[] args) {
-		if (player.getServer().getPlayers().size() == 0) {
+		if (player.getServer().getClassicPlayers().size() == 0) {
 			player.sendMessage("There are no online players!");
 			return;
 		}

@@ -130,7 +130,7 @@ public class GlobalChatBot implements Runnable {
                                 handler.sendMessage("^MoTD: " + s.MOTD);
                                 handler.sendMessage("^Version: MCForge " + Server.CORE_VERSION);
                                 handler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hash);
-                                handler.sendMessage("^Players: " + s.getPlayers().size() + "/" + s.MaxPlayers);
+                                handler.sendMessage("^Players: " + s.getClassicPlayers().size() + "/" + s.MaxPlayers);
                             }
                         }
                         else if (message.startsWith("^SENDRULES ")) {
@@ -139,7 +139,7 @@ public class GlobalChatBot implements Runnable {
                                 s.getCommandHandler().execute(who, "gcrules", new String[0]);
                         }
                         else if (message.startsWith("^GETIP ") || message.startsWith("^IPGET ")) {
-                            List<Player> players = s.getPlayers();
+                            List<Player> players = s.getClassicPlayers();
                             for (int i = 0; i < players.size(); i++) {
                                 Player p = players.get(i);
                                 if (p.username.equals(message.split(" ")[1])) {
@@ -149,7 +149,7 @@ public class GlobalChatBot implements Runnable {
                             players = null;
                         }
                         else if (message.startsWith("^ISONLINE")) {
-                            List<Player> players = s.getPlayers();
+                            List<Player> players = s.getClassicPlayers();
                             for (int i = 0; i < players.size(); i++) {
                                 Player p = players.get(i);
                                 if (p.username.equals(message.split(" ")[1])) {
