@@ -15,9 +15,9 @@ import net.mcforge.iomodel.Player;
 import net.mcforge.server.Server;
 import net.mcforge.util.WebUtils;
 
-
 public class GlobalChatBot implements Runnable {
-    protected final IRCHandler handler;
+    protected final IRCHandler ircHandler;
+    protected final RankHandler rankHandler;
     protected Server s;
 
     protected Socket socket;
@@ -50,7 +50,8 @@ public class GlobalChatBot implements Runnable {
         this.username = username;
         this.quitMessage = quitMessage;
         s = server;
-        handler = new IRCHandler(this);
+        ircHandler = new IRCHandler(this);
+        rankHandler = new RankHandler();
         URL url;
         String gcData;
         try {
@@ -63,7 +64,7 @@ public class GlobalChatBot implements Runnable {
         }
         String[] info = gcData.split("&");
         this.server = info[0];
-        channel = info[1];
+        channel = info[1].toLowerCase(Locale.ENGLISH);
     }
 
     public void startBot() throws IOException {
@@ -84,8 +85,8 @@ public class GlobalChatBot implements Runnable {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-            handler.setNick(username);
-            handler.sendUserMsg(true);
+            ircHandler.setNick(username);
+            ircHandler.sendUserMsg(true);
 
             while (isRunning) {
                 line = reader.readLine();
@@ -96,19 +97,19 @@ public class GlobalChatBot implements Runnable {
                 colonSplit = line.split(":");
                 spaceSplit = line.split(" ");
                 
-                if (handler.hasCode("004")) {
-                    handler.joinChannel(channel);
+                if (ircHandler.hasCode("004")) {
+                    ircHandler.joinChannel(channel);
                     s.Log("Bot joined the Global Chat!");
                     break;
                 }
-                else if (handler.hasCode("433")) {
+                else if (ircHandler.hasCode("433")) {
                     s.Log("Nickname already in use! Randomizing..");
                     username = "ForgeBot" + new Random(System.currentTimeMillis()).nextInt(1000000000);
-                    handler.setNick(username);
+                    ircHandler.setNick(username);
                     s.Log("New Global Chat nickname: " + username);
                 }
                 else if (line.startsWith("PING ")) {
-                    handler.pong(line);
+                    ircHandler.pong(line);
                 }
             }
             connected = true;
@@ -123,11 +124,10 @@ public class GlobalChatBot implements Runnable {
                 spaceSplit = line.split(" ");
                 
                 if (line.startsWith("PING ")) {
-                    handler.pong(line);
+                    ircHandler.pong(line);
                 }
-                else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel.toLowerCase(Locale.ENGLISH)) && 
-                        !handler.hasCode("005")) {
-                    String message = handler.getMessage();
+                else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel) && !ircHandler.hasCode("005")) {
+                    String message = ircHandler.getMessage();
                     if (message.startsWith("\u0001") && message.endsWith("\u0001")) {
                         continue;
                     }
@@ -136,25 +136,34 @@ public class GlobalChatBot implements Runnable {
                             GCCPBanService.updateBanList();
                         else if (message.startsWith("^GETINFO ")) {
                             if (message.split(" ")[1].equals(username)) {
-                                handler.sendMessage("^Name: " + s.Name);
-                                handler.sendMessage("^Description: " + s.description);
-                                handler.sendMessage("^MoTD: " + s.MOTD);
-                                handler.sendMessage("^Version: MCForge " + Server.CORE_VERSION);
-                                handler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hash);
-                                handler.sendMessage("^Players: " + s.getClassicPlayers().size() + "/" + s.MaxPlayers);
+                                ircHandler.sendMessage("^Name: " + s.Name);
+                                ircHandler.sendMessage("^Description: " + s.description);
+                                ircHandler.sendMessage("^MoTD: " + s.MOTD);
+                                ircHandler.sendMessage("^Version: MCForge " + Server.CORE_VERSION);
+                                ircHandler.sendMessage("^URL: http://minecraft.net/classic/play/" + s.hash);
+                                ircHandler.sendMessage("^Players: " + s.getClassicPlayers().size() + "/" + s.MaxPlayers);
                             }
                         }
                         else if (message.startsWith("^SENDRULES ")) {
                             Player who = s.findPlayer(message.split(" ")[1]);
-                            if (who != null)
-                                s.getCommandHandler().execute(who, "gcrules", new String[0]);
+                            
+                            if (who != null) {
+                            	String sender = ircHandler.getSender();
+                            	if (rankHandler.canSendRules(sender)) {
+                                	s.getCommandHandler().execute(who, "gcrules", "");
+                                	ircHandler.sendMessage("^" + sender + ": Sent rules to " + who.getName() + "!");
+                            	}
+                            	else {
+                            		ircHandler.sendMessage("^" + sender + ": You don't have the required permission to send the GC rules!");
+                            	}
+                            }
                         }
                         else if (message.startsWith("^GETIP ") || message.startsWith("^IPGET ")) {
                             List<Player> players = s.getClassicPlayers();
                             for (int i = 0; i < players.size(); i++) {
                                 Player p = players.get(i);
                                 if (p.username.equals(message.split(" ")[1])) {
-                                    handler.sendMessage("^Username: " + p.username + " IP: " + p.getIP());
+                                    ircHandler.sendMessage("^Username: " + p.username + " IP: " + p.getIP());
                                 }
                             }
                             players = null;
@@ -164,27 +173,87 @@ public class GlobalChatBot implements Runnable {
                             for (int i = 0; i < players.size(); i++) {
                                 Player p = players.get(i);
                                 if (p.username.equals(message.split(" ")[1])) {
-                                    handler.sendMessage("^" + p.username + " is online on " + s.Name);
+                                    ircHandler.sendMessage("^" + p.username + " is online on " + s.Name);
                                 }
                             }
                             players = null;
                         }
                         else if (message.startsWith("^ISSERVER ")) {
                             if (message.split(" ")[1].equals(username))
-                                handler.sendMessage("^IMASERVER");
+                                ircHandler.sendMessage("^IMASERVER");
                         }
                         continue;
                     }
-                    String toSend = incoming + handler.getSender() + ": &f" +  message;
-                    handler.messagePlayers(toSend);
+                    String toSend = incoming + ircHandler.getSender() + ": &f" +  message;
+                    ircHandler.messagePlayers(toSend);
                 }
                 else if (colonSplit[1].contains("PRIVMSG " + username)) {
-                    if (handler.getMessage().equals("\u0001" + "VERSION" + "\u0001")) {
-                        handler.sendNotice(handler.getSender(), "\u0001" + "VERSION MCForge " + Server.CORE_VERSION + " : " + System.getProperty("os.name") + "\u0001");
+                    if (ircHandler.getMessage().equals("\u0001" + "VERSION" + "\u0001")) {
+                        ircHandler.sendNotice(ircHandler.getSender(), "\u0001" + "VERSION MCForge " + Server.CORE_VERSION + " : " + System.getProperty("os.name") + "\u0001");
                     }
                 }
-                else if (handler.hasCode("474")) {
-                    String providedReason = handler.getMessage();
+                
+                
+    			else if (ircHandler.hasCode("353")) {
+    				rankHandler.clear();
+    				String userListRaw = colonSplit[2];
+    				String[] userList = userListRaw.split(" ");
+    				for (int i = 0; i < userList.length; i++) {
+    					String user = userList[i];
+    					rankHandler.addUser(IRCRank.parseUser(user), IRCRank.parseRank(user));
+    				}
+    			}
+                
+    			else if (colonSplit[1].contains(" NICK ")) {
+					String sender = ircHandler.getSender();
+					IRCRank rank = rankHandler.getRank(sender);
+					
+					rankHandler.removeUser(sender);
+					
+					rankHandler.addUser(colonSplit[2], rank);
+				}
+                
+    			else if (colonSplit[1].contains(" PART ") || colonSplit[1].contains(" QUIT ")) {
+    				rankHandler.removeUser(ircHandler.getSender());
+    			}
+                
+				else if (colonSplit[1].contains(" MODE ")) {
+					if (spaceSplit.length >= 5) {
+						String user = spaceSplit[4];
+						String rawMode = spaceSplit[3];
+						
+						switch (rawMode) {
+							case "+v":
+								rankHandler.removeUser(user);
+								rankHandler.addUser(user, IRCRank.Voiced);
+								break;
+							case "+h":
+								rankHandler.removeUser(user);
+								rankHandler.addUser(user, IRCRank.HalfOp);
+								break;
+							case "+o":
+								rankHandler.removeUser(user);
+								rankHandler.addUser(user, IRCRank.Op);
+								break;
+							case "+ao":
+								rankHandler.removeUser(user);
+								rankHandler.addUser(user, IRCRank.Admin);
+								break;
+							case "+a":
+								rankHandler.removeUser(user);
+								rankHandler.addUser(user, IRCRank.Owner);
+								break;
+							default:
+								rankHandler.removeUser(user);
+								rankHandler.addUser(user, IRCRank.Other);
+								break;
+						}
+					}					
+				}
+                
+                
+                else if (ircHandler.hasCode("474")) {
+                    String providedReason = ircHandler.getMessage();
                     String banReason = providedReason.equals("Cannot join channel (+b)") ? "You're banned" : providedReason;
                     s.Log("You're banned from the Global Chat! Reason: " + banReason);
                     disposeBot();
@@ -207,8 +276,8 @@ public class GlobalChatBot implements Runnable {
     }
 
     public void disposeBot() {
-        handler.sendPart(quitMessage);
-        handler.sendQuit(quitMessage);
+        ircHandler.sendPart(quitMessage);
+        ircHandler.sendQuit(quitMessage);
 
         isRunning = false;
         connected = false;
