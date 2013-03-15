@@ -37,7 +37,11 @@ public class GlobalChatBot implements Runnable {
     protected volatile boolean isRunning;
     protected volatile boolean connected;
     private Thread botThread;
-
+	
+	protected String line;
+	protected String[] colonSplit;
+	protected String[] spaceSplit;
+	
     protected final static String outgoing = "&6<[Global]";
     protected final static String incoming = "&6>[Global]";
 
@@ -75,7 +79,6 @@ public class GlobalChatBot implements Runnable {
     }
     @Override
     public void run() {	
-        String line;
         try  {
             isRunning = true;
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -89,12 +92,16 @@ public class GlobalChatBot implements Runnable {
                 if (line == null) {
                     continue;
                 }
-                if (handler.hasCode(line, "004")) {
+                
+                colonSplit = line.split(":");
+                spaceSplit = line.split(" ");
+                
+                if (handler.hasCode("004")) {
                     handler.joinChannel(channel);
                     s.Log("Bot joined the Global Chat!");
                     break;
                 }
-                else if (handler.hasCode(line, "433")) {
+                else if (handler.hasCode("433")) {
                     s.Log("Nickname already in use! Randomizing..");
                     username = "ForgeBot" + new Random(System.currentTimeMillis()).nextInt(1000000000);
                     handler.setNick(username);
@@ -111,12 +118,16 @@ public class GlobalChatBot implements Runnable {
                 if (line == null) {
                     continue;
                 }
+                
+                colonSplit = line.split(":");
+                spaceSplit = line.split(" ");
+                
                 if (line.startsWith("PING ")) {
                     handler.pong(line);
                 }
                 else if (line.toLowerCase(Locale.ENGLISH).contains("privmsg " + channel.toLowerCase(Locale.ENGLISH)) && 
-                        !handler.hasCode(line, "005")) {
-                    String message = handler.getMessage(line);
+                        !handler.hasCode("005")) {
+                    String message = handler.getMessage();
                     if (message.startsWith("\u0001") && message.endsWith("\u0001")) {
                         continue;
                     }
@@ -124,7 +135,7 @@ public class GlobalChatBot implements Runnable {
                         if (message.startsWith("^UGCS"))
                             GCCPBanService.updateBanList();
                         else if (message.startsWith("^GETINFO ")) {
-                            if (message.split(" ").length > 1 && message.split(" ")[1].equals(username)) {
+                            if (message.split(" ")[1].equals(username)) {
                                 handler.sendMessage("^Name: " + s.Name);
                                 handler.sendMessage("^Description: " + s.description);
                                 handler.sendMessage("^MoTD: " + s.MOTD);
@@ -159,21 +170,21 @@ public class GlobalChatBot implements Runnable {
                             players = null;
                         }
                         else if (message.startsWith("^ISSERVER ")) {
-                            if (message.split(" ").length > 1 && message.split(" ")[1].equals(username))
+                            if (message.split(" ")[1].equals(username))
                                 handler.sendMessage("^IMASERVER");
                         }
                         continue;
                     }
-                    String toSend = incoming + handler.getSender(line) + ": &f" +  message;
+                    String toSend = incoming + handler.getSender() + ": &f" +  message;
                     handler.messagePlayers(toSend);
                 }
-                else if (line.split(":")[1].contains("PRIVMSG " + username)) {
-                    if (handler.getMessage(line).equals("\u0001" + "VERSION" + "\u0001")) {
-                        handler.sendNotice(handler.getSender(line), "\u0001" + "VERSION MCForge " + Server.CORE_VERSION + " : " + System.getProperty("os.name") + "\u0001");
+                else if (colonSplit[1].contains("PRIVMSG " + username)) {
+                    if (handler.getMessage().equals("\u0001" + "VERSION" + "\u0001")) {
+                        handler.sendNotice(handler.getSender(), "\u0001" + "VERSION MCForge " + Server.CORE_VERSION + " : " + System.getProperty("os.name") + "\u0001");
                     }
                 }
-                else if (handler.hasCode(line, "474")) {
-                    String providedReason = handler.getMessage(line);
+                else if (handler.hasCode("474")) {
+                    String providedReason = handler.getMessage();
                     String banReason = providedReason.equals("Cannot join channel (+b)") ? "You're banned" : providedReason;
                     s.Log("You're banned from the Global Chat! Reason: " + banReason);
                     disposeBot();
@@ -199,6 +210,9 @@ public class GlobalChatBot implements Runnable {
         handler.sendPart(quitMessage);
         handler.sendQuit(quitMessage);
 
+        isRunning = false;
+        connected = false;
+        
         try {
             if (reader != null)
                 reader.close();
@@ -211,7 +225,5 @@ public class GlobalChatBot implements Runnable {
         catch (IOException e) {
             e.printStackTrace();
         }
-        isRunning = false;
-        connected = false;
     }
 }
