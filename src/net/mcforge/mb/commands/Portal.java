@@ -73,7 +73,7 @@ public class Portal extends PlayerCommand {
 	public void show(Player p) {
 		boolean show = false;
 		if (p.hasAttribute("showportal")) {
-			show = ((Boolean)(p.getAttribute("showportal", Boolean.class))).booleanValue();
+			show = p.getAttribute("showportal", Boolean.class).booleanValue();
 		}
 		show = !show;
 		for (int x = 0; x < p.getLevel().getWidth(); x++) {
