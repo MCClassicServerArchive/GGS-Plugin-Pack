@@ -37,11 +37,11 @@ public class GlobalChatBot implements Runnable {
     protected volatile boolean isRunning;
     protected volatile boolean connected;
     private Thread botThread;
-	
-	protected String line;
-	protected String[] colonSplit;
-	protected String[] spaceSplit;
-	
+
+    protected String line;
+    protected String[] colonSplit;
+    protected String[] spaceSplit;
+
     protected final static String outgoing = "&6<[Global]";
     protected final static String incoming = "&6>[Global]";
 
@@ -93,10 +93,10 @@ public class GlobalChatBot implements Runnable {
                 if (line == null) {
                     continue;
                 }
-                
+
                 colonSplit = line.split(":");
                 spaceSplit = line.split(" ");
-                
+
                 if (ircHandler.hasCode("004")) {
                     ircHandler.joinChannel(channel);
                     s.Log("Bot joined the Global Chat!");
@@ -119,10 +119,10 @@ public class GlobalChatBot implements Runnable {
                 if (line == null) {
                     continue;
                 }
-                
+
                 colonSplit = line.split(":");
                 spaceSplit = line.split(" ");
-                
+
                 if (line.startsWith("PING ")) {
                     ircHandler.pong(line);
                 }
@@ -146,16 +146,16 @@ public class GlobalChatBot implements Runnable {
                         }
                         else if (message.startsWith("^SENDRULES ")) {
                             Player who = s.findPlayer(message.split(" ")[1]);
-                            
+
                             if (who != null) {
-                            	String sender = ircHandler.getSender();
-                            	if (rankHandler.canSendRules(sender)) {
-                                	s.getCommandHandler().execute(who, "gcrules", "");
-                                	ircHandler.sendMessage("^" + sender + ": Sent rules to " + who.getName() + "!");
-                            	}
-                            	else {
-                            		ircHandler.sendMessage("^" + sender + ": You don't have the required permission to send the GC rules!");
-                            	}
+                                String sender = ircHandler.getSender();
+                                if (rankHandler.canSendRules(sender)) {
+                                    s.getCommandHandler().execute(who, "gcrules", "");
+                                    ircHandler.sendMessage("^" + sender + ": Sent rules to " + who.getName() + "!");
+                                }
+                                else {
+                                    ircHandler.sendMessage("^" + sender + ": You don't have the required permission to send the GC rules!");
+                                }
                             }
                         }
                         else if (message.startsWith("^GETIP ") || message.startsWith("^IPGET ")) {
@@ -192,66 +192,63 @@ public class GlobalChatBot implements Runnable {
                         ircHandler.sendNotice(ircHandler.getSender(), "\u0001" + "VERSION MCForge " + Server.CORE_VERSION + " : " + System.getProperty("os.name") + "\u0001");
                     }
                 }
-                
-                
-    			else if (ircHandler.hasCode("353")) {
-    				rankHandler.clear();
-    				String userListRaw = colonSplit[2];
-    				String[] userList = userListRaw.split(" ");
-    				for (int i = 0; i < userList.length; i++) {
-    					String user = userList[i];
-    					rankHandler.addUser(IRCRank.parseUser(user), IRCRank.parseRank(user));
-    				}
-    			}
-                
-    			else if (colonSplit[1].contains(" NICK ")) {
-					String sender = ircHandler.getSender();
-					IRCRank rank = rankHandler.getRank(sender);
-					
-					rankHandler.removeUser(sender);
-					
-					rankHandler.addUser(colonSplit[2], rank);
-				}
-                
-    			else if (colonSplit[1].contains(" PART ") || colonSplit[1].contains(" QUIT ")) {
-    				rankHandler.removeUser(ircHandler.getSender());
-    			}
-                
-				else if (colonSplit[1].contains(" MODE ")) {
-					if (spaceSplit.length >= 5) {
-						String user = spaceSplit[4];
-						String rawMode = spaceSplit[3];
-						
-						switch (rawMode) {
-							case "+v":
-								rankHandler.removeUser(user);
-								rankHandler.addUser(user, IRCRank.Voiced);
-								break;
-							case "+h":
-								rankHandler.removeUser(user);
-								rankHandler.addUser(user, IRCRank.HalfOp);
-								break;
-							case "+o":
-								rankHandler.removeUser(user);
-								rankHandler.addUser(user, IRCRank.Op);
-								break;
-							case "+ao":
-								rankHandler.removeUser(user);
-								rankHandler.addUser(user, IRCRank.Admin);
-								break;
-							case "+a":
-								rankHandler.removeUser(user);
-								rankHandler.addUser(user, IRCRank.Owner);
-								break;
-							default:
-								rankHandler.removeUser(user);
-								rankHandler.addUser(user, IRCRank.Other);
-								break;
-						}
-					}					
-				}
-                
-                
+
+
+                else if (ircHandler.hasCode("353")) {
+                    rankHandler.clear();
+                    String userListRaw = colonSplit[2];
+                    String[] userList = userListRaw.split(" ");
+                    for (int i = 0; i < userList.length; i++) {
+                        String user = userList[i];
+                        rankHandler.addUser(IRCRank.parseUser(user), IRCRank.parseRank(user));
+                    }
+                }
+
+                else if (colonSplit[1].contains(" NICK ")) {
+                    String sender = ircHandler.getSender();
+                    IRCRank rank = rankHandler.getRank(sender);
+
+                    rankHandler.removeUser(sender);
+
+                    rankHandler.addUser(colonSplit[2], rank);
+                }
+
+                else if (colonSplit[1].contains(" PART ") || colonSplit[1].contains(" QUIT ")) {
+                    rankHandler.removeUser(ircHandler.getSender());
+                }
+
+                else if (colonSplit[1].contains(" MODE ")) {
+                    if (spaceSplit.length >= 5) {
+                        String user = spaceSplit[4];
+                        String rawMode = spaceSplit[3];
+                        if (rawMode.equals("+v")) {
+                            rankHandler.removeUser(user);
+                            rankHandler.addUser(user, IRCRank.Voiced);
+                        }
+                        else if (rawMode.equals("+h")) {
+                            rankHandler.removeUser(user);
+                            rankHandler.addUser(user, IRCRank.HalfOp);
+                        }
+                        else if (rawMode.equals("+o")) {
+                            rankHandler.removeUser(user);
+                            rankHandler.addUser(user, IRCRank.Op);
+                        }
+                        else if (rawMode.equals("+ao")) {
+                            rankHandler.removeUser(user);
+                            rankHandler.addUser(user, IRCRank.Admin);
+                        }
+                        else if (rawMode.equals("+a")) {
+                            rankHandler.removeUser(user);
+                            rankHandler.addUser(user, IRCRank.Owner);
+                        }
+                        else {
+                            rankHandler.removeUser(user);
+                            rankHandler.addUser(user, IRCRank.Other);
+                        }
+                    }					
+                }
+
+
                 else if (ircHandler.hasCode("474")) {
                     String providedReason = ircHandler.getMessage();
                     String banReason = providedReason.equals("Cannot join channel (+b)") ? "You're banned" : providedReason;
@@ -281,7 +278,7 @@ public class GlobalChatBot implements Runnable {
 
         isRunning = false;
         connected = false;
-        
+
         try {
             if (reader != null)
                 reader.close();
