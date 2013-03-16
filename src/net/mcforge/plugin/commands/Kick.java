@@ -45,7 +45,7 @@ public class Kick extends Command implements HelpItem {
 			return;
 		}
 		String kickReason = "";
-		Player who = executor.getServer().getPlayer(args[0]);
+		Player who = executor.getServer().findPlayer(args[0]);
 		if (who == null) {
 			executor.sendMessage("Player not found!");
 			return;

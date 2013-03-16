@@ -77,7 +77,7 @@ public class Players extends Command implements HelpItem {
 	private List<Player> getOnlineStaff(Server s, List<String> rawList) {
 		List<Player> online = new ArrayList<Player>();
 		for (int i = 0; i < rawList.size(); i++) {
-			Player p = s.getPlayer(rawList.get(i));
+			Player p = s.findPlayer(rawList.get(i));
 			if (p != null) {
 				online.add(p);
 			}

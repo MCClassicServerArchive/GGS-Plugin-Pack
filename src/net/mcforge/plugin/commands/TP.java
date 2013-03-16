@@ -38,7 +38,7 @@ public class TP extends PlayerCommand implements HelpItem {
 	@Override
 	public void execute(Player player, String[] args) {
 		if (args.length == 1) {
-			Player other = player.getServer().getPlayer(args[0]);
+			Player other = player.getServer().findPlayer(args[0]);
 			if (other != null) {
 				if (player.getLevel() != other.getLevel())
 					player.changeLevel(other.getLevel());
@@ -49,8 +49,8 @@ public class TP extends PlayerCommand implements HelpItem {
 			}
 		}
 		else if (args.length == 2) {
-			Player otherTPing = player.getServer().getPlayer(args[0]);
-			Player otherTPto = player.getServer().getPlayer(args[1]);
+			Player otherTPing = player.getServer().findPlayer(args[0]);
+			Player otherTPto = player.getServer().findPlayer(args[1]);
 
 			if (otherTPing != null && otherTPto != null) {
 				if (otherTPing.getLevel() != otherTPto.getLevel())

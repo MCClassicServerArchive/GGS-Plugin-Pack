@@ -45,7 +45,7 @@ public class Ban extends Command implements HelpItem {
                 return;
             }
             if (!args[0].equalsIgnoreCase(player.getName())) {
-                Player who = player.getServer().getPlayer(args[0]);
+                Player who = player.getServer().findPlayer(args[0]);
                 if (who != null) {
                     BanHandler.banHandler.ban(who.username);
                     player.getServer().getMessages().serverBroadcast(who.username + " has been banned by " + player.getName());
