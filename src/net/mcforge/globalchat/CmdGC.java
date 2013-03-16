@@ -73,12 +73,12 @@ public class CmdGC extends Command {
 		if (executor instanceof Console) {
 			String nick = GlobalChatPlugin.gcBot.consoleNick;
 			nick = nick.equalsIgnoreCase("Console") ? nick : "<C>" + nick;
-			GlobalChatPlugin.gcBot.handler.sendMessage(nick + ": " + joined);
-			GlobalChatPlugin.gcBot.handler.messagePlayers(GlobalChatBot.outgoing + nick + ":&f " + joined);
+			GlobalChatPlugin.gcBot.ircHandler.sendMessage(nick + ": " + joined);
+			GlobalChatPlugin.gcBot.ircHandler.messagePlayers(GlobalChatBot.outgoing + nick + ":&f " + joined);
 		}
 		else {
-			GlobalChatPlugin.gcBot.handler.sendMessage(executor.getName() + ": " + joined);
-			GlobalChatPlugin.gcBot.handler.messagePlayers(GlobalChatBot.outgoing + executor.getName() + ":&f " + joined);
+			GlobalChatPlugin.gcBot.ircHandler.sendMessage(executor.getName() + ": " + joined);
+			GlobalChatPlugin.gcBot.ircHandler.messagePlayers(GlobalChatBot.outgoing + executor.getName() + ":&f " + joined);
 		}
 	}
 	@Override

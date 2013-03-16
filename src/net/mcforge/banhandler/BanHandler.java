@@ -40,7 +40,7 @@ public class BanHandler extends Plugin implements Listener {
 	}
 	@Override
 	public String getAuthor() {
-		return "MCForge Dev Team"; //I have no idea who made the plugin, feel free to change the name
+		return "MCForge Dev Team";
 	}
 	
 	public BanHandler(Server server) {

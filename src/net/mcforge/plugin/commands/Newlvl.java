@@ -67,7 +67,7 @@ public class Newlvl extends Command implements HelpItem {
 				return;
 			}
 			if (!(gen instanceof ClassicGenerator)) {
-			    player.sendMessage("The type " + args[4] + " is invalid!");
+			    player.sendMessage("The type " + args[4] + " is not a Classic level generator!");
 			    help(player);
 			    return;
 			}
@@ -86,7 +86,9 @@ public class Newlvl extends Command implements HelpItem {
 		String typeList = "";
 		List<Generator<?>> gens = executor.getServer().getGeneratorHandler().getGenerators();
 		for (int i = 0; i < gens.size(); i++) {
-			typeList += gens.get(i).getName() + ", ";
+			if (gens.get(i) instanceof ClassicGenerator) {
+				typeList += gens.get(i).getName() + ", ";
+			}
 		}
 		typeList = typeList.substring(0, typeList.length() - 2);
 		executor.sendMessage("Types: " + typeList);

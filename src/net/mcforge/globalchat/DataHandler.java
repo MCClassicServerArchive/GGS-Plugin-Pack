@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) 2012 MCForge.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
+ ******************************************************************************/
 package net.mcforge.globalchat;
 
 import net.mcforge.iomodel.Player;
@@ -19,21 +26,21 @@ public abstract class DataHandler {
 	public static boolean readGCRules(Player p) {
 		if (!p.hasAttribute(readRules))
 			p.setAttribute(readRules, false);
-		return ((Boolean)(p.getAttribute(readRules, Boolean.class))).booleanValue();
+		return p.getAttribute(readRules, Boolean.class).booleanValue();
 	}
 	
 	public static boolean agreedToRules(Player p) {
 		if (!p.hasAttribute(agreed))
 			p.setAttribute(agreed, false);
 		
-		return ((Boolean)(p.getAttribute(agreed, Boolean.class))).booleanValue();
+		return p.getAttribute(agreed, Boolean.class).booleanValue();
 	}
 	
 	public static boolean ignoringGC(Player p) {
 		if (!p.hasAttribute(ignoring))
 			p.setAttribute(ignoring, false);
 		
-		return ((Boolean)(p.getAttribute(ignoring, Boolean.class))).booleanValue();
+		return p.getAttribute(ignoring, Boolean.class).booleanValue();
 	}
 	
 	public static synchronized void setValue(Player p, String identKey, Object Attribute, boolean save) {
